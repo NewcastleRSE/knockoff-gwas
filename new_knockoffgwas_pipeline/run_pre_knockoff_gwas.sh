@@ -1,0 +1,153 @@
+#!/bin/bash
+#
+# Class: script
+#
+# Run KnockoffGWAS on any dataset
+#
+# Authors: Richard Howey
+# Date:    28/03/2025
+#
+# Parameters
+#
+# $1 = start chr number
+# $2 = end chr number
+# $3 = path & file prefix (not including "_chrXX") for genetic data, .bim, .bed, .fam
+#      also path & file prefix (not including "_map_chrXX") for genetic map data, .txt
+#      also path & file prefix (not including "_ibd_chrXX") for IBD data, .txt
+#      also path & file prefix (not including "_phenotypes") for all phenotype data, .txt
+#      also path & file prefix (not including "_qc_chrXX") for QC SNP data, .txt
+#      also path & file prefix (not including "_qc_variants") for all QC SNP data, .txt
+#      also path & file prefix (not including "_qc_samples") for all QC SNP data, .txt
+# $4 = phenotype name
+# $5 = FDR rate
+# $6 = output folder
+
+# Absolute path to this script
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+# Log file
+LOG_FILE=$6"/pre-knockoffgwas.log"
+rm -f $LOG_FILE
+touch $LOG_FILE
+echo "Log file: "$LOG_FILE
+
+# Temporary folder for temporary files
+TMP_DIR=$6"/tmp"
+mkdir -p $6
+mkdir -p $TMP_DIR
+
+# Setup spinner for long jobs
+source "$SCRIPTPATH/knockoffgwas_pipeline/misc/spinner.sh"
+
+# Make QC files required for the pipeline if they do not exist:
+# $3_variants.txt and $3_qc_chrXX.txt
+# $3_samples.txt
+# If they do not exist we assume the QC has already been done we just choose all SNPs and individuals
+# R libraries
+
+start_spinner " - Creating QC files (if necessary) for KnockOffGWAS pipeline..."
+Rscript --vanilla "$SCRIPTPATH/knockoffgwas_pipeline/new_bits/make_qc_files.R" $1 $2 $3 $6 &>> $LOG_FILE
+stop_spinner $?
+
+# List of chromosomes
+CHR_LIST=$(seq $1 $2)
+
+# If haplotype data exists, .bgen, .sample then it is used otherwise it is calculated
+
+start_spinner " - Phasing chromosome data (if necessary) for KnockOffGWAS pipeline..."
+for CHR in $CHR_LIST; do
+
+if [ -e "$3_chr"$CHR".bgen" ]; then
+    echo ""
+    echo "Phasing for chromosome "$CHR" exists"
+    echo ""
+else
+    echo ""
+    echo "Phasing chromosome "$CHR" ..."
+    echo ""
+
+    # Input genotype files (PLINK format)
+    GENO_BIM="$3_chr"$CHR".bim"
+
+    # Input genotype files (PLINK format)
+    GENO_FAM="$3_chr"$CHR".fam"
+   
+    # Create .vcf file
+    plink --bfile "$3_chr"$CHR --recode vcf --out "$3_chr"$CHR &>> $LOG_FILE
+       
+    # Convert to bcf
+    bcftools view -O b -o "$3_chr"$CHR".bcf" "$3_chr"$CHR".vcf" &>> $LOG_FILE
+       
+    # Fill in missing AC (allele count) field
+    bcftools +fill-tags "$3_chr"$CHR".bcf" -Ob -o "$3_chr"$CHR".bcf" -- -t AN,AC &>> $LOG_FILE      
+    
+    # Create index file
+    bcftools index "$3_chr"$CHR".bcf" &>> $LOG_FILE
+    
+    # Create pedigree file for Shapeit5, This file contains one line per sample having parent(s) in the dataset and three columns (kidID fatherID and motherID), separated by TABs for spaces.
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_ped_file.R $GENO_FAM "$3_chr"$CHR"_shapeit.fam" &>> $LOG_FILE
+
+    # Convert map file by removing the first column (chr)
+    cut -f2- "$3_map_chr"$CHR".txt" > "$3_map_chr"$CHR"_shapeit.txt"
+    
+    # Phase
+    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/phase_common_static --input "$3_chr"$CHR".bcf" --pedigree "$3_chr"$CHR"_shapeit.fam" --region $CHR --map "$3_map_chr"$CHR"_shapeit.txt" --output "$3_phased_chr"$CHR".bcf" --thread 8 &>> $LOG_FILE
+
+    # Convert phased chr to bgen
+    #bcftools convert --bgen-plain --output-type b --output "$3_chr"$CHR".bgen" "$3_phased_chr"$CHR".bcf" &>> $LOG_FILE
+    
+    bcftools view "$3_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf"
+ 
+    bcftools convert --output-type b -o "$3_phased_chr"$CHR".bgen" "$3_phased_chr"$CHR".vcf" 
+
+    # Create .sample file
+    bcftools query -l "$3_phased_chr"$CHR".bcf" > "$3_phased_chr"$CHR".sample"
+    
+    # Remove temporary files
+    rm "$3_map_chr"$CHR"_shapeit.txt"
+    rm "$3_chr"$CHR"_shapeit.fam"
+fi
+    
+done
+stop_spinner $?
+
+
+# Make directory for results
+mkdir -p ibd
+
+# If IBD data exists, .txt, then it is used otherwise it is calculated
+for CHR in $CHR_LIST; do
+
+if [ -e "$3_ibd_chr"$CHR".txt" ]; then
+    echo "IBD data for chromosome "$CHR" exists"
+else
+    echo ""
+    echo "Creating IBD data for chromosome "$CHR" ..."
+    echo ""
+
+    # Create .vcf file
+    if [ -e "$3_chr"$CHR".vcf" ]; then
+        plink --bfile "$3_chr"$CHR --recode vcf --out "$3_chr"$CHR
+    fi
+    
+    # Zip up
+    gzip -f "$3_chr"$CHR".vcf"
+    
+    # Produce genetic map file for use with RaPID using python conversion scripts provided by RaPID
+    #python $SCRIPTPATH/knockoffgwas_pipeline/new_bits/filter_mapping_file.py "$3_map_chr"$CHR".txt" "$3_map_filtered_chr"$CHR".txt"
+    #python $SCRIPTPATH/knockoffgwas_pipeline/new_bits/interpolate_loci.py "$3_map_filtered_chr"$CHR".txt" "$3_chr"$CHR".vcf.gz" "$3_map_rapid_chr"$CHR".txt"
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/filter_mapping_file.R "$3_map_chr"$CHR".txt" "$3_map_filtered_chr"$CHR".txt" &>> $LOG_FILE
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/interpolate_loci.R "$3_map_filtered_chr"$CHR".txt" "$3_chr"$CHR".vcf.gz" "$3_map_rapid_chr"$CHR".txt" &>> $LOG_FILE
+    
+    # Usage: ./RaPID_v.1.7 -i <input_file_vcf_compressed>  -g <genetic_mapping_file> -d <min_length_in_cM> -o <output_folder>   -w  <window_size>  -r <#runs> -s <#success>
+    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d 5 -w 250 -r 10 -s 2 -o ibd &>> $LOG_FILE
+    
+    gunzip -f ibd/results.max.gz
+    mv ibd/results.max "$3_ibd_chr"$CHR".txt"
+fi
+    
+done
+
+

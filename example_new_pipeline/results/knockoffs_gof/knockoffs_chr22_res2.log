@@ -1,0 +1,33 @@
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res2
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res2
+  --r2 in-phase
+
+Hostname: finan
+Working directory: /home/unix/nrajh/StatGen/work-other/KnockOff/KnockoffGWAS/example_new_pipeline
+Start time: Mon Mar 31 16:18:17 2025
+
+Random number seed: 1743434297
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res2.ld ...
+done.
+
+End time: Mon Mar 31 16:18:17 2025

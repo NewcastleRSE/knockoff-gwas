@@ -1,0 +1,1562 @@
+Loading required package: tidyverse
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: fastcluster
+
+Attaching package: ‘fastcluster’
+
+The following object is masked from ‘package:stats’:
+
+    hclust
+
+Loading required package: latex2exp
+Loading required package: grid
+Loading required package: gridExtra
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+  tidyverse fastcluster   latex2exp        grid   gridExtra 
+       TRUE        TRUE        TRUE        TRUE        TRUE 
+list()
+Loading required package: bigstatsr
+Loading required package: bigsnpr
+bigstatsr   bigsnpr 
+     TRUE      TRUE 
+
+----------------------------------------------------------------------------------------------------
+Partitioning variants
+----------------------------------------------------------------------------------------------------
+
+Processing chromosome 21 ...
+
+Mean group sizes: 
+     res_7      res_6      res_5      res_4      res_3      res_2      res_1 
+  1.000000   6.622517  16.949153  27.027027  45.454545  90.909091 200.000000 
+Partitions written to: results/tmp/partitions/example_chr21.txt
+
+Processing chromosome 22 ...
+
+Mean group sizes: 
+     res_7      res_6      res_5      res_4      res_3      res_2      res_1 
+  1.000000   4.347826  11.235955  16.949153  29.411765  52.631579 111.111111 
+Partitions written to: results/tmp/partitions/example_chr22.txt
+
+----------------------------------------------------------------------------------------------------
+Generating knockoffs
+----------------------------------------------------------------------------------------------------
+	+----------------------+
+	|                      |
+	|  SNPKNOCK2, v0.3     |
+	|  July 21, 2020       |
+	|  Matteo Sesia        |
+	|                      |
+	+----------------------+
+
+Copyright (C) 2020 Stanford University.
+Distributed under the GNU GPLv3 open source license.
+
+Use --help for more information.
+
+Command line arguments:
+  --bgen example_chr{21:22}
+  --keep example_qc_samples.txt
+  --extract example_qc_chr{21:22}.txt
+  --map example_map_chr{21:22}.txt
+  --part results/tmp/partitions/example_chr{21:22}.txt
+  --ibd example_ibd_chr{21:22}.txt
+  --K 10
+  --cluster_size_min 1000
+  --cluster_size_max 10000
+  --hmm-rho 1
+  --hmm-lambda 1e-3
+  --windows 0
+  --n_threads 4
+  --seed 2020
+  --compute-references
+  --generate-knockoffs
+  --out results/tmp/knockoffs/knockoffs_chr{21:22}
+
+Requested operations:
+  --compute-references
+  --generate_knockoffs
+
+
+--------------------------------------------------------------------------------
+Loading metadata
+--------------------------------------------------------------------------------
+Loading sample information from:
+  example_chr21.sample
+Loading legend from:
+  example_chr21.bim
+Loading partitions from:
+  results/tmp/partitions/example_chr21.txt
+Loading IBD segments from:
+  example_ibd_chr21.txt
+Loaded 3 IBD segments.
+
+Printing summary of 1 windows:
+     0: 0--1000
+Summary of metadata for chromosome 1:
+  number of samples (after | before filtering) : 1000 | 1000
+  number of SNPs (after | before filtering)    : 1000 | 1000
+  number of variant partitions                 : 7
+  size of genomic windows                      : whole-chromosome
+  number of IBD segments                       : 3
+
+Loading sample information from:
+  example_chr22.sample
+Loading legend from:
+  example_chr22.bim
+Loading partitions from:
+  results/tmp/partitions/example_chr22.txt
+Loading IBD segments from:
+  example_ibd_chr22.txt
+Loaded 40 IBD segments.
+
+Printing summary of 1 windows:
+     0: 0--1000
+Summary of metadata for chromosome 2:
+  number of samples (after | before filtering) : 1000 | 1000
+  number of SNPs (after | before filtering)    : 1000 | 1000
+  number of variant partitions                 : 7
+  size of genomic windows                      : whole-chromosome
+  number of IBD segments                       : 40
+
+
+--------------------------------------------------------------------------------
+Kinship (using only haplotype data)
+--------------------------------------------------------------------------------
+Reached 1
+Chromosome 1 will be loaded from:
+  haplotype file            : example_chr21.bgen
+  sample file               : example_chr21.sample
+  legend file               : example_chr21.bim
+  thinning factor           : 10
+  sample filter file        : example_qc_samples.txt
+  variant filter file       : example_qc_chr21.txt
+  number of SNPs            : 100
+  number of haplotypes      : 2000
+
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+Chromosome 2 will be loaded from:
+  haplotype file            : example_chr22.bgen
+  sample file               : example_chr22.sample
+  legend file               : example_chr22.bim
+  thinning factor           : 10
+  sample filter file        : example_qc_samples.txt
+  variant filter file       : example_qc_chr22.txt
+  number of SNPs            : 100
+  number of haplotypes      : 2000
+
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+Solving 2 bifurcating K-means problems using 2 threads.
+|..|
+|
+Bifurcating K-means (leaving out chromosome 1)
+Smallest allowed cluster size: 1000=
+ step	 cluster	    size	    left	   right	accepted
+Bifurcating K-means completed after 0 steps.
+Number of clusters: 1.
+
+=|
+
+Kinship clusters (leaving out chromosome 1) written to:
+  results/tmp/knockoffs/knockoffs_chr21_clust.txt
+  results/tmp/knockoffs/knockoffs_chr21.sample
+Kinship clusters (leaving out chromosome 2) written to:
+  results/tmp/knockoffs/knockoffs_chr22_clust.txt
+  results/tmp/knockoffs/knockoffs_chr22.sample
+
+Assigning references for the whole chromosome using 4 threads: 
+|....................................................................................................|
+|====================================================================================================|
+
+Assigning references for the whole chromosome using 4 threads: 
+|....................................................................................................|
+|====================================================================================================|
+
+Reached 2
+Individual global references written to:
+  results/tmp/knockoffs/knockoffs_chr21_lref.txt
+  results/tmp/knockoffs/knockoffs_chr22_lref.txt
+
+Individual local references written to:
+  results/tmp/knockoffs/knockoffs_chr21_ref.txt
+  results/tmp/knockoffs/knockoffs_chr22_ref.txt
+
+
+--------------------------------------------------------------------------------
+Knockoffs for chromosome 1
+--------------------------------------------------------------------------------
+Chromosome 1 will be loaded from:
+  haplotype file            : example_chr21
+  haplotype file format     : bgen
+  sample file               : example_chr21.sample
+  legend file               : example_chr21.bim
+  map file                  : example_map_chr21.txt
+  sample filter file        : example_qc_samples.txt
+  variant filter file       : example_qc_chr21.txt
+  number of SNPs            : 1000
+  number of windows         : 1
+  number of haplotypes      : 2000
+
+Loading data for chromosome 1
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+
+Initializing HMM with user-supplied hyperparameters: rho = 1, lambda = 0.001.
+
+HMM parameters written to:
+  results/tmp/knockoffs/knockoffs_chr21_hmm.txt
+
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr21_res0_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr21_res0_windows.txt
+
+Generating related knockoffs for chromosome 1 (6 haplotypes in 3 families, 1000 variants in 1000 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (1994 haplotypes; 1000 variants in 1000 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr21_res0.bed
+  results/tmp/knockoffs/knockoffs_chr21_res0.bim
+  results/tmp/knockoffs/knockoffs_chr21_res0.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr21_res0_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr21_res1_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr21_res1_windows.txt
+
+Generating related knockoffs for chromosome 1 (6 haplotypes in 3 families, 1000 variants in 151 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (1994 haplotypes; 1000 variants in 151 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr21_res1.bed
+  results/tmp/knockoffs/knockoffs_chr21_res1.bim
+  results/tmp/knockoffs/knockoffs_chr21_res1.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr21_res1_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr21_res2_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr21_res2_windows.txt
+
+Generating related knockoffs for chromosome 1 (6 haplotypes in 3 families, 1000 variants in 59 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (1994 haplotypes; 1000 variants in 59 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr21_res2.bed
+  results/tmp/knockoffs/knockoffs_chr21_res2.bim
+  results/tmp/knockoffs/knockoffs_chr21_res2.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr21_res2_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr21_res3_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr21_res3_windows.txt
+
+Generating related knockoffs for chromosome 1 (6 haplotypes in 3 families, 1000 variants in 37 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (1994 haplotypes; 1000 variants in 37 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr21_res3.bed
+  results/tmp/knockoffs/knockoffs_chr21_res3.bim
+  results/tmp/knockoffs/knockoffs_chr21_res3.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr21_res3_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr21_res4_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr21_res4_windows.txt
+
+Generating related knockoffs for chromosome 1 (6 haplotypes in 3 families, 1000 variants in 22 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (1994 haplotypes; 1000 variants in 22 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr21_res4.bed
+  results/tmp/knockoffs/knockoffs_chr21_res4.bim
+  results/tmp/knockoffs/knockoffs_chr21_res4.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr21_res4_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr21_res5_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr21_res5_windows.txt
+
+Generating related knockoffs for chromosome 1 (6 haplotypes in 3 families, 1000 variants in 11 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (1994 haplotypes; 1000 variants in 11 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr21_res5.bed
+  results/tmp/knockoffs/knockoffs_chr21_res5.bim
+  results/tmp/knockoffs/knockoffs_chr21_res5.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr21_res5_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr21_res6_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr21_res6_windows.txt
+
+Generating related knockoffs for chromosome 1 (6 haplotypes in 3 families, 1000 variants in 5 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (1994 haplotypes; 1000 variants in 5 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr21_res6.bed
+  results/tmp/knockoffs/knockoffs_chr21_res6.bim
+  results/tmp/knockoffs/knockoffs_chr21_res6.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr21_res6_anc.txt
+
+--------------------------------------------------------------------------------
+Knockoffs for chromosome 2
+--------------------------------------------------------------------------------
+Chromosome 2 will be loaded from:
+  haplotype file            : example_chr22
+  haplotype file format     : bgen
+  sample file               : example_chr22.sample
+  legend file               : example_chr22.bim
+  map file                  : example_map_chr22.txt
+  sample filter file        : example_qc_samples.txt
+  variant filter file       : example_qc_chr22.txt
+  number of SNPs            : 1000
+  number of windows         : 1
+  number of haplotypes      : 2000
+
+Loading data for chromosome 2
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+
+Initializing HMM with user-supplied hyperparameters: rho = 1, lambda = 0.001.
+
+HMM parameters written to:
+  results/tmp/knockoffs/knockoffs_chr22_hmm.txt
+
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr22_res0_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr22_res0_windows.txt
+
+Generating related knockoffs for chromosome 2 (75 haplotypes in 36 families, 1000 variants in 1000 groups):
+|....................................|
+|====================================|
+
+Generating unrelated knockoffs for chromosome 2 (1925 haplotypes; 1000 variants in 1000 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr22_res0.bed
+  results/tmp/knockoffs/knockoffs_chr22_res0.bim
+  results/tmp/knockoffs/knockoffs_chr22_res0.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr22_res0_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr22_res1_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr22_res1_windows.txt
+
+Generating related knockoffs for chromosome 2 (75 haplotypes in 36 families, 1000 variants in 230 groups):
+|....................................|
+|====================================|
+
+Generating unrelated knockoffs for chromosome 2 (1925 haplotypes; 1000 variants in 230 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr22_res1.bed
+  results/tmp/knockoffs/knockoffs_chr22_res1.bim
+  results/tmp/knockoffs/knockoffs_chr22_res1.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr22_res1_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr22_res2_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr22_res2_windows.txt
+
+Generating related knockoffs for chromosome 2 (75 haplotypes in 36 families, 1000 variants in 89 groups):
+|....................................|
+|====================================|
+
+Generating unrelated knockoffs for chromosome 2 (1925 haplotypes; 1000 variants in 89 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr22_res2.bed
+  results/tmp/knockoffs/knockoffs_chr22_res2.bim
+  results/tmp/knockoffs/knockoffs_chr22_res2.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr22_res2_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr22_res3_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr22_res3_windows.txt
+
+Generating related knockoffs for chromosome 2 (75 haplotypes in 36 families, 1000 variants in 59 groups):
+|....................................|
+|====================================|
+
+Generating unrelated knockoffs for chromosome 2 (1925 haplotypes; 1000 variants in 59 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr22_res3.bed
+  results/tmp/knockoffs/knockoffs_chr22_res3.bim
+  results/tmp/knockoffs/knockoffs_chr22_res3.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr22_res3_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr22_res4_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr22_res4_windows.txt
+
+Generating related knockoffs for chromosome 2 (75 haplotypes in 36 families, 1000 variants in 34 groups):
+|....................................|
+|====================================|
+
+Generating unrelated knockoffs for chromosome 2 (1925 haplotypes; 1000 variants in 34 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr22_res4.bed
+  results/tmp/knockoffs/knockoffs_chr22_res4.bim
+  results/tmp/knockoffs/knockoffs_chr22_res4.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr22_res4_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr22_res5_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr22_res5_windows.txt
+
+Generating related knockoffs for chromosome 2 (75 haplotypes in 36 families, 1000 variants in 19 groups):
+|....................................|
+|====================================|
+
+Generating unrelated knockoffs for chromosome 2 (1925 haplotypes; 1000 variants in 19 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr22_res5.bed
+  results/tmp/knockoffs/knockoffs_chr22_res5.bim
+  results/tmp/knockoffs/knockoffs_chr22_res5.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr22_res5_anc.txt
+SNP groups written to:
+  results/tmp/knockoffs/knockoffs_chr22_res6_grp.txt
+SNP windows written to:
+  results/tmp/knockoffs/knockoffs_chr22_res6_windows.txt
+
+Generating related knockoffs for chromosome 2 (75 haplotypes in 36 families, 1000 variants in 9 groups):
+|....................................|
+|====================================|
+
+Generating unrelated knockoffs for chromosome 2 (1925 haplotypes; 1000 variants in 9 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  results/tmp/knockoffs/knockoffs_chr22_res6.bed
+  results/tmp/knockoffs/knockoffs_chr22_res6.bim
+  results/tmp/knockoffs/knockoffs_chr22_res6.fam
+Reconstructed ancestries written to:
+  results/tmp/knockoffs/knockoffs_chr22_res6_anc.txt
+
+Finished.
+
+
+----------------------------------------------------------------------------------------------------
+Checking knockoffs goodness-of-fit
+----------------------------------------------------------------------------------------------------
+
+Computing goodness-of-fit diagnostics for chromosome 21 at resolution 6 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res6_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res6
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res6_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr21_res6_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr21_res6_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res6.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res6
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res6
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res6.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 57774 rows [18, 19, 20,
+21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 58944 rows [1, 11, 12,
+13, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 32, 33, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr21_res6.png
+
+Computing goodness-of-fit diagnostics for chromosome 22 at resolution 6 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res6_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res6
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res6_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr22_res6_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr22_res6_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res6.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res6
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res6
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res6.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 44217 rows [31, 32, 33,
+34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 44649 rows [1, 2, 5, 7,
+10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 31, 33, 35, 36, 37, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr22_res6.png
+
+Computing goodness-of-fit diagnostics for chromosome 21 at resolution 5 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res5_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res5
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res5_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr21_res5_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr21_res5_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res5.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res5
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res5
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res5.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 64496 rows [40, 41, 42,
+43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 63856 rows [1, 31, 32,
+40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 59, 60, 61, 62, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr21_res5.png
+
+Computing goodness-of-fit diagnostics for chromosome 22 at resolution 5 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res5_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res5
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res5_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr22_res5_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr22_res5_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res5.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res5
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res5
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res5.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 46638 rows [30, 31, 32,
+33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 46305 rows [1, 2, 5, 7,
+11, 13, 14, 16, 19, 20, 23, 24, 26, 28, 29, 30, 32, 34, 35, 36, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr22_res5.png
+
+Computing goodness-of-fit diagnostics for chromosome 21 at resolution 4 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res4_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res4
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res4_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr21_res4_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr21_res4_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res4.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res4
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res4
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res4.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 66010 rows [22, 23, 24,
+25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 65998 rows [1, 20, 21,
+22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 47, 48, 49, 50, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr21_res4.png
+
+Computing goodness-of-fit diagnostics for chromosome 22 at resolution 4 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res4_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res4
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res4_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr22_res4_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr22_res4_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res4.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res4
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res4
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res4.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 50504 rows [30, 31, 32,
+33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 49754 rows [1, 2, 5, 7,
+11, 13, 14, 16, 19, 20, 23, 24, 26, 28, 29, 30, 32, 34, 35, 36, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr22_res4.png
+
+Computing goodness-of-fit diagnostics for chromosome 21 at resolution 3 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res3_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res3
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res3_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr21_res3_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr21_res3_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res3.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res3
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res3
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res3.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 67477 rows [17, 18, 19,
+20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 66768 rows [1, 13, 14,
+17, 20, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, 42, 52, 54, 56, 57, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr21_res3.png
+
+Computing goodness-of-fit diagnostics for chromosome 22 at resolution 3 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res3_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res3
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res3_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr22_res3_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr22_res3_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res3.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res3
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res3
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res3.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 51180 rows [30, 31, 32,
+33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 51670 rows [1, 2, 5, 7,
+11, 13, 14, 16, 19, 20, 23, 24, 26, 28, 29, 30, 32, 34, 35, 36, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr22_res3.png
+
+Computing goodness-of-fit diagnostics for chromosome 21 at resolution 2 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res2_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res2
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res2_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr21_res2_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr21_res2_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res2.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res2
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res2
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res2.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 66870 rows [5, 6, 7, 8,
+9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 67526 rows [1, 3, 4, 5,
+7, 9, 11, 12, 14, 17, 18, 21, 22, 24, 27, 29, 33, 35, 37, 38, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr21_res2.png
+
+Computing goodness-of-fit diagnostics for chromosome 22 at resolution 2 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res2_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res2
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res2_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr22_res2_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr22_res2_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res2.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res2
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res2
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res2.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 51821 rows [30, 31, 32,
+33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 52301 rows [1, 2, 5, 7,
+10, 12, 13, 15, 18, 19, 22, 23, 25, 27, 28, 30, 32, 34, 36, 37, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr22_res2.png
+
+Computing goodness-of-fit diagnostics for chromosome 21 at resolution 1 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res1_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res1
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res1_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr21_res1_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr21_res1_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res1.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res1
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res1
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res1.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 66840 rows [7, 8, 9, 10,
+11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 67299 rows [1, 3, 4, 5,
+7, 10, 12, 14, 15, 17, 20, 21, 24, 25, 27, 30, 31, 35, 37, 39, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr21_res1.png
+
+Computing goodness-of-fit diagnostics for chromosome 22 at resolution 1 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res1_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res1
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res1_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr22_res1_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr22_res1_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res1.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res1
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res1
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res1.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 52083 rows [32, 33, 34,
+35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 52202 rows [1, 2, 5, 7,
+10, 12, 13, 15, 18, 19, 22, 23, 25, 28, 29, 32, 35, 37, 39, 40, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr22_res1.png
+
+Computing goodness-of-fit diagnostics for chromosome 21 at resolution 0 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res0_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res0
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res0_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr21_res0_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr21_res0_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr21_res0.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res0
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr21_res0
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res0.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 67053 rows [8, 9, 10, 11,
+12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 67201 rows [1, 3, 6, 8,
+11, 13, 15, 16, 18, 20, 21, 24, 25, 27, 30, 31, 35, 37, 39, 40, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr21_res0.png
+
+Computing goodness-of-fit diagnostics for chromosome 22 at resolution 0 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res0_self.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res0
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res0_self
+  --r in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr22_res0_self.frq .
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r with the following filters:
+  --ld-window: 2
+  --ld-window-kb: 0
+  --ld-window-r2: 0.2
+--r in-phase to results/knockoffs_gof/knockoffs_chr22_res0_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr22_res0.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr22_res0
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr22_res0
+  --r2 in-phase
+
+63857 MB RAM detected; reserving 9000 MB for main workspace.
+2000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+2000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+Running --r2 with the following filters:
+  --ld-window: 5000
+  --ld-window-kb: 10000
+  --ld-window-r2: 0.01
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr22_res0.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 1000 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 52024 rows [30, 31, 32,
+33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 52085 rows [1, 2, 5, 7,
+10, 12, 13, 15, 18, 19, 22, 23, 25, 28, 29, 30, 33, 35, 37, 38, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr22_res0.png
+
+----------------------------------------------------------------------------------------------------
+Converting augmented genotypes into FBM
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)            cog-genomics.org/plink/1.9/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/tmp/knockoffs_full/example_res6.log.
+Options in effect:
+  --bfile results/tmp/knockoffs/knockoffs_chr21_res6
+  --make-bed
+  --memory 5000
+  --merge-list results/tmp/knockoffs_full/example_res6_mergelist.txt
+  --out results/tmp/knockoffs_full/example_res6
+
+63857 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: Variants 'rs7282547.k' and 'rs7282547' have the same position.
+Warning: Variants 'rs2792379.k' and 'rs2792379' have the same position.
+Warning: Variants 'rs2792452.k' and 'rs2792452' have the same position.
+1997 more same-position warnings: see log file.
+Performing single-pass merge (1000 people, 4000 variants).
+Pass 1: fileset #1 complete.                                              Merged fileset written to results/tmp/knockoffs_full/example_res6-merge.bed +
+results/tmp/knockoffs_full/example_res6-merge.bim +
+results/tmp/knockoffs_full/example_res6-merge.fam .
+4000 variants loaded from .bim file.
+1000 people (495 males, 505 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 1000 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is exactly 1.
+4000 variants and 1000 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to results/tmp/knockoffs_full/example_res6.bed +
+results/tmp/knockoffs_full/example_res6.bim +
+results/tmp/knockoffs_full/example_res6.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Error in library(devtools) : there is no package called ‘devtools’
+Calls: suppressMessages -> withCallingHandlers -> library
+Execution halted

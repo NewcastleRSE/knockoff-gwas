@@ -1,0 +1,57 @@
+drhowey/causal-imp
+
+[nrajh@finan knockoffgwas]$ grep -r "devtools::install" knockoffgwas
+knockoffgwas/utils/make_FBM.R:# devtools::install_github("privefl/bigsnpr")
+knockoffgwas/utils/lasso.R:# devtools::install_github("privefl/bigstatsr")
+knockoffgwas/utils/lasso.R:# devtools::install_github("privefl/bigsnpr")
+knockoffgwas/utils/check_packages.R:        devtools::install_github(sprintf("privefl/%s", new.pkg))
+
+
+15/4/2025.
+
+Need plink 2 to convert to bgen
+
+
+
+/home/unix/nrajh/StatGen/work-other/KnockOff/KnockoffGWAS/new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/phase_common_static --input example_chr22.bcf --pedigree example_chr22.fam --region 22 --map example_map_chr22.txt --output example_phased_chr22.bcf --thread 8
+
+/home/unix/nrajh/StatGen/work-other/KnockOff/KnockoffGWAS/new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/phase_common_static --input example_chr22.bcf --region 22 --map example_map_chr22.txt --output example_phased_chr22.bcf --thread 8
+
+
+bcftools +fill-tags example_chr22.bcf
+
+
+plink --bfile example_chr22 --recode vcf --out example_chr22
+
+bcftools +fill-tags example_chr22.vcf -Ov -o example_chr22.vcf -- -t AC
+
+
+
+plink --bfile example_chr21 --recode vcf --out example_chr21
+
+#bcftools +fill-tags example_chr21.vcf -Ov -o example_chr21.vcf -- -t AC 
+
+# Convert to bcf
+bcftools view -O b -o example_chr21.bcf example_chr21.vcf 
+
+# Create index file
+bcftools index example_chr21.bcf
+
+bcftools +fill-tags example_chr21.bcf -Ob -o example_chr21.bcf -- -t AN,AC
+
+# Convert fam file
+Rscript --vanilla /home/unix/nrajh/StatGen/work-other/KnockOff/KnockoffGWAS/new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/convert_ped_file.R example_chr21.fam example_chr21_shapeit.fam
+
+# Convert map file by removing the first column
+cut -f2- example_map_chr21.txt > example_map_chr21_shapeit.txt
+
+/home/unix/nrajh/StatGen/work-other/KnockOff/KnockoffGWAS/new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/phase_common_static --input example_chr21.bcf --pedigree example_chr21_shapeit.fam --region 21 --map example_map_chr21_shapeit.txt --output example_phased_chr21.bcf --thread 8
+
+#/home/unix/nrajh/StatGen/work-other/KnockOff/KnockoffGWAS/new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/phase_common_static --input example_chr21.bcf --region 21 --map example_map_chr21.txt --output example_phased_chr21.bcf --thread 8
+
+#bcftools convert --bgen-plain --output-type b --output example_phased_chr21.bgen example_phased_chr21.bcf
+ 
+bcftools view example_phased_chr21.bcf -Ov -o example_phased_chr21.vcf
+ 
+ 
+bcftools convert --output-type b -o output.bgen example_phased_chr21.vcf 
