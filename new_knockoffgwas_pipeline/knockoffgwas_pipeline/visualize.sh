@@ -38,7 +38,7 @@ check_dependency () {
 }
 DEPENDENCY_LIST=("R")
 start_spinner " - Checking system dependencies..."
-for DEPENDENCY in "${DEPENDENCY_LIST[@]}"; do    
+for DEPENDENCY in "${DEPENDENCY_LIST[@]}"; do
   check_dependency $DEPENDENCY &>> "../"$LOG_FILE
 done
 stop_spinner $?
