@@ -9,7 +9,9 @@ chr <- as.numeric(args[1])
 geno.basename <- as.character(args[2])
 phenotype.name <- as.character(args[3])
 
-cat("Creating phenotype file using .fam file from chromesome ",chr, " with phenotype name ",phenotype.name," for use in KnockOffGWAS pipeline...\n")
+phenotype.filename<-paste0(geno.basename,"_phenotypes.txt")
+
+cat("Creating phenotype file",phenotype.filename,"using .fam file from chromesome",chr, "with phenotype name",phenotype.name,"for use in KnockOffGWAS pipeline...\n")
 
 all_snps<-c()
 write_all<-FALSE
@@ -24,5 +26,5 @@ pheno.data<-fam[,c(1,2,5,6)]
 colnames(pheno.data)<-header
   
 # Write new phenotype name
-phenotype.filename<-paste0(geno.basename,"_phenotypes.txt")
+
 write.table(pheno.data, phenotype.filename, row.names=FALSE, col.names=TRUE, quote=FALSE)
