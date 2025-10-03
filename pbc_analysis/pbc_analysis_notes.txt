@@ -1,0 +1,20 @@
+# Data is in the data directory but is not included in the git repo.
+ 
+# Added make_phenotype_file_from_fam.R script to new_bits directory to create the needed phenotype file from the .fam file
+
+# Update the pre data script to use this.
+
+# Found data for genetic map data for PBC data in Heather dir.
+
+# Example data, units are wrong for rate data. Numbers 1000 times too small 
+Chromosome	Position(bp)	Rate(cM/Mb)	Map(cM)
+chr21	14009151	0	1.05033423
+chr21	14027356	0.00674326	1.14492434
+chr21	14041746	0.00135274	1.16391912
+chr21	14051249	8.8443e-4	1.1763464
+chr21	14056240	4.6422e-4	1.18287154
+chr21	14057714	1.3753e-4	1.18480483
+chr21	14074393	0.00170351	1.20878066
+...
+
+# Adding script to create map data

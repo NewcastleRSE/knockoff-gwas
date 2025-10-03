@@ -18,7 +18,7 @@ set -e
 # $2 = end chr number
 # $3 = path & file prefix (not including "_chrXX") for genetic data, .bim, .bed, .fam
 #      also path & file prefix (not including "_map_chrXX") for genetic map data, .txt
-#      also path & file prefix (not including "_ibd_chrXX") for genetic map data, .txt
+#      also path & file prefix (not including "_ibd_chrXX") for ibd map data, .txt
 # $4 = phenotype name
 # $5 = FDR rate
 # $6 = output folder
