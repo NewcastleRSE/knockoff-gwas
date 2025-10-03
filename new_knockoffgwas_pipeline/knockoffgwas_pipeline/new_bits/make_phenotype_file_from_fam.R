@@ -25,4 +25,4 @@ colnames(pheno.data)<-header
   
 # Write new phenotype name
 phenotype.filename<-paste0(geno.basename,"_phenotypes.txt")
-write.table(pheno.data, row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(pheno.data, phenotype.filename, row.names=FALSE, col.names=TRUE, quote=FALSE)
