@@ -27,4 +27,4 @@ colnames(pheno.data)<-header
   
 # Write new phenotype name
 
-write.table(pheno.data, phenotype.filename, row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(pheno.data, phenotype.filename, row.names=FALSE, col.names=TRUE, quote=FALSE, sep="\t")
