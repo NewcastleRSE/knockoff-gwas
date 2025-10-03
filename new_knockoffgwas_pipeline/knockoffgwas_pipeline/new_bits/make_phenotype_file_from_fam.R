@@ -16,7 +16,7 @@ write_all<-FALSE
 
 # Read in .fam file
 fam.filename<-paste0(geno.basename,"_chr",chr,".fam")
-fam<-read.file(fam.filename, header=FALSE)
+fam<-read.table(fam.filename, header=FALSE)
 
 # Create data to write to phenotype file
 header=c("FID",	"IID", "sex", phenotype.name)
