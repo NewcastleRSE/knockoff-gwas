@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Needs to run on bocchi to access the genetic map data
+# Needs run on finan to access the genetic map data
 
 # Run interpolate_genetic_map.R for chromosomes 1-22
 
 R_SCRIPT="../new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/make_phenotype_file_from_fam.R"
 
 for CHR in $(seq 22 22); do
-    MAP_FILE="/home/nhc15/SOFTWARE/RaPID_Zhi/RaPID-master/genetic_maps/genetic_map_GRCh37_chr${CHR}.txt"
+    MAP_FILE="../../genetic_maps/genetic_map_GRCh37_chr${CHR}.txt"
     BIM_FILE="data/Nicola_chr${CHR}.bim"
     OUT_FILE="data/Nicola_map_chr${CHR}.txt"
 
