@@ -4,7 +4,7 @@
 
 # Run interpolate_genetic_map.R for chromosomes 1-22
 
-R_SCRIPT="../new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/make_phenotype_file_from_fam.R"
+R_SCRIPT="../new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/interpolate_genetic_map.R"
 
 for CHR in $(seq 22 22); do
     MAP_FILE="../../genetic_maps/genetic_map_GRCh37_chr${CHR}.txt"
@@ -22,7 +22,7 @@ for CHR in $(seq 22 22); do
     fi
 
     echo "Processing chromosome $CHR ..."
-    Rscript "$R_SCRIPT" --map "$MAP_FILE" --bim "$BIM_FILE" --out "$OUT_FILE" --recalc-rate TRUE
+    Rscript "$R_SCRIPT" "$MAP_FILE" "$BIM_FILE" "$OUT_FILE"
 done
 
 echo "All done!"
