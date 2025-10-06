@@ -6,7 +6,7 @@
 
 R_SCRIPT="../new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/interpolate_genetic_map.R"
 
-for CHR in $(seq 22 22); do
+for CHR in $(seq 1 22); do
     MAP_FILE="../../genetic_maps/genetic_map_GRCh37_chr${CHR}.txt"
     BIM_FILE="data/Nicola_chr${CHR}.bim"
     OUT_FILE="data/Nicola_map_chr${CHR}.txt"
