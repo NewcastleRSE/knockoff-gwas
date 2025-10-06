@@ -55,3 +55,9 @@ bcftools view example_phased_chr21.bcf -Ov -o example_phased_chr21.vcf
  
  
 bcftools convert --output-type b -o output.bgen example_phased_chr21.vcf 
+
+####
+# On comet need:
+BCFtools/1.22-GCC-13.3.0
+PLINK/1.9b_6.21-x86_64
+R/4.5.1-gfbf-2024a 
