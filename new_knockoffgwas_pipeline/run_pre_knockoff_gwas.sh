@@ -28,7 +28,7 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 # Log file
-LOG_FILE=$6"/pre-knockoffgwas.log"
+LOG_FILE=$6"/pre_knockoffgwas_"$1"_"$2".log"
 rm -f $LOG_FILE
 touch $LOG_FILE
 echo "Log file: "$LOG_FILE
