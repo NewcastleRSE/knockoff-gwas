@@ -1,4 +1,4 @@
 *.Rhistory
 pbc_analysis/data/
-pbc_analysis/ibd/
+pbc_analysis/ibd*
 *slurm*out
