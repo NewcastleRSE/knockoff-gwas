@@ -162,6 +162,7 @@ if __name__ == '__main__':
 		print ("Usage: python parameter_estimation <vcf_input_file> <error_rate> <num_haplotypes> <min_snps>, or\\ python parameter_estimation <vcf_input_file> <error_rate> <num_haplotypes> <min_snps> <num_run> <num_success>" )
 		sys.exit(0)
 
+
 	vcf_input = sys.argv[1] # VCF input file
 	error_rate = float(sys.argv[2])
 	num_haps = int(sys.argv[3])
@@ -169,7 +170,7 @@ if __name__ == '__main__':
 
 	num_runs = 10
 	num_success = 2
-	if (len(sys.argv) > 4):
+	if (len(sys.argv) > 5):
 		num_runs = int(sys.argv[5])
 		num_success = int(sys.argv[6])
 	max_window_size = 300

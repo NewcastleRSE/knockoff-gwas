@@ -3,7 +3,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=highmem_paid
 #SBATCH --time=48:00:00
-#SBATCH --array=2-3                       # Run tasks 1 through 22
+#SBATCH --array=6-6                       # Run tasks 1 through 22
 #SBATCH --output=slurm_pre_%a.out
 
 # Load modules
