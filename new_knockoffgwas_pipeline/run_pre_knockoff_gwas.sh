@@ -146,7 +146,7 @@ else
     
     # Usage: ./RaPID_v.1.7 -i <input_file_vcf_compressed>  -g <genetic_mapping_file> -d <min_length_in_cM> -o <output_folder>   -w  <window_size>  -r <#runs> -s <#success>
     #$SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d 5 -w 250 -r 10 -s 2 -o ibd_"$3_chr"$CHR &>> $LOG_FILE
-    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d 5 -w 300 -r 10 -s 2 -o ibd_"$3_chr"$CHR &>> $LOG_FILE
+    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d 5 -w 300 -r 10 -s 8 -o ibd_"$3_chr"$CHR &>> $LOG_FILE
 
     gunzip -f ibd_"$3_chr"$CHR/results.max.gz
     mv ibd_"$3_chr"$CHR/results.max "$3_ibd_chr"$CHR".txt"

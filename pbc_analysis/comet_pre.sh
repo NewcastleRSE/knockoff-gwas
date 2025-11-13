@@ -10,7 +10,7 @@
 
 module load BCFtools/1.22-GCC-13.3.0
 module load PLINK/1.9b_6.21-x86_64
-module load R/4.5.1-gfbf-2024a 
+module load R/4.5.1-gfbf-2024a
 
 date
 echo "Running on $HOSTNAME PBC pre-analysis data preparing"
@@ -19,3 +19,4 @@ echo "Running on $HOSTNAME PBC pre-analysis data preparing"
 
 echo "Node memory state: `free`"
 date
+
