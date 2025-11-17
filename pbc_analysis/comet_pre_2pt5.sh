@@ -4,7 +4,7 @@
 #SBATCH --mem=2GB
 #SBATCH --cpus-per-task=1
 #SBATCH --time=120:00
-#SBATCH --array=2                       # Run tasks 1 through 22
+#SBATCH --array=2,8,9,10,13,14,21                       # Run tasks 1 through 22
 #SBATCH --output=slurm_pre_%a.out
 
 # Load modules

@@ -1,8 +1,9 @@
 #!/bin/bash
-#SBATCH --mem=10GB
+#SBATCH --partition=short_free
+#SBATCH --account=comettestgroup3
 #SBATCH --cpus-per-task=1
-#SBATCH --partition=highmem_paid
-#SBATCH --time=00:05                    
+#SBATCH --partition=short_free
+#SBATCH --time=00:05
 #SBATCH --output=slurm_test_dir.out
 
 # Load modules

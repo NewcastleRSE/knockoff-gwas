@@ -19,7 +19,7 @@ source set_dirs_comet.sh
 date
 echo "Running on $HOSTNAME PBC pre-analysis data preparing"
 
-../new_knockoffgwas_pipeline/run_pre_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.1 results 2.5 3
+../new_knockoffgwas_pipeline/run_pre_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.1 results 1.5 3
 
 echo "Node memory state: `free`"
 date

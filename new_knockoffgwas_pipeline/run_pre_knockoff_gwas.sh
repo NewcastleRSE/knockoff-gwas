@@ -21,6 +21,11 @@
 # $4 = phenotype name
 # $5 = FDR rate
 # $6 = output folder
+# $7 = -l
+# $8 = -w
+
+# Set dirs
+source set_dirs.sh
 
 # Absolute path to this script
 SCRIPT=$(readlink -f "$0")
@@ -34,7 +39,7 @@ touch $LOG_FILE
 echo "Log file: "$LOG_FILE
 
 # Temporary folder for temporary files
-TMP_DIR=$6"/tmp"
+TMP_DIR=$DATA"/tmp"
 mkdir -p $6
 mkdir -p $TMP_DIR
 
@@ -120,6 +125,9 @@ stop_spinner $?
 # If IBD data exists, .txt, then it is used otherwise it is calculated
 for CHR in $CHR_LIST; do
 
+# Remove to redo IBD calcs
+rm "$3_ibd_chr"$CHR".txt"
+
 if [ -e "$3_ibd_chr"$CHR".txt" ]; then
     echo "IBD data for chromosome "$CHR" exists"
 else
@@ -128,7 +136,7 @@ else
     echo ""
 
     # Make directory for results
-    mkdir -p ibd_"$3_chr"$CHR
+    mkdir -p $TMP_DIR/"ibd_chr"$CHR
 
     # Create .vcf file
     if [ -e "$3_chr"$CHR".vcf" ]; then
@@ -146,10 +154,10 @@ else
     
     # Usage: ./RaPID_v.1.7 -i <input_file_vcf_compressed>  -g <genetic_mapping_file> -d <min_length_in_cM> -o <output_folder>   -w  <window_size>  -r <#runs> -s <#success>
     #$SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d 5 -w 250 -r 10 -s 2 -o ibd_"$3_chr"$CHR &>> $LOG_FILE
-    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d 5 -w 300 -r 10 -s 8 -o ibd_"$3_chr"$CHR &>> $LOG_FILE
+    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d $7 -w $8 -r 10 -s 5 -o $TMP_DIR/"ibd_chr"$CHR &>> $LOG_FILE
 
-    gunzip -f ibd_"$3_chr"$CHR/results.max.gz
-    mv ibd_"$3_chr"$CHR/results.max "$3_ibd_chr"$CHR".txt"
+    gunzip -f $TMP_DIR/"ibd_chr"$CHR/results.max.gz
+    mv $TMP_DIR/"ibd_chr"$CHR/results.max "$3_ibd_chr"$CHR".txt"
 fi
     
 done
