@@ -1,0 +1,6 @@
+Warning in install.packages(new.pkg, dependencies = TRUE, repos = "http://cran.us.r-project.org") :
+  'lib = "/opt/software/easybuild/software/R/4.5.1-gfbf-2024a/lib64/R/library"' is not writable
+Error in install.packages(new.pkg, dependencies = TRUE, repos = "http://cran.us.r-project.org") : 
+  unable to install packages
+Calls: check.packages.cran -> install.packages
+Execution halted
