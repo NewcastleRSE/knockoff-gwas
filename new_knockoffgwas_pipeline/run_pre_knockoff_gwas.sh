@@ -111,8 +111,11 @@ else
     bcftools query -l "$3_phased_chr"$CHR".bcf" > "$3_phased_chr"$CHR".sample"
     
     # Remove temporary files
-    rm "$3_map_chr"$CHR"_shapeit.txt"
-    rm "$3_chr"$CHR"_shapeit.fam"
+    rm -f "$3_map_chr"$CHR"_shapeit.txt"
+    rm -f "$3_chr"$CHR"_shapeit.fam"
+    rm -f "$3_phased_chr"$CHR".vcf"
+    rm -f "$3_phased_chr"$CHR".bcf"
+    rm -f "$3_phased_chr"$CHR".bcf.csi"
 fi
     
 done
@@ -158,6 +161,12 @@ else
 
     gunzip -f $TMP_DIR/"ibd_chr"$CHR/results.max.gz
     mv $TMP_DIR/"ibd_chr"$CHR/results.max "$3_ibd_chr"$CHR".txt"
+
+    # Remove temporary files
+    rm -f "$3_map_rapid_chr"$CHR".txt" 
+    rm -f "$3_chr"$CHR".vcf.gz"
+    rm -f "$3_chr"$CHR".vcf"
+    rm -f "$3_map_filtered_chr"$CHR".txt"
 fi
     
 done

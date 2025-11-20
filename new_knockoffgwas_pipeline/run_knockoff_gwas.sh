@@ -27,8 +27,11 @@ SCRIPT=$(readlink -f "$0")
 # Absolute path this script is in
 SCRIPTPATH=$(dirname "$SCRIPT")
 
+# Load dirs
+source ./set_dirs.sh
+
 # Temporary folder for temporary files
-TMP_DIR=$6"/tmp"
+TMP_DIR=$DATA"/tmp"
 mkdir -p $6
 mkdir -p $TMP_DIR
 

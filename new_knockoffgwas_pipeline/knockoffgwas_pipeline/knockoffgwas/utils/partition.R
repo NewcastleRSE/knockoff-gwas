@@ -61,7 +61,7 @@ Variants <- Variants %>% inner_join(variants.qc, by="SNP")
 
 # Load genetic map
 Map <- read_delim(map.file, delim="\t", col_types=cols()) %>%
-    transmute(CHR=parse_number(Chromosome), BP=`Position(bp)`, Rate=`Rate(cM/Mb)`, Map=`Map(cM)`)
+    transmute(CHR=parse_number(as.character(Chromosome)), BP=`Position(bp)`, Rate=`Rate(cM/Mb)`, Map=`Map(cM)`)
 
 ## Cross-reference genetic map and list of variants
 Map <- Map %>% inner_join(Variants, by = c("CHR", "BP"))
