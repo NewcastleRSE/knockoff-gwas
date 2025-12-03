@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=short_free
-#SBATCH --account=comettestgroup3
+#SBATCH --account=comet_kogwas
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=short_free
 #SBATCH --time=00:05

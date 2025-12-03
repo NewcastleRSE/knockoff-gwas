@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=default_free
-#SBATCH --account=comettestgroup3
+#SBATCH --account=comet_kogwas
 #SBATCH --mem=2GB
 #SBATCH --cpus-per-task=1
 #SBATCH --time=120:00

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=long_free
-#SBATCH --account=comettestgroup3
+#SBATCH --account=comet_kogwas
 #SBATCH --mem=10GB
 #SBATCH --cpus-per-task=1
 #SBATCH --array=22                       # Run tasks 1 through 22

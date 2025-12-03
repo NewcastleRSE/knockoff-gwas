@@ -71,13 +71,13 @@ if [[ $FLAG_PARTITION == 1 ]]; then
     GENO_BIM="$3_chr"$CHR".bim"
 
     # List of variants that passed QC
-    QC_VARIANTS="$3_qc_variants.txt"
+    QC_VARIANTS="$3_qc_chr"$CHR".txt"
 
     # Genetic map file
     GEN_MAP="$3_map_chr"$CHR".txt"
 
     # Basename for output dendrogram file
-    OUT_FILE=$TMP_DIR"/partitions/example_chr"$CHR".txt"
+    OUT_FILE=$TMP_DIR"/partitions/chr"$CHR".txt"
 
     # Partition the variants at different resolutions
     $PARTITION_VARIANTS $GEN_MAP $GENO_BIM $QC_VARIANTS $OUT_FILE

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=default_free
-#SBATCH --account=comettestgroup3
+#SBATCH --account=comet_kogwas
 #SBATCH --mem=2GB
 #SBATCH --cpus-per-task=1
 #SBATCH --time=120:00
@@ -12,6 +12,7 @@
 module load BCFtools/1.22-GCC-13.3.0
 module load PLINK/1.9b_6.21-x86_64
 module load R/4.5.1-gfbf-2024a
+module load plink/2.0.0
 
 #Set dirs
 source set_dirs_comet.sh

@@ -41,6 +41,55 @@ Partitioning variants
 
 Processing chromosome 22 ...
 
-Error in kmeans(Map$Map, n.clusters, nstart = 20) : 
-  more cluster centres than distinct data points.
-Execution halted
+Mean group sizes: 
+    res_7     res_6     res_5     res_4     res_3     res_2     res_1 
+ 1.000000  2.882229  5.271154  7.368280 10.964000 20.765152 35.597403 
+Partitions written to: /nobackup/proj/comet_kogwas/data/tmp/partitions/chr22.txt
+
+----------------------------------------------------------------------------------------------------
+Generating knockoffs
+----------------------------------------------------------------------------------------------------
+	+----------------------+
+	|                      |
+	|  SNPKNOCK2, v0.3     |
+	|  July 21, 2020       |
+	|  Matteo Sesia        |
+	|                      |
+	+----------------------+
+
+Copyright (C) 2020 Stanford University.
+Distributed under the GNU GPLv3 open source license.
+
+Use --help for more information.
+
+Command line arguments:
+  --bgen /nobackup/proj/comet_kogwas/data/Nicola_chr{22:22}
+  --keep /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  --extract /nobackup/proj/comet_kogwas/data/Nicola_qc_chr{22:22}.txt
+  --map /nobackup/proj/comet_kogwas/data/Nicola_map_chr{22:22}.txt
+  --part /nobackup/proj/comet_kogwas/data/tmp/partitions/chr{22:22}.txt
+  --ibd /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr{22:22}.txt
+  --K 10
+  --cluster_size_min 1000
+  --cluster_size_max 10000
+  --hmm-rho 1
+  --hmm-lambda 1e-3
+  --windows 0
+  --n_threads 4
+  --seed 2020
+  --compute-references
+  --generate-knockoffs
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr{22:22}
+
+Requested operations:
+  --compute-references
+  --generate_knockoffs
+
+
+--------------------------------------------------------------------------------
+Loading metadata
+--------------------------------------------------------------------------------
+Loading sample information from:
+  /nobackup/proj/comet_kogwas/data/Nicola_chr22.sample
+snpknock2: src/metadata.cpp:606: void Sample::push_back(std::vector<std::__cxx11::basic_string<char> >): Assertion `(row_.size()==4)|(row_.size()==5)' failed.
+/mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/new_knockoffgwas_pipeline/knockoffgwas_pipeline/knockoffgwas/module_2_knockoffs.sh: line 91: 323888 Aborted                 (core dumped) $SNPKNOCK2 --bgen "$3_chr{"$CHR_MIN":"$CHR_MAX"}" --keep "$3_qc_samples.txt" --extract "$3_qc_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --map "$3_map_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --part "$TMP_DIR/partitions/chr{"$CHR_MIN":"$CHR_MAX"}.txt" --ibd "$3_ibd_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --K 10 --cluster_size_min 1000 --cluster_size_max 10000 --hmm-rho 1 --hmm-lambda 1e-3 --windows 0 --n_threads 4 --seed 2020 --compute-references --generate-knockoffs --out $TMP_DIR"/knockoffs/knockoffs_chr{"$CHR_MIN":"$CHR_MAX"}"

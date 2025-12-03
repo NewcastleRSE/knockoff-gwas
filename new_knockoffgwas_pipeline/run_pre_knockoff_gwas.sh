@@ -64,7 +64,7 @@ CHR_LIST=$(seq $1 $2)
 start_spinner " - Phasing chromosome data (if necessary) for KnockOffGWAS pipeline..."
 for CHR in $CHR_LIST; do
 
-if [ -e "$3_chr"$CHR".bgen" ]; then
+if [ -e "$3_phased_chr"$CHR".bgen" ]; then
     echo ""
     echo "Phasing for chromosome "$CHR" exists"
     echo ""
@@ -103,13 +103,16 @@ else
     # Convert phased chr to bgen
     #bcftools convert --bgen-plain --output-type b --output "$3_chr"$CHR".bgen" "$3_phased_chr"$CHR".bcf" &>> $LOG_FILE
     
-    bcftools view "$3_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf"
+    bcftools view "$3_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE
  
-    bcftools convert --output-type b -o "$3_phased_chr"$CHR".bgen" "$3_phased_chr"$CHR".vcf" 
+    #bcftools convert --output-type b -o "$3_phased_chr"$CHR".bgen" "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE 
+    
+    plink2 --vcf "$3_phased_chr"$CHR".vcf" --make-bgen --out "$3_chr"$CHR""
 
     # Create .sample file
-    bcftools query -l "$3_phased_chr"$CHR".bcf" > "$3_phased_chr"$CHR".sample"
+    #bcftools query -l "$3_phased_chr"$CHR".bcf" > "$3_phased_chr"$CHR".sample"
     
+
     # Remove temporary files
     rm -f "$3_map_chr"$CHR"_shapeit.txt"
     rm -f "$3_chr"$CHR"_shapeit.fam"
@@ -129,7 +132,7 @@ stop_spinner $?
 for CHR in $CHR_LIST; do
 
 # Remove to redo IBD calcs
-rm "$3_ibd_chr"$CHR".txt"
+#rm "$3_ibd_chr"$CHR".txt"
 
 if [ -e "$3_ibd_chr"$CHR".txt" ]; then
     echo "IBD data for chromosome "$CHR" exists"
