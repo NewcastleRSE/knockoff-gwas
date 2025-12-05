@@ -33,7 +33,7 @@ out <- data.frame(
   CHR        = df$CHR,
   ID1        = df$HAPID1,
   HID1       = df$HID1,
-  ID2        = df$HAPID1,
+  ID2        = df$HAPID2,
   HID2       = df$HID2,
   BP.start   = df$BP.start,
   BP.end     = df$BP.end,
