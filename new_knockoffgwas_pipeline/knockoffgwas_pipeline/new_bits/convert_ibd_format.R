@@ -46,9 +46,9 @@ fam2_id2 <- lapply(df$HAPID2, split_fam_ind)
 # Build output in RaPID v1.2.3 format
 out <- data.frame(
   CHR        = df$CHR,
-  ID1        = fam1_id1$id,
+  ID1        = fam1_id1$ind,
   HID1       = df$HID1,
-  ID2        = fam2_id2$id,
+  ID2        = fam2_id2$ind,
   HID2       = df$HID2,
   BP.start   = df$BP.start,
   BP.end     = df$BP.end,
