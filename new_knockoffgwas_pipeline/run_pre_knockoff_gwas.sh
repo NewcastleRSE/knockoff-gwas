@@ -64,7 +64,7 @@ CHR_LIST=$(seq $1 $2)
 start_spinner " - Phasing chromosome data (if necessary) for KnockOffGWAS pipeline..."
 for CHR in $CHR_LIST; do
 
-if [ -e "$3_phased_chr"$CHR".bgen" ]; then
+if [ -e "$3_phased_chr"$CHR".bgenXXX" ]; then
     echo ""
     echo "Phasing for chromosome "$CHR" exists"
     echo ""
@@ -105,15 +105,12 @@ else
     
     bcftools view "$3_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE
  
-    #bcftools convert --output-type b -o "$3_phased_chr"$CHR".bgen" "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE 
-    
-    plink2 --vcf "$3_phased_chr"$CHR".vcf" --make-bgen --out "$3_chr"$CHR""
+    plink2 --vcf "$3_phased_chr"$CHR".vcf" --make-pgen --out "$3_temp_chr"$CHR"" &>> $LOG_FILE
 
-    # Create .sample file
-    #bcftools query -l "$3_phased_chr"$CHR".bcf" > "$3_phased_chr"$CHR".sample"
-    
+    plink2 --pfile "$3_temp_chr"$CHR"" --export bgen-1.2 --out "$3_chr"$CHR"" &>> $LOG_FILE
 
     # Remove temporary files
+    rm -f "$3_temp_chr"$CHR"".*
     rm -f "$3_map_chr"$CHR"_shapeit.txt"
     rm -f "$3_chr"$CHR"_shapeit.fam"
     rm -f "$3_phased_chr"$CHR".vcf"
@@ -132,7 +129,7 @@ stop_spinner $?
 for CHR in $CHR_LIST; do
 
 # Remove to redo IBD calcs
-#rm "$3_ibd_chr"$CHR".txt"
+rm "$3_ibd_chr"$CHR".txt"
 
 if [ -e "$3_ibd_chr"$CHR".txt" ]; then
     echo "IBD data for chromosome "$CHR" exists"
@@ -162,8 +159,17 @@ else
     #$SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d 5 -w 250 -r 10 -s 2 -o ibd_"$3_chr"$CHR &>> $LOG_FILE
     $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d $7 -w $8 -r 10 -s 5 -o $TMP_DIR/"ibd_chr"$CHR &>> $LOG_FILE
 
+    # Required:
+    # <INPUT FILE> <OUTPUT FOLDER> <WINDOW SIZE> <NUMBER OF RUNS> <NUMBER OF SUCCESSES> <MINIMUM IBD LENGTH>
+    # <TOTAL LENGTH> required if minimum IBD length is given in cM or Mbps
+
+    #$SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.2.3 -i "$3_chr"$CHR".vcf.gz" -g "$3_map_rapid_chr"$CHR".txt" -d $7 -w $8 -r 10 -s 5 -o $TMP_DIR/"ibd_chr"$CHR &>> $LOG_FILE
+
     gunzip -f $TMP_DIR/"ibd_chr"$CHR/results.max.gz
-    mv $TMP_DIR/"ibd_chr"$CHR/results.max "$3_ibd_chr"$CHR".txt"
+    mv $TMP_DIR/"ibd_chr"$CHR/results.max "$3_temp_ibd_chr"$CHR".txt"
+
+    # Convert IBD format from RaPIDv1.7 to v1.2.3
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_ibd_format3.R "$3_temp_ibd_chr"$CHR".txt" "$3_ibd_chr"$CHR".txt"
 
     # Remove temporary files
     rm -f "$3_map_rapid_chr"$CHR".txt" 

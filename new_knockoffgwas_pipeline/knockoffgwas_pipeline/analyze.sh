@@ -43,7 +43,7 @@ printf "(C) 2020,2021 Matteo Sesia   GNU General Public License v3 \n\n"
 source "$SCRIPTPATH/misc/spinner.sh"
 
 # Log file
-LOG_FILE=$6"/knockoffgwas.log"
+LOG_FILE=$6"/knockoffgwas"$1"_"$2".log"
 rm -f $LOG_FILE
 touch $LOG_FILE
 echo "Log file: "$LOG_FILE

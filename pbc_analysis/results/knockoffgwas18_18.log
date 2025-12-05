@@ -39,12 +39,12 @@ bigstatsr   bigsnpr
 Partitioning variants
 ----------------------------------------------------------------------------------------------------
 
-Processing chromosome 22 ...
+Processing chromosome 18 ...
 
 Mean group sizes: 
-    res_7     res_6     res_5     res_4     res_3     res_2     res_1 
- 1.000000  2.882229  5.271154  7.368280 10.964000 20.765152 35.597403 
-Partitions written to: /nobackup/proj/comet_kogwas/data/tmp/partitions/chr22.txt
+   res_7    res_6    res_5    res_4    res_3    res_2    res_1 
+ 1.00000  3.54470  7.21990 10.38054 15.50427 29.14056 52.96350 
+Partitions written to: /nobackup/proj/comet_kogwas/data/tmp/partitions/chr18.txt
 
 ----------------------------------------------------------------------------------------------------
 Generating knockoffs
@@ -63,12 +63,12 @@ Distributed under the GNU GPLv3 open source license.
 Use --help for more information.
 
 Command line arguments:
-  --bgen /nobackup/proj/comet_kogwas/data/Nicola_chr{22:22}
+  --bgen /nobackup/proj/comet_kogwas/data/Nicola_chr{18:18}
   --keep /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
-  --extract /nobackup/proj/comet_kogwas/data/Nicola_qc_chr{22:22}.txt
-  --map /nobackup/proj/comet_kogwas/data/Nicola_map_chr{22:22}.txt
-  --part /nobackup/proj/comet_kogwas/data/tmp/partitions/chr{22:22}.txt
-  --ibd /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr{22:22}.txt
+  --extract /nobackup/proj/comet_kogwas/data/Nicola_qc_chr{18:18}.txt
+  --map /nobackup/proj/comet_kogwas/data/Nicola_map_chr{18:18}.txt
+  --part /nobackup/proj/comet_kogwas/data/tmp/partitions/chr{18:18}.txt
+  --ibd /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr{18:18}.txt
   --K 10
   --cluster_size_min 1000
   --cluster_size_max 10000
@@ -79,7 +79,7 @@ Command line arguments:
   --seed 2020
   --compute-references
   --generate-knockoffs
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr{22:22}
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr{18:18}
 
 Requested operations:
   --compute-references
@@ -90,20 +90,20 @@ Requested operations:
 Loading metadata
 --------------------------------------------------------------------------------
 Loading sample information from:
-  /nobackup/proj/comet_kogwas/data/Nicola_chr22.sample
+  /nobackup/proj/comet_kogwas/data/Nicola_chr18.sample
 Loading legend from:
-  /nobackup/proj/comet_kogwas/data/Nicola_chr22.bim
+  /nobackup/proj/comet_kogwas/data/Nicola_chr18.bim
 Loading partitions from:
-  /nobackup/proj/comet_kogwas/data/tmp/partitions/chr22.txt
+  /nobackup/proj/comet_kogwas/data/tmp/partitions/chr18.txt
 Loading IBD segments from:
-  /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr22.txt
+  /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr18.txt
 Loaded 0 IBD segments.
 
 Printing summary of 1 windows:
-     0: 0--2741
+     0: 0--7256
 Summary of metadata for chromosome 1:
   number of samples (after | before filtering) : 0 | 24510
-  number of SNPs (after | before filtering)    : 2741 | 2741
+  number of SNPs (after | before filtering)    : 7256 | 7256
   number of variant partitions                 : 7
   size of genomic windows                      : whole-chromosome
   number of IBD segments                       : 0
@@ -114,13 +114,13 @@ Kinship (using only haplotype data)
 --------------------------------------------------------------------------------
 Reached 1
 Chromosome 1 will be loaded from:
-  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr22.bgen
-  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr22.sample
-  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr22.bim
+  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr18.bgen
+  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr18.sample
+  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr18.bim
   thinning factor           : 10
   sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
-  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr22.txt
-  number of SNPs            : 275
+  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr18.txt
+  number of SNPs            : 726
   number of haplotypes      : 0
 
 Reading BGEN file using 4 threads:
