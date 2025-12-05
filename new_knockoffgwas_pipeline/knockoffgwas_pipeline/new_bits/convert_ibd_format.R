@@ -43,20 +43,26 @@ split_fam_ind <- function(hapid) {
 fam1_id1 <- lapply(df$HAPID1, split_fam_ind)
 fam2_id2 <- lapply(df$HAPID2, split_fam_ind)
 
+FAM1 <- sapply(fam1_id1, function(x) x$fam)
+ID1  <- sapply(fam1_id1, function(x) x$ind)
+
+FAM2 <- sapply(fam2_id2, function(x) x$fam)
+ID2  <- sapply(fam2_id2, function(x) x$ind)
+
 # Build output in RaPID v1.2.3 format
 out <- data.frame(
   CHR        = df$CHR,
-  ID1        = fam1_id1$ind,
+  ID1        = ID1,
   HID1       = df$HID1,
-  ID2        = fam2_id2$ind,
+  ID2        = ID2,
   HID2       = df$HID2,
   BP.start   = df$BP.start,
   BP.end     = df$BP.end,
   site.start = df$site.start,
   site.end   = df$site.end,
   cM         = df$cM,
-  FAM1       = fam1_id1$fam,
-  FAM2       = fam2_id2$fam,
+  FAM1       = FAM1,
+  FAM2       = FAM2,
   stringsAsFactors = FALSE
 )
 
