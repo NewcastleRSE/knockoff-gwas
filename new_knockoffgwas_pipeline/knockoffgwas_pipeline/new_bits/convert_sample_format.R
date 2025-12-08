@@ -36,4 +36,4 @@ df[,1]<-FAM
 df[,2]<-ID
 
 # Write result
-write.table(out, outfile, sep = "\t", quote = FALSE, row.names = FALSE, col.names = TRUE)
+write.table(df, outfile, sep = "\t", quote = FALSE, row.names = FALSE, col.names = TRUE)
