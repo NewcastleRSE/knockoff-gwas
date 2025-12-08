@@ -1,0 +1,16 @@
+PLINK v2.0.0-a.6.16LM AVX2 AMD (9 Jun 2025)
+Options in effect:
+  --bgen file.bgen
+  --list
+  --out bgen_variants
+
+Hostname: cometlogin02.comet.hpc.ncl.ac.uk
+Working directory: /mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/pbc_analysis
+Start time: Mon Dec  8 15:42:26 2025
+
+Error: --bgen now requires a REF/ALT mode ('ref-first', 'ref-last', or
+'ref-unknown').  As of this writing, raw UK Biobank files are ref-first, while
+older and PLINK-exported BGEN files are more likely to be ref-last.
+For more info, try "plink2 --help <flag name>" or "plink2 --help | more".
+
+End time: Mon Dec  8 15:42:26 2025

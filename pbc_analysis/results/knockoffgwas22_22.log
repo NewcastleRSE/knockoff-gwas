@@ -97,16 +97,16 @@ Loading partitions from:
   /nobackup/proj/comet_kogwas/data/tmp/partitions/chr22.txt
 Loading IBD segments from:
   /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr22.txt
-Loaded 0 IBD segments.
+Loaded 936568 IBD segments.
 
 Printing summary of 1 windows:
      0: 0--2741
 Summary of metadata for chromosome 1:
-  number of samples (after | before filtering) : 0 | 24510
+  number of samples (after | before filtering) : 24510 | 24510
   number of SNPs (after | before filtering)    : 2741 | 2741
   number of variant partitions                 : 7
   size of genomic windows                      : whole-chromosome
-  number of IBD segments                       : 0
+  number of IBD segments                       : 936568
 
 
 --------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ Chromosome 1 will be loaded from:
   sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
   variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr22.txt
   number of SNPs            : 275
-  number of haplotypes      : 0
+  number of haplotypes      : 49020
 
 Reading BGEN file using 4 threads:
 Error loading BGEN file. Some requested variants were not found.

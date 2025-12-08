@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --partition=default_free
 #SBATCH --account=comet_kogwas
-#SBATCH --mem=2GB
+#SBATCH --mem=10GB
 #SBATCH --cpus-per-task=1
 #SBATCH --time=120:00
 #SBATCH --array=22                       # Tasks to run, corresponds to chromosome number

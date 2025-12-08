@@ -42,6 +42,7 @@ echo "Log file: "$LOG_FILE
 TMP_DIR=$DATA"/tmp"
 mkdir -p $6
 mkdir -p $TMP_DIR
+mkdir -p data
 
 # Setup spinner for long jobs
 source "$SCRIPTPATH/knockoffgwas_pipeline/misc/spinner.sh"
@@ -78,18 +79,50 @@ else
 
     # Input genotype files (PLINK format)
     GENO_FAM="$3_chr"$CHR".fam"
-   
+
+    cp $GENO_FAM "$3_original_chr"$CHR".fam"
+
+    # Convert.fam file to numbered IDs
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_fam_format.R "$3_original_chr"$CHR".fam" $GENO_FAM   
+
     # Create .vcf file
-    plink --bfile "$3_chr"$CHR --recode vcf --out "$3_chr"$CHR &>> $LOG_FILE
+    plink2 --bfile "$3_chr"$CHR --recode vcf --out "$3_chr"$CHR &>> $LOG_FILE
        
+    gzip -f "$3_chr"$CHR".vcf"
+
+    cp "$3_chr"$CHR".vcf".gz data/"_chr"$CHR".vcf".gz
+    
+#echo "=== Node ==="
+    #hostname
+
+    #echo "=== File size seen by compute node ==="
+    #ls -l $DATA/Nicola_chr22.vcf.gz
+  
+    #echo "=== md5sum seen by compute node ==="
+    #md5sum $DATA/Nicola_chr22.vcf.gz
+    #echo "=== trying random read test ==="
+#zcat $DATA/Nicola_chr22.vcf.gz | wc -l
+
+#echo "=== seek test ==="
+#zgrep -m 1 -n "rs123" $DATA/Nicola_chr22.vcf.gz
+echo "--- bcftools version ---"
+bcftools --version
+
+echo "--- which bcftools ---"
+which bcftools
+
+echo "--- ldd bcftools ---"
+ldd $(which bcftools)
+
+
     # Convert to bcf
-    bcftools view -O b -o "$3_chr"$CHR".bcf" "$3_chr"$CHR".vcf" &>> $LOG_FILE
+    bcftools view -Ob data/"_chr"$CHR".vcf".gz -o data/"_chr"$CHR".bcf" &>> $LOG_FILE
        
     # Fill in missing AC (allele count) field
-    bcftools +fill-tags "$3_chr"$CHR".bcf" -Ob -o "$3_chr"$CHR".bcf" -- -t AN,AC &>> $LOG_FILE      
+    bcftools +fill-tags data/"_chr"$CHR".bcf" -Ob -o data/"_chr"$CHR".bcf" -- -t AN,AC &>> $LOG_FILE      
     
     # Create index file
-    bcftools index "$3_chr"$CHR".bcf" &>> $LOG_FILE
+    bcftools index data/"_chr"$CHR".bcf" &>> $LOG_FILE
     
     # Create pedigree file for Shapeit5, This file contains one line per sample having parent(s) in the dataset and three columns (kidID fatherID and motherID), separated by TABs for spaces.
     Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_ped_file.R $GENO_FAM "$3_chr"$CHR"_shapeit.fam" &>> $LOG_FILE
@@ -98,18 +131,26 @@ else
     cut -f2- "$3_map_chr"$CHR".txt" > "$3_map_chr"$CHR"_shapeit.txt"
     
     # Phase
-    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/phase_common_static --input "$3_chr"$CHR".bcf" --pedigree "$3_chr"$CHR"_shapeit.fam" --region $CHR --map "$3_map_chr"$CHR"_shapeit.txt" --output "$3_phased_chr"$CHR".bcf" --thread 8 &>> $LOG_FILE
+    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/phase_common_static --input data/"_chr"$CHR".bcf" --pedigree "$3_chr"$CHR"_shapeit.fam" --region $CHR --map "$3_map_chr"$CHR"_shapeit.txt" --output data/"_phased_chr"$CHR".bcf" --thread 8 &>> $LOG_FILE
 
     # Convert phased chr to bgen
-    #bcftools convert --bgen-plain --output-type b --output "$3_chr"$CHR".bgen" "$3_phased_chr"$CHR".bcf" &>> $LOG_FILE
+    # bcftools convert --bgen-plain --output-type b --output "$3_chr"$CHR".bgen" "$3_phased_chr"$CHR".bcf" &>> $LOG_FILE
     
-    bcftools view "$3_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE
+    # Create .sample file?
+
+    bcftools view data/"_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE
  
     plink2 --vcf "$3_phased_chr"$CHR".vcf" --make-pgen --out "$3_temp_chr"$CHR"" &>> $LOG_FILE
 
-    plink2 --pfile "$3_temp_chr"$CHR"" --export bgen-1.2 --out "$3_chr"$CHR"" &>> $LOG_FILE
+    plink2 --pfile "$3_temp_chr"$CHR"" --export bgen-1.2 ref-first id-paste=iid --out "$3_chr"$CHR"" &>> $LOG_FILE
+
+    cp "$3_chr"$CHR".sample" "$3_temp_chr"$CHR".sample"
+
+    # Fixed .sample file to have the same family and individual ID
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_sample_format.R "$3_temp_chr"$CHR".sample" "$3_chr"$CHR".sample" &>> $LOG_FILE
 
     # Remove temporary files
+    #rm -f data/*${CHR}*
     rm -f "$3_temp_chr"$CHR"".*
     rm -f "$3_map_chr"$CHR"_shapeit.txt"
     rm -f "$3_chr"$CHR"_shapeit.fam"
@@ -129,7 +170,7 @@ stop_spinner $?
 for CHR in $CHR_LIST; do
 
 # Remove to redo IBD calcs
-rm "$3_ibd_chr"$CHR".txt"
+#rm "$3_ibd_chr"$CHR".txt"
 
 if [ -e "$3_ibd_chr"$CHR".txt" ]; then
     echo "IBD data for chromosome "$CHR" exists"

@@ -1,0 +1,23 @@
+PLINK v2.0.0-a.6.16LM AVX2 AMD (9 Jun 2025)
+Options in effect:
+  --bgen /nobackup/proj/comet_kogwas/data/Nicola_chr22.bgen ref-unknown
+  --out bgen_variants22.txt
+  --write-snplist
+
+Hostname: cometlogin02.comet.hpc.ncl.ac.uk
+Working directory: /mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/pbc_analysis
+Start time: Mon Dec  8 15:47:49 2025
+
+Random number seed: 1765208869
+192671 MiB RAM detected, ~179031 available; reserving 96335 MiB for main
+workspace.
+Using up to 64 threads (change this with --threads).
+--bgen: 15 variants declared in header, format v1.3.
+--bgen: 24510 sample IDs written to bgen_variants22.txt-temporary.psam .
+--bgen: bgen_variants22.txt-temporary.pgen + bgen_variants22.txt-temporary.pvar
+written.
+15 variants loaded from bgen_variants22.txt-temporary.pvar.
+Note: No phenotype data present.
+--write-snplist: Variant IDs written to bgen_variants22.txt.snplist .
+
+End time: Mon Dec  8 15:47:49 2025
