@@ -76,7 +76,7 @@ if [[ $FLAG_MAKE_FBM == 1 ]]; then
     echo ""
 
     # Basename for output FBM
-    OUT_BASENAME=$TMP_DIR"/knockoffs_full/example_res"$RESOLUTION
+    OUT_BASENAME=$TMP_DIR"/knockoffs_full/ko_chr"${CHR_MIN}"_chr"${CHR_MAX}"_res"$RESOLUTION
     # Combine genotypes and knockoffs into bed
     $AUGMENT_GENOTYPES $OUT_BASENAME $RESOLUTION $CHR_MIN $CHR_MAX $TMP_DIR
     # Convert augmented BED to FBM
@@ -106,13 +106,13 @@ if [[ $FLAG_COMPUTE_STATS == 1 ]]; then
     echo ""
 
     # Augmented genotypes in FBM format
-    DATA_BASENAME=$TMP_DIR"/knockoffs_full/example_res"$RESOLUTION
+    DATA_BASENAME=$TMP_DIR"/knockoffs_full/ko_chr"${CHR_MIN}"_chr"${CHR_MAX}"_res"$RESOLUTION
     # Phenotype file
     PHENO_FILE="$3_phenotypes.txt"
     # Phenotype name
     PHENO_NAME=$4
     # Output file
-    OUT_BASENAME=$TMP_DIR"/stats/example_res"$RESOLUTION
+    OUT_BASENAME=$TMP_DIR"/stats/stats_chr"${CHR_MIN}"_chr"${CHR_MAX}"_res"$RESOLUTION
     # Compute test statistics
     $COMPUTE_STATS $DATA_BASENAME $PHENO_FILE $PHENO_NAME $OUT_BASENAME
 

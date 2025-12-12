@@ -73,13 +73,13 @@ if [[ $FLAG_FILTER == 1 ]]; then
     echo ""
 
     # Stats basename
-    STATS_BASENAME=$TMP_DIR"/stats/example_res"$RESOLUTION
+    STATS_BASENAME=$TMP_DIR"/stats/stats_chr"${CHR_MIN}"_chr"${CHR_MAX}"_res"$RESOLUTION
 
     # Partition file
-    DATA_BASENAME=$TMP_DIR"/knockoffs_full/example_res"$RESOLUTION
+    DATA_BASENAME=$TMP_DIR"/knockoffs_full/ko_chr"${CHR_MIN}"_chr"${CHR_MAX}"_res"$RESOLUTION
 
     # Basename for output files
-    OUT_BASENAME=$OUT_DIR"/example_res"$RESOLUTION
+    OUT_BASENAME=$OUT_DIR"/results_chr"${CHR_MIN}"_chr"${CHR_MAX}"_res"$RESOLUTION
 
     # Threshold the test statistics and report discoveries
     $FILTER_STATS $STATS_BASENAME $DATA_BASENAME $FDR $OUT_BASENAME
