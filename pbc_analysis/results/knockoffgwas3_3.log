@@ -1,0 +1,126 @@
+Loading required package: tidyverse
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.5.1
+✔ ggplot2   4.0.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: fastcluster
+
+Attaching package: ‘fastcluster’
+
+The following object is masked from ‘package:stats’:
+
+    hclust
+
+Loading required package: latex2exp
+Loading required package: grid
+Loading required package: gridExtra
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+  tidyverse fastcluster   latex2exp        grid   gridExtra 
+       TRUE        TRUE        TRUE        TRUE        TRUE 
+list()
+Loading required package: bigstatsr
+Loading required package: bigsnpr
+bigstatsr   bigsnpr 
+     TRUE      TRUE 
+
+----------------------------------------------------------------------------------------------------
+Partitioning variants
+----------------------------------------------------------------------------------------------------
+
+Processing chromosome 3 ...
+
+Mean group sizes: 
+    res_7     res_6     res_5     res_4     res_3     res_2     res_1 
+ 1.000000  3.810382  8.426945 12.251034 19.245937 38.450216 67.287879 
+Partitions written to: /nobackup/proj/comet_kogwas/data/tmp/partitions/chr3.txt
+
+----------------------------------------------------------------------------------------------------
+Generating knockoffs
+----------------------------------------------------------------------------------------------------
+	+----------------------+
+	|                      |
+	|  SNPKNOCK2, v0.3     |
+	|  July 21, 2020       |
+	|  Matteo Sesia        |
+	|                      |
+	+----------------------+
+
+Copyright (C) 2020 Stanford University.
+Distributed under the GNU GPLv3 open source license.
+
+Use --help for more information.
+
+Command line arguments:
+  --bgen /nobackup/proj/comet_kogwas/data/Nicola_chr{3:3}
+  --keep /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  --extract /nobackup/proj/comet_kogwas/data/Nicola_qc_chr{3:3}.txt
+  --map /nobackup/proj/comet_kogwas/data/Nicola_map_chr{3:3}.txt
+  --part /nobackup/proj/comet_kogwas/data/tmp/partitions/chr{3:3}.txt
+  --ibd /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr{3:3}.txt
+  --K 10
+  --cluster_size_min 1000
+  --cluster_size_max 10000
+  --hmm-rho 1
+  --hmm-lambda 1e-3
+  --windows 0
+  --n_threads 4
+  --seed 2020
+  --compute-references
+  --generate-knockoffs
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr{3:3}
+
+Requested operations:
+  --compute-references
+  --generate_knockoffs
+
+
+--------------------------------------------------------------------------------
+Loading metadata
+--------------------------------------------------------------------------------
+Loading sample information from:
+  /nobackup/proj/comet_kogwas/data/Nicola_chr3.sample
+Loading legend from:
+  /nobackup/proj/comet_kogwas/data/Nicola_chr3.bim
+Loading partitions from:
+  /nobackup/proj/comet_kogwas/data/tmp/partitions/chr3.txt
+Loading IBD segments from:
+  /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr3.txt
+Loaded 34822 IBD segments.
+
+Printing summary of 1 windows:
+     0: 0--17764
+Summary of metadata for chromosome 1:
+  number of samples (after | before filtering) : 24510 | 24510
+  number of SNPs (after | before filtering)    : 17764 | 17764
+  number of variant partitions                 : 7
+  size of genomic windows                      : whole-chromosome
+  number of IBD segments                       : 34822
+
+
+--------------------------------------------------------------------------------
+Kinship (using only haplotype data)
+--------------------------------------------------------------------------------
+Reached 1
+Chromosome 1 will be loaded from:
+  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr3.bgen
+  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr3.sample
+  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr3.bim
+  thinning factor           : 10
+  sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr3.txt
+  number of SNPs            : 1777
+  number of haplotypes      : 49020
+
+/mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/new_knockoffgwas_pipeline/knockoffgwas_pipeline/knockoffgwas/module_2_knockoffs.sh: line 91: 642434 Killed                  $SNPKNOCK2 --bgen "$3_chr{"$CHR_MIN":"$CHR_MAX"}" --keep "$3_qc_samples.txt" --extract "$3_qc_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --map "$3_map_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --part "$TMP_DIR/partitions/chr{"$CHR_MIN":"$CHR_MAX"}.txt" --ibd "$3_ibd_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --K 10 --cluster_size_min 1000 --cluster_size_max 10000 --hmm-rho 1 --hmm-lambda 1e-3 --windows 0 --n_threads 4 --seed 2020 --compute-references --generate-knockoffs --out $TMP_DIR"/knockoffs/knockoffs_chr{"$CHR_MIN":"$CHR_MAX"}"
