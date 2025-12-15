@@ -176,17 +176,4 @@ Loading data for chromosome 1
 Reading BGEN file using 4 threads:
 |....................................................................................................|
 |====================================================================================================|
-
-Initializing HMM with user-supplied hyperparameters: rho = 1, lambda = 0.001.
-
-HMM parameters written to:
-  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr19_hmm.txt
-
-SNP groups written to:
-  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr19_res0_grp.txt
-SNP windows written to:
-  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr19_res0_windows.txt
-
-Generating related knockoffs for chromosome 1 (16382 haplotypes in 5014 families, 3782 variants in 3782 groups):
-|....................................................................................................|
-|===========================================================================
+/mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/new_knockoffgwas_pipeline/knockoffgwas_pipeline/knockoffgwas/module_2_knockoffs.sh: line 91: 3361705 Killed                  $SNPKNOCK2 --bgen "$3_chr{"$CHR_MIN":"$CHR_MAX"}" --keep "$3_qc_samples.txt" --extract "$3_qc_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --map "$3_map_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --part "$TMP_DIR/partitions/chr{"$CHR_MIN":"$CHR_MAX"}.txt" --ibd "$3_ibd_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --K 10 --cluster_size_min 1000 --cluster_size_max 10000 --hmm-rho 1 --hmm-lambda 1e-3 --windows 0 --n_threads 4 --seed 2020 --compute-references --generate-knockoffs --out $TMP_DIR"/knockoffs/knockoffs_chr{"$CHR_MIN":"$CHR_MAX"}"

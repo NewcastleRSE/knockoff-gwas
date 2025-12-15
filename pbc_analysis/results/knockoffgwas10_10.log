@@ -43,7 +43,7 @@ Processing chromosome 10 ...
 
 Mean group sizes: 
     res_7     res_6     res_5     res_4     res_3     res_2     res_1 
- 1.000000  3.765917  8.234597 12.097476 18.783784 37.165775 64.651163 
+ 1.000000  3.765917  8.239478 12.108014 18.783784 37.165775 64.651163 
 Partitions written to: /nobackup/proj/comet_kogwas/data/tmp/partitions/chr10.txt
 
 ----------------------------------------------------------------------------------------------------
@@ -99,37 +99,4 @@ Loading IBD segments from:
   /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr10.txt
 Loaded 41871 IBD segments.
 
-Printing summary of 1 windows:
-     0: 0--13900
-Summary of metadata for chromosome 1:
-  number of samples (after | before filtering) : 24510 | 24510
-  number of SNPs (after | before filtering)    : 13900 | 13900
-  number of variant partitions                 : 7
-  size of genomic windows                      : whole-chromosome
-  number of IBD segments                       : 41871
-
-
---------------------------------------------------------------------------------
-Kinship (using only haplotype data)
---------------------------------------------------------------------------------
-Reached 1
-Chromosome 1 will be loaded from:
-  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr10.bgen
-  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr10.sample
-  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr10.bim
-  thinning factor           : 10
-  sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
-  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr10.txt
-  number of SNPs            : 1390
-  number of haplotypes      : 49020
-
-Reading BGEN file using 4 threads:
-|....................................................................................................|
-|====================================================================================================|
-Solving 1 bifurcating K-means problems using 1 threads.
-
-Bifurcating K-means
-Smallest allowed cluster size: 1000
- step	 cluster	    size	    left	   right	accepted
-    1	       0	   49020	   25000	   24020	     yes	
-    2	       0	   25000	
+/mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/new_knockoffgwas_pipeline/knockoffgwas_pipeline/knockoffgwas/module_2_knockoffs.sh: line 91: 3506942 Killed                  $SNPKNOCK2 --bgen "$3_chr{"$CHR_MIN":"$CHR_MAX"}" --keep "$3_qc_samples.txt" --extract "$3_qc_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --map "$3_map_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --part "$TMP_DIR/partitions/chr{"$CHR_MIN":"$CHR_MAX"}.txt" --ibd "$3_ibd_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --K 10 --cluster_size_min 1000 --cluster_size_max 10000 --hmm-rho 1 --hmm-lambda 1e-3 --windows 0 --n_threads 4 --seed 2020 --compute-references --generate-knockoffs --out $TMP_DIR"/knockoffs/knockoffs_chr{"$CHR_MIN":"$CHR_MAX"}"

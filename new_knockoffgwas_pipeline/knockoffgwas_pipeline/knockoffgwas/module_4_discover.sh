@@ -45,6 +45,9 @@ mkdir -p $OUT_DIR
 # List of chromosomes
 CHR_LIST=($(seq $1 $2))
 
+CHR_MIN=$1
+CHR_MAX=$2
+
 # List of resolutions
 RESOLUTION_LIST=("6" "5" "4" "3" "2" "1" "0")
 

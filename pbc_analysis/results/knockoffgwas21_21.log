@@ -780,13 +780,13 @@ Processing at resolution 6 ...
 
 PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
 (C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6.log.
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.log.
 Options in effect:
   --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr21_res6
   --make-bed
   --memory 5000
-  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6_mergelist.txt
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6
 
 1547128 MB RAM detected; reserving 5000 MB for main workspace.
 Warning: --merge-list file is empty.
@@ -796,38 +796,41 @@ Warning: Variants 'rs12627290.k' and 'rs12627290' have the same position.
 3184 more same-position warnings: see log file.
 Performing single-pass merge (24510 people, 6374 variants).
                                               Merged fileset written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6-merge.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6-merge.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6-merge.fam .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6-merge.fam
+.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6.nosex .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.nosex .
 Using 1 thread (no multithreaded calculations invoked).
 Before main variant filters, 24510 founders and 0 nonfounders present.
 Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
 6374 variants and 24510 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
-[1] TRUE
 Reading genotype file and creating FBM object... done.
-Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res6.rds
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.rds
 
 Processing at resolution 5 ...
 
 PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
 (C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5.log.
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.log.
 Options in effect:
   --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr21_res5
   --make-bed
   --memory 5000
-  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5_mergelist.txt
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5
 
 1547128 MB RAM detected; reserving 5000 MB for main workspace.
 Warning: --merge-list file is empty.
@@ -837,38 +840,41 @@ Warning: Variants 'rs12627290.k' and 'rs12627290' have the same position.
 3184 more same-position warnings: see log file.
 Performing single-pass merge (24510 people, 6374 variants).
                                               Merged fileset written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5-merge.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5-merge.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5-merge.fam .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5-merge.fam
+.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5.nosex .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.nosex .
 Using 1 thread (no multithreaded calculations invoked).
 Before main variant filters, 24510 founders and 0 nonfounders present.
 Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
 6374 variants and 24510 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
-[1] TRUE
 Reading genotype file and creating FBM object... done.
-Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res5.rds
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.rds
 
 Processing at resolution 4 ...
 
 PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
 (C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4.log.
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.log.
 Options in effect:
   --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr21_res4
   --make-bed
   --memory 5000
-  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4_mergelist.txt
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4
 
 1547128 MB RAM detected; reserving 5000 MB for main workspace.
 Warning: --merge-list file is empty.
@@ -878,38 +884,41 @@ Warning: Variants 'rs12627290.k' and 'rs12627290' have the same position.
 3184 more same-position warnings: see log file.
 Performing single-pass merge (24510 people, 6374 variants).
                                               Merged fileset written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4-merge.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4-merge.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4-merge.fam .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4-merge.fam
+.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4.nosex .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.nosex .
 Using 1 thread (no multithreaded calculations invoked).
 Before main variant filters, 24510 founders and 0 nonfounders present.
 Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
 6374 variants and 24510 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
-[1] TRUE
 Reading genotype file and creating FBM object... done.
-Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res4.rds
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.rds
 
 Processing at resolution 3 ...
 
 PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
 (C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3.log.
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.log.
 Options in effect:
   --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr21_res3
   --make-bed
   --memory 5000
-  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3_mergelist.txt
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3
 
 1547128 MB RAM detected; reserving 5000 MB for main workspace.
 Warning: --merge-list file is empty.
@@ -919,38 +928,41 @@ Warning: Variants 'rs12627290.k' and 'rs12627290' have the same position.
 3184 more same-position warnings: see log file.
 Performing single-pass merge (24510 people, 6374 variants).
                                               Merged fileset written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3-merge.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3-merge.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3-merge.fam .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3-merge.fam
+.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3.nosex .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.nosex .
 Using 1 thread (no multithreaded calculations invoked).
 Before main variant filters, 24510 founders and 0 nonfounders present.
 Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
 6374 variants and 24510 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
-[1] TRUE
 Reading genotype file and creating FBM object... done.
-Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res3.rds
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.rds
 
 Processing at resolution 2 ...
 
 PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
 (C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2.log.
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.log.
 Options in effect:
   --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr21_res2
   --make-bed
   --memory 5000
-  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2_mergelist.txt
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2
 
 1547128 MB RAM detected; reserving 5000 MB for main workspace.
 Warning: --merge-list file is empty.
@@ -960,38 +972,41 @@ Warning: Variants 'rs12627290.k' and 'rs12627290' have the same position.
 3184 more same-position warnings: see log file.
 Performing single-pass merge (24510 people, 6374 variants).
                                               Merged fileset written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2-merge.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2-merge.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2-merge.fam .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2-merge.fam
+.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2.nosex .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.nosex .
 Using 1 thread (no multithreaded calculations invoked).
 Before main variant filters, 24510 founders and 0 nonfounders present.
 Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
 6374 variants and 24510 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
-[1] TRUE
 Reading genotype file and creating FBM object... done.
-Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res2.rds
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.rds
 
 Processing at resolution 1 ...
 
 PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
 (C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1.log.
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.log.
 Options in effect:
   --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr21_res1
   --make-bed
   --memory 5000
-  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1_mergelist.txt
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1
 
 1547128 MB RAM detected; reserving 5000 MB for main workspace.
 Warning: --merge-list file is empty.
@@ -1001,38 +1016,41 @@ Warning: Variants 'rs12627290.k' and 'rs12627290' have the same position.
 3184 more same-position warnings: see log file.
 Performing single-pass merge (24510 people, 6374 variants).
                                               Merged fileset written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1-merge.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1-merge.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1-merge.fam .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1-merge.fam
+.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1.nosex .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.nosex .
 Using 1 thread (no multithreaded calculations invoked).
 Before main variant filters, 24510 founders and 0 nonfounders present.
 Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
 6374 variants and 24510 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
-[1] TRUE
 Reading genotype file and creating FBM object... done.
-Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res1.rds
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.rds
 
 Processing at resolution 0 ...
 
 PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
 (C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0.log.
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.log.
 Options in effect:
   --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr21_res0
   --make-bed
   --memory 5000
-  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0_mergelist.txt
-  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0
 
 1547128 MB RAM detected; reserving 5000 MB for main workspace.
 Warning: --merge-list file is empty.
@@ -1042,26 +1060,29 @@ Warning: Variants 'rs12627290.k' and 'rs12627290' have the same position.
 3184 more same-position warnings: see log file.
 Performing single-pass merge (24510 people, 6374 variants).
                                               Merged fileset written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0-merge.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0-merge.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0-merge.fam .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0-merge.fam
+.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0.nosex .
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.nosex .
 Using 1 thread (no multithreaded calculations invoked).
 Before main variant filters, 24510 founders and 0 nonfounders present.
 Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
 6374 variants and 24510 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0.bed +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0.bim +
-/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
-[1] TRUE
 Reading genotype file and creating FBM object... done.
-Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/example_res0.rds
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.rds
 
 ----------------------------------------------------------------------------------------------------
 Computing test statistics
@@ -1078,7 +1099,7 @@ e.g.:
 Computing scaling factors for all variants... done.
 Reading phenotype file... done.
 0 individuals out of 24510 have missing phenotype.
-Fitting sparse logistic regression with 24510 observations, 10720 variants and 1 covariates... done.
+Fitting sparse logistic regression with 24510 observations, 6374 variants and 1 covariates... done.
 Extracting regression coefficients... Warning message:
 The `x` argument of `as_tibble.matrix()` must have unique column names if
 `.name_repair` is omitted as of tibble 2.0.0.
@@ -1087,32 +1108,32 @@ done.
 Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
 argument.
 done.
-# A tibble: 137 × 6
+# A tibble: 68 × 6
    CHR   Group SNP.lead    BP.lead  Size       W
    <chr> <int> <chr>         <int> <int>   <dbl>
- 1 17       65 rs9303277  37976469    24  0.141 
- 2 17       72 rs199533   44828931    21  0.0732
- 3 17       74 rs3826397  46509447    20  0.0697
- 4 17       83 rs7207114  53434046    12  0.0412
- 5 17       90 rs1292053  57963537    20  0.0409
- 6 17       73 rs2292700  45362423    13  0.0373
- 7 17       61 rs12941866 34900120     5  0.0371
- 8 17      108 rs12451606 70023827    14  0.0340
- 9 17        6 rs58337165  1684605     5  0.0334
-10 17       57 rs891754   32810443    16 -0.0318
-11 17       14 rs3786046   4920360    24  0.0315
-12 17       21 rs12952489  8241891    13  0.0294
-13 17       94 rs6504191  62041068    10  0.0294
-14 17       86 rs7224488  54868625     4 -0.0286
-15 17      135 rs999977   78606412    14  0.0278
-16 17       80 rs10514997 50299021     8  0.0278
-17 17       50 rs4470197  28464474     9  0.0268
-18 17      132 rs7216806  77538517     1  0.0259
-19 17      104 rs8071899  67930946     8  0.0257
-20 17      105 rs12150382 68222772    15  0.0252
-# ℹ 117 more rows
+ 1 21       38 rs2834109  34521087     8  0.0665
+ 2 21       64 rs7283760  45640629    16  0.0341
+ 3 21       29 rs2831503  29481474    12  0.0330
+ 4 21       30 rs2832310  30768350    21  0.0274
+ 5 21       33 rs762194   32493031    12  0.0229
+ 6 21       43 rs11700641 37061365    28 -0.0224
+ 7 21       57 rs2280807  42821265     7  0.0220
+ 8 21       31 rs565489   31523734    13  0.0206
+ 9 21       47 rs2836074  39346333    14  0.0188
+10 21       51 rs447480   41221971    11  0.0183
+11 21       14 rs2826185  21708991    13 -0.0181
+12 21        5 rs453644   17743767     7  0.0178
+13 21       23 rs7281937  26021230    13  0.0173
+14 21       40 rs2834585  36064321    11  0.0170
+15 21       68 rs4819138  47061267     9  0.0162
+16 21        6 rs2824098  18235587    11  0.0145
+17 21       67 rs8129133  46454237    10  0.0138
+18 21        3 rs2823188  16629033     6 -0.0124
+19 21       20 rs12483180 24720653    22  0.0117
+20 21       18 rs2827079  23196432    10  0.0116
+# ℹ 48 more rows
 Test statistics written on:
-/nobackup/proj/comet_kogwas/data/tmp/stats/example_res6_stats.txt
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr21_chr21_res6_stats.txt
 
 Processing at resolution 5 ...
 
@@ -1125,7 +1146,7 @@ e.g.:
 Computing scaling factors for all variants... done.
 Reading phenotype file... done.
 0 individuals out of 24510 have missing phenotype.
-Fitting sparse logistic regression with 24510 observations, 10720 variants and 1 covariates... done.
+Fitting sparse logistic regression with 24510 observations, 6374 variants and 1 covariates... done.
 Extracting regression coefficients... Warning message:
 The `x` argument of `as_tibble.matrix()` must have unique column names if
 `.name_repair` is omitted as of tibble 2.0.0.
@@ -1134,32 +1155,32 @@ done.
 Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
 argument.
 done.
-# A tibble: 197 × 6
+# A tibble: 113 × 6
    CHR   Group SNP.lead    BP.lead  Size       W
    <chr> <int> <chr>         <int> <int>   <dbl>
- 1 17      117 rs9303277  37976469    16  0.156 
- 2 17      130 rs3826397  46509447    10  0.0809
- 3 17      129 rs2292700  45362423     9  0.0451
- 4 17       23 rs3786046   4920360     7  0.0379
- 5 17      147 rs7207114  53434046     5  0.0376
- 6 17      166 rs6504191  62041068     3  0.0359
- 7 17      109 rs12941866 34900120     3  0.0343
- 8 17        9 rs58337165  1684605     4  0.0312
- 9 17      115 rs923370   37010150     3 -0.0273
-10 17      192 rs12451606 70023827    13  0.0268
-11 17       37 rs2304911   8050979     7  0.0258
-12 17      160 rs1292053  57963537    12  0.0245
-13 17      234 rs7216806  77538517     2  0.0245
-14 17      127 rs1230103  43485791    10  0.0243
-15 17      185 rs8071899  67930946     3  0.0240
-16 17      141 rs10514997 50299021     5  0.0214
-17 17      242 rs7342974  79483999     4  0.0205
-18 17      228 rs7218605  76811803     3  0.0204
-19 17      202 rs2661611  71708855     6  0.0203
-20 17       33 rs2270981   7216540     4  0.0199
-# ℹ 177 more rows
+ 1 21       65 rs2834109  34521087    11  0.0616
+ 2 21      114 rs7283760  45640629     8  0.0390
+ 3 21       55 rs565489   31523734     8  0.0293
+ 4 21       75 rs2835076  37043885    10 -0.0280
+ 5 21       83 rs2836074  39346333    11  0.0254
+ 6 21       52 rs2832310  30768350    13  0.0250
+ 7 21      100 rs2280807  42821265    11  0.0194
+ 8 21       66 rs6517178  34888621     7 -0.0187
+ 9 21        9 rs1449525  17762328     7  0.0177
+10 21       57 rs762194   32493031    12  0.0162
+11 21       31 rs2827079  23196432    11  0.0159
+12 21       50 rs2831503  29481474     3  0.0159
+13 21       51 rs2831772  29772530     8  0.0153
+14 21       35 rs12483180 24720653     9  0.0140
+15 21       86 rs992244   40252150    15  0.0139
+16 21      107 rs4920091  43778036     6 -0.0126
+17 21       90 rs447480   41221971     9  0.0122
+18 21      110 rs3737434  44437142     9  0.0121
+19 21       70 rs2834591  36071202     4 -0.0115
+20 21       46 rs914130   28574546     7 -0.0110
+# ℹ 93 more rows
 Test statistics written on:
-/nobackup/proj/comet_kogwas/data/tmp/stats/example_res5_stats.txt
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr21_chr21_res5_stats.txt
 
 Processing at resolution 4 ...
 
@@ -1206,7 +1227,7 @@ done.
 20 21      238 rs2839315  47962186     5  0.0123
 # ℹ 172 more rows
 Test statistics written on:
-/nobackup/proj/comet_kogwas/data/tmp/stats/example_res4_stats.txt
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr21_chr21_res4_stats.txt
 
 Processing at resolution 3 ...
 
@@ -1253,7 +1274,7 @@ done.
 20 21      303 rs220229   43448797     1  0.0106
 # ℹ 222 more rows
 Test statistics written on:
-/nobackup/proj/comet_kogwas/data/tmp/stats/example_res3_stats.txt
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr21_chr21_res3_stats.txt
 
 Processing at resolution 2 ...
 
@@ -1300,7 +1321,7 @@ done.
 20 21       38 rs1449525  17762328     3  0.00986
 # ℹ 277 more rows
 Test statistics written on:
-/nobackup/proj/comet_kogwas/data/tmp/stats/example_res2_stats.txt
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr21_chr21_res2_stats.txt
 
 Processing at resolution 1 ...
 
@@ -1313,4 +1334,94 @@ e.g.:
 Computing scaling factors for all variants... done.
 Reading phenotype file... done.
 0 individuals out of 24510 have missing phenotype.
-Fitting sparse logistic regression with 24510 observations, 5482 variants and 1 covariates... 
+Fitting sparse logistic regression with 24510 observations, 6374 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 417 × 6
+   CHR   Group SNP.lead    BP.lead  Size        W
+   <chr> <int> <chr>         <int> <int>    <dbl>
+ 1 21      551 rs2834109  34521087     2  0.0294 
+ 2 21      952 rs7283760  45640629     4  0.0284 
+ 3 21      464 rs565489   31523734     3  0.0230 
+ 4 21      232 rs2827079  23196432     1 -0.0214 
+ 5 21      439 rs2832310  30768350     1  0.0211 
+ 6 21      414 rs2831503  29481474     1  0.0184 
+ 7 21      796 rs16999738 41780398     3 -0.0176 
+ 8 21      845 rs2280807  42821265     2  0.0163 
+ 9 21      756 rs1524930  40968460     2 -0.0150 
+10 21      266 rs12483180 24720653     1  0.0140 
+11 21      467 rs2832660  31593066     1  0.0139 
+12 21      141 rs444223   20300576     3 -0.0113 
+13 21      874 rs220229   43448797     1  0.0105 
+14 21       67 rs1449525  17762328     3  0.0103 
+15 21      703 rs2211860  39552192     4  0.0101 
+16 21      730 rs992244   40252150     3  0.00965
+17 21      420 rs2831772  29772530     6  0.00889
+18 21      631 rs4817726  36943564     4  0.00856
+19 21      921 rs3737434  44437142     8  0.00855
+20 21      699 rs2836074  39346333     2  0.00854
+# ℹ 397 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr21_chr21_res1_stats.txt
+
+Processing at resolution 0 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 6374 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 521 × 6
+   CHR   Group SNP.lead    BP.lead  Size        W
+   <chr> <int> <chr>         <int> <int>    <dbl>
+ 1 21     1787 rs2834109  34521087     2  0.0363 
+ 2 21     3005 rs7283760  45640629     1  0.0266 
+ 3 21     1440 rs2832310  30768350     1  0.0225 
+ 4 21     2704 rs2280807  42821265     2 -0.0221 
+ 5 21     1272 rs2831503  29481474     2  0.0200 
+ 6 21      231 rs2824098  18235587     1 -0.0182 
+ 7 21     1519 rs565489   31523734     1  0.0161 
+ 8 21     1807 rs9981243  34594878     2  0.0161 
+ 9 21      798 rs12483180 24720653     1  0.0157 
+10 21     1527 rs2832660  31593066     1  0.0152 
+11 21      697 rs2827079  23196432     2 -0.0126 
+12 21     2774 rs220229   43448797     1  0.0119 
+13 21     2377 rs992244   40252150     1  0.0104 
+14 21     1850 rs12482697 35293199     1 -0.0103 
+15 21     3064 rs8129133  46454237     1  0.0102 
+16 21     2951 rs496300   44779680     1 -0.0101 
+17 21     1176 rs2830768  28572980     1 -0.0100 
+18 21     1623 rs1855703  32753155     2 -0.00982
+19 21     3111 rs944422   46982335     1 -0.00974
+20 21      201 rs2823748  17675675     1  0.00963
+# ℹ 501 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr21_chr21_res0_stats.txt
+
+----------------------------------------------------------------------------------------------------
+Filtering the test statistics
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+Error: '/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr_chr_res6_stats.txt' does not exist.
+Execution halted

@@ -99,30 +99,4 @@ Loading IBD segments from:
   /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr4.txt
 Loaded 36696 IBD segments.
 
-Printing summary of 1 windows:
-     0: 0--15501
-Summary of metadata for chromosome 1:
-  number of samples (after | before filtering) : 24510 | 24510
-  number of SNPs (after | before filtering)    : 15501 | 15501
-  number of variant partitions                 : 7
-  size of genomic windows                      : whole-chromosome
-  number of IBD segments                       : 36696
-
-
---------------------------------------------------------------------------------
-Kinship (using only haplotype data)
---------------------------------------------------------------------------------
-Reached 1
-Chromosome 1 will be loaded from:
-  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr4.bgen
-  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr4.sample
-  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr4.bim
-  thinning factor           : 10
-  sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
-  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr4.txt
-  number of SNPs            : 1551
-  number of haplotypes      : 49020
-
-Reading BGEN file using 4 threads:
-|....................................................................................................|
-|=====================
+/mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/new_knockoffgwas_pipeline/knockoffgwas_pipeline/knockoffgwas/module_2_knockoffs.sh: line 91: 3533417 Killed                  $SNPKNOCK2 --bgen "$3_chr{"$CHR_MIN":"$CHR_MAX"}" --keep "$3_qc_samples.txt" --extract "$3_qc_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --map "$3_map_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --part "$TMP_DIR/partitions/chr{"$CHR_MIN":"$CHR_MAX"}.txt" --ibd "$3_ibd_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --K 10 --cluster_size_min 1000 --cluster_size_max 10000 --hmm-rho 1 --hmm-lambda 1e-3 --windows 0 --n_threads 4 --seed 2020 --compute-references --generate-knockoffs --out $TMP_DIR"/knockoffs/knockoffs_chr{"$CHR_MIN":"$CHR_MAX"}"

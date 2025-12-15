@@ -112,4 +112,4 @@ stop_spinner $?
 # Summarize results #
 #####################
 
-printf "\nResults written in 'results/'\n"
+printf "\nResults written in "$6"\n"

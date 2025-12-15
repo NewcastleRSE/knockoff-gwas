@@ -11,9 +11,9 @@ Options in effect:
 
 Hostname: compute030.comet.hpc.ncl.ac.uk
 Working directory: /mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/pbc_analysis
-Start time: Fri Dec 12 16:14:44 2025
+Start time: Fri Dec 12 22:03:19 2025
 
-Random number seed: 1765556084
+Random number seed: 1765576999
 1547128 MB RAM detected; reserving 9000 MB for main workspace.
 6374 variants loaded from .bim file.
 24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
@@ -26,4 +26,4 @@ Note: No phenotypes present.
 --r2 in-phase to results/knockoffs_gof/knockoffs_chr21_res5.ld ...
 done.
 
-End time: Fri Dec 12 16:15:55 2025
+End time: Fri Dec 12 22:04:02 2025

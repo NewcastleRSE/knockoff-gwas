@@ -2,7 +2,7 @@
 #SBATCH --partition=long_free
 #SBATCH --account=comet_kogwas
 #SBATCH --cpus-per-task=1
-#SBATCH --array=1-22                       # Run tasks for given chromosomes
+#SBATCH --array=22                       # Run tasks for given chromosomes
 #SBATCH --output=slurm_anal_%a.out
 
 # Load modules
