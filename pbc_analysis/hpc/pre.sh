@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --partition=default_free
 #SBATCH --account=comet_kogwas
-#SBATCH --mem=10GB
 #SBATCH --cpus-per-task=1
-#SBATCH --array=15                       # Tasks to run, corresponds to chromosome number
+#SBATCH --mem=20GB
+#SBATCH --array=1-14,16-20                       # Tasks to run, corresponds to chromosome number
 #SBATCH --output=slurm_pre_%a.out
 
 # Load modules
@@ -22,7 +22,7 @@ echo "Running on $HOSTNAME PBC pre-analysis data preparing"
 # Run different chromosomes with different window sizes to get reasonable number of IBDs returned
 
 # Try different window sizes for chromosomes here until a suitable size is found
-../new_knockoffgwas_pipeline/run_pre_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.1 results 20 3
+../new_knockoffgwas_pipeline/run_pre_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.1 results 10 3
 
 echo "Node memory state: `free`"
 date

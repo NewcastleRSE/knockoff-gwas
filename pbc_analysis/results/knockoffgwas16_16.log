@@ -43,7 +43,7 @@ Processing chromosome 16 ...
 
 Mean group sizes: 
     res_7     res_6     res_5     res_4     res_3     res_2     res_1 
- 1.000000  3.031137  6.106364  8.723377 13.196464 24.785978 43.335484 
+ 1.000000  3.031137  6.106364  8.723377 13.274704 24.970260 43.335484 
 Partitions written to: /nobackup/proj/comet_kogwas/data/tmp/partitions/chr16.txt
 
 ----------------------------------------------------------------------------------------------------
@@ -108,4 +108,86 @@ Summary of metadata for chromosome 1:
   size of genomic windows                      : whole-chromosome
   number of IBD segments                       : 19278
 
-/mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/new_knockoffgwas_pipeline/knockoffgwas_pipeline/knockoffgwas/module_2_knockoffs.sh: line 91: 3375492 Killed                  $SNPKNOCK2 --bgen "$3_chr{"$CHR_MIN":"$CHR_MAX"}" --keep "$3_qc_samples.txt" --extract "$3_qc_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --map "$3_map_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --part "$TMP_DIR/partitions/chr{"$CHR_MIN":"$CHR_MAX"}.txt" --ibd "$3_ibd_chr{"$CHR_MIN":"$CHR_MAX"}.txt" --K 10 --cluster_size_min 1000 --cluster_size_max 10000 --hmm-rho 1 --hmm-lambda 1e-3 --windows 0 --n_threads 4 --seed 2020 --compute-references --generate-knockoffs --out $TMP_DIR"/knockoffs/knockoffs_chr{"$CHR_MIN":"$CHR_MAX"}"
+
+--------------------------------------------------------------------------------
+Kinship (using only haplotype data)
+--------------------------------------------------------------------------------
+Reached 1
+Chromosome 1 will be loaded from:
+  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr16.bgen
+  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr16.sample
+  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr16.bim
+  thinning factor           : 10
+  sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr16.txt
+  number of SNPs            : 672
+  number of haplotypes      : 49020
+
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+Solving 1 bifurcating K-means problems using 1 threads.
+
+Bifurcating K-means
+Smallest allowed cluster size: 1000
+ step	 cluster	    size	    left	   right	accepted
+    1	       0	   49020	   26068	   22952	     yes	
+    2	       0	   26068	   12346	   13722	     yes	
+    3	       0	   12346	    6620	    5726	     yes	
+    5	       1	   22952	   11922	   11030	     yes	
+    6	       1	   11922	    5976	    5946	     yes	
+    8	       2	   13722	    6658	    7064	     yes	
+   11	       4	   11030	    6038	    4992	     yes	
+Bifurcating K-means completed after 14 steps.
+Number of clusters: 8.
+
+
+Kinship clusters written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr16_clust.txt
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr16.sample
+
+Assigning references for the whole chromosome using 4 threads: 
+|....................................................................................................|
+|====================================================================================================|
+
+Reached 2
+Individual global references written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr16_lref.txt
+
+Individual local references written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr16_ref.txt
+
+
+--------------------------------------------------------------------------------
+Knockoffs for chromosome 1
+--------------------------------------------------------------------------------
+Chromosome 1 will be loaded from:
+  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr16
+  haplotype file format     : bgen
+  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr16.sample
+  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr16.bim
+  map file                  : /nobackup/proj/comet_kogwas/data/Nicola_map_chr16.txt
+  sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr16.txt
+  number of SNPs            : 6717
+  number of windows         : 1
+  number of haplotypes      : 49020
+
+Loading data for chromosome 1
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+
+Initializing HMM with user-supplied hyperparameters: rho = 1, lambda = 0.001.
+
+HMM parameters written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr16_hmm.txt
+
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr16_res0_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr16_res0_windows.txt
+
+Generating related knockoffs for chromosome 1 (20310 haplotypes in 4571 families, 6717 variants in 6717 groups):
+|....................................................................................................|
+|===========================================================================

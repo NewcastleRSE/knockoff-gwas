@@ -817,6 +817,7 @@ Note: No phenotypes present.
 /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.fam ...
 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
+[1] TRUE
 Reading genotype file and creating FBM object... done.
 Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res6.rds
 
@@ -861,6 +862,7 @@ Note: No phenotypes present.
 /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.fam ...
 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
+[1] TRUE
 Reading genotype file and creating FBM object... done.
 Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res5.rds
 
@@ -905,6 +907,7 @@ Note: No phenotypes present.
 /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.fam ...
 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
+[1] TRUE
 Reading genotype file and creating FBM object... done.
 Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res4.rds
 
@@ -949,6 +952,7 @@ Note: No phenotypes present.
 /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.fam ...
 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
+[1] TRUE
 Reading genotype file and creating FBM object... done.
 Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res3.rds
 
@@ -993,6 +997,7 @@ Note: No phenotypes present.
 /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.fam ...
 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
+[1] TRUE
 Reading genotype file and creating FBM object... done.
 Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res2.rds
 
@@ -1037,6 +1042,7 @@ Note: No phenotypes present.
 /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.fam ...
 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
+[1] TRUE
 Reading genotype file and creating FBM object... done.
 Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res1.rds
 
@@ -1081,6 +1087,7 @@ Note: No phenotypes present.
 /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.fam ...
 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
 Converting augmented genotypes into FBM...
+[1] TRUE
 Reading genotype file and creating FBM object... done.
 Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr21_chr21_res0.rds
 
@@ -1423,5 +1430,77 @@ Filtering the test statistics
 
 Processing at resolution 6 ...
 
-Error: '/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr_chr_res6_stats.txt' does not exist.
-Execution halted
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr21_chr21_res6_discoveries.txt
+Test statistics written on: results/results_chr21_chr21_res6_stats.txt
+
+Processing at resolution 5 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr21_chr21_res5_discoveries.txt
+Test statistics written on: results/results_chr21_chr21_res5_stats.txt
+
+Processing at resolution 4 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr21_chr21_res4_discoveries.txt
+Test statistics written on: results/results_chr21_chr21_res4_stats.txt
+
+Processing at resolution 3 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr21_chr21_res3_discoveries.txt
+Test statistics written on: results/results_chr21_chr21_res3_stats.txt
+
+Processing at resolution 2 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr21_chr21_res2_discoveries.txt
+Test statistics written on: results/results_chr21_chr21_res2_stats.txt
+
+Processing at resolution 1 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr21_chr21_res1_discoveries.txt
+Test statistics written on: results/results_chr21_chr21_res1_stats.txt
+
+Processing at resolution 0 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr21_chr21_res0_discoveries.txt
+Test statistics written on: results/results_chr21_chr21_res0_stats.txt

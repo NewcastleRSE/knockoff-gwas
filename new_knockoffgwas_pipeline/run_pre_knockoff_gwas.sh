@@ -45,7 +45,7 @@ mkdir -p $TMP_DIR
 mkdir -p data
 
 # Make Phenotype file if it does not exist
-if [ ! -e "$3_phenotypes.txt"]; then
+if [ ! -e "$3_phenotypes.txt" ]; then
     Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/make_phenotype_file_from_fam.R $CHR $3 $4 &>> $LOG_FILE
 fi
 
@@ -61,7 +61,7 @@ CHR_LIST=$(seq $1 $2)
 start_spinner " - Phasing chromosome data (if necessary) for KnockOffGWAS pipeline..."
 for CHR in $CHR_LIST; do
 
-if [ -e "$3_phased_chr"$CHR".bgen" ]; then
+if [ -e "$3_phased_chr"$CHR".bgenXXX" ]; then
     echo ""
     echo "Phasing for chromosome "$CHR" exists"
     echo ""
@@ -142,10 +142,7 @@ stop_spinner $?
 # If IBD data exists, .txt, then it is used otherwise it is calculated
 for CHR in $CHR_LIST; do
 
-# Remove to redo IBD calcs
-#rm "$3_ibd_chr${CHR}.txt"
-
-if [ -e "$3_ibd_chr"$CHR".txt" ]; then
+if [ -e "$3_ibd_chr"$CHR".txtXXX" ]; then
     echo "IBD data for chromosome "$CHR" exists"
 else
     echo ""

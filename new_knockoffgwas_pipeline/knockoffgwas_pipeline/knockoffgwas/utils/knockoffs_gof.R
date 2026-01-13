@@ -127,7 +127,7 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
 
     ## Combine plots
     plot.title <- sprintf("Knockoff GOF for chromosome %s, resolution %s", chr.name, res.name)
-    p.combined <- gridExtra::grid.arrange(p.frq, p.orig, p.exch, p.self, nrow = 2,
+    p.combined <- gridExtra::arrangeGrob(p.frq, p.orig, p.exch, p.self, nrow = 2,
                                           top = grid::textGrob(plot.title,gp=grid::gpar(fontsize=15,font=1)))
     return(p.combined)
 }
