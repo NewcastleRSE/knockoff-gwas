@@ -9,13 +9,14 @@ source("utils_plotting.R")
 source("utils_shiny.R")
 source("utils_manhattan.R")
 
-data_dir <- "../data"
-res_dir <- "../results"
-lmm_dir <- "../data/lmm"
-chromosomes <- 1:22
-phenotypes <- c("example")
+print(getwd())
 
-annotations <- load_annotations(data_dir)
+data_dir <- "../../../pbc_analysis/data" #"../data"
+res_dir <- "../../../pbc_analysis/results" #../results"
+lmm_dir <- "../data/lmm"
+
+
+annotations <- load_annotations(".")
 genes <- unique(annotations$Exons.canonical$name2)
 
 # create user interface
@@ -27,19 +28,21 @@ ui <- fluidPage(theme = "theme.css",
   # side panel with inputs, error messages, and information box
   fluidRow(
     column(3,
-      h4("Step 1: Select a phenotype."),
+      h4("Step 1: Select a chromosome."),
       wellPanel(
-        selectInput(inputId = 'phenotype', label = 'Phenotype', choices = c(phenotypes)),    
-        actionButton("load.results", "Load results")
+        #selectInput(inputId = 'phenotype', label = 'Phenotype', choices = c(phenotypes)),
+        fluidRow(
+        column(6,
+               verticalLayout(uiOutput("ui_chr_select"),
+                              actionButton("load.results", "Load results")
+                             )
+              )
+        )
       ),
-      h4("Step 2: Type a chromosome or gene."),
+      h4("Optional Step 2: Type a gene."),
       wellPanel(
         fluidRow( 
-          column(6,
-                 verticalLayout(uiOutput("ui_chr_select"),
-                                actionButton("zoom.chr", "Zoom to chromosome")
-                                )
-                 ),
+          
           column(6,
                     verticalLayout(uiOutput("ui_gene_select"),
                                    actionButton("zoom.gene", "Zoom to gene")
@@ -47,7 +50,7 @@ ui <- fluidPage(theme = "theme.css",
                  )
         )
       ),
-      h4("Step 3: Refine the locus."),
+      h4("Optional Step 3: Refine the locus."),
       wellPanel(
         fluidRow(
           column(6,actionButton("zoom.in", "Zoom in (slider)")),
@@ -61,8 +64,7 @@ ui <- fluidPage(theme = "theme.css",
         fixed = TRUE,        
         div(
           style="padding: 8px; border: 5px solid #CCC; background: #FFFFFF;", 
-          HTML("<font size=\"3\">This website presents the results of the KnockoffGWAS methodology
-            applied to a toy dataset. See [bioRxiv link] for the manuscript, and <a href=\"https://msesia.github.io/knockoffgwas\" target=\"_blank\"/>this webpage</a> 
+          HTML("<font size=\"3\">This website presents the results of the KnockoffGWAS methodology. See <a href=\"https://msesia.github.io/knockoffgwas\" target=\"_blank\"/>this webpage</a> 
             for more information.</font>")
         )
       )
@@ -71,7 +73,7 @@ ui <- fluidPage(theme = "theme.css",
   # main panel displaying results
   column(9,
     tabsetPanel(type = "tabs", id = "Tabset",
-                tabPanel(title = "Genome", value = "manhattan", 
+                tabPanel(title = "Chromosome", value = "manhattan", 
                          h4(textOutput("placeholder.manhattan")),
                          plotOutput('plot.manhattan', width = "100%", height = "700px")),
                 tabPanel(title = "Locus", value = "manhattan.chr", 
@@ -89,10 +91,10 @@ ui <- fluidPage(theme = "theme.css",
 # back-end code
 server <- function(input, output, session) {
 
-  output$placeholder.manhattan <- renderText({"[Select a phenotype to get started.]"})
-  output$placeholder.locus <- renderText({"[Select a chromosome or gene to produce locus view.]"})
+  output$placeholder.manhattan <- renderText({"[Select a chromosome to get started.]"})
+  output$placeholder.locus <- renderText({"[Select a gene to produce locus view.]"})
   # all parameters required to describe state of the app  
-  state <- reactiveValues(phenotype = NULL,
+  state <- reactiveValues(
                          association_results = NULL,
                          chr = NULL,
                          max.BP = NULL,
@@ -125,17 +127,18 @@ server <- function(input, output, session) {
   
   # what to do if "Load association results" button is pressed
   observeEvent(input$load.results, {
+    chr <- input$chr
     # clear error message
     output$message <- NULL
     # switch to the appropriate tab
     updateTabsetPanel(session, inputId = "Tabset", selected = "manhattan")
     # clear placeholder
     output$placeholder.manhattan <- NULL
-    # check if phenotype has changed; if so, clear lower-level variables and 
-    # load association results for new phenotype
-    if(!is.null(state$phenotype)){
-      if(input$phenotype != state$phenotype){
-        state$chr <- NULL
+    # check if chr has changed; if so, clear lower-level variables and 
+    # load association results for new chr
+    if(!is.null(state$chr)){
+      if(chr != state$chr){
+        state$chr <- chr
         state$highlight.gene <- NULL
         state$max.BP <- NULL
         state$window.left <- NULL
@@ -143,16 +146,18 @@ server <- function(input, output, session) {
         state$slider.left <- NULL
         state$slider.right <- NULL
         output$plot.annotations <- NULL # important: clear Chicago plot
-        output$placeholder.locus <- renderText({"[Select a chromosome or gene to produce locus view.]"})
-        state$phenotype <- input$phenotype 
-        state$association_results <- load_association_results(res_dir, lmm_dir, input$phenotype)
+        output$placeholder.locus <- renderText({"[Select a gene to produce locus view.]"})
+        file_prefix<-paste0("results_chr",chr,"_chr",chr)
+        state$association_results <- load_association_results(res_dir, lmm_dir, file_prefix)
       }
     } else{
-        state$phenotype <- input$phenotype
+        state$chr <- chr
+        file_prefix<-paste0("results_chr",chr,"_chr",chr)
         withProgress(message = 'Loading results...', value = 0, {
-          state$association_results <- load_association_results(res_dir, lmm_dir, input$phenotype)
+          state$association_results <- load_association_results(res_dir, lmm_dir, file_prefix)
         })
     }
+    
     # produce plot
     output$plot.manhattan <- renderPlot({
       withProgress(message = 'Rendering plot...', value = 0, {
@@ -161,68 +166,67 @@ server <- function(input, output, session) {
                                  ytrans="identity")
       })
     })
-  })
-
-  # what to do if "Zoom to chromosome" button is pressed
-  observeEvent(input$zoom.chr,{
-      error <- TRUE
-      # check if association data are loaded
-      if(is.null(state$phenotype) | is.null(state$association_results)){
-        output$message <- renderText({"Before clicking this button, first select a 
-          phenotype and load association results."})
+    
+    # Produce "Locus" plot
+    error <- TRUE
+    # check if association data are loaded
+    if(is.null(state$chr) | is.null(state$association_results)){
+      output$message <- renderText({"Before clicking this button, first select a 
+          chromosome and load association results."})
+    } else{
+      # check if valid chromosome number was entered
+      chr <- as.integer(input$chr)
+      if(is.na(chr) | is.null(chr)){
+        error <- TRUE
       } else{
-        # check if valid chromosome number was entered
-        chr <- as.integer(input$chr)
-        if(is.na(chr) | is.null(chr)){
+        if(!(chr %in% 1:22)){
           error <- TRUE
         } else{
-          if(!(chr %in% 1:22)){
-            error <- TRUE
-          } else{
-            error <- FALSE
-          }
-        } 
-        if(error){
-          output$message <- renderText({"Type a chromosome number between 1 and 22."})
-        } else{
-          # clear error message
-          output$message <- NULL
-          # clear placeholder
-          output$placeholder.locus <- NULL
-          # clear highlighted gene if chromosome has changed
-          if(!is.null(state$chr)){
-            if(state$chr != chr){
-              state$chr <- chr
-              state$highlight.gene <- NULL
-            }
-          } else{
+          error <- FALSE
+        }
+      } 
+      if(error){
+        output$message <- renderText({"Type a chromosome number between 1 and 22."})
+      } else{
+        # clear error message
+        output$message <- NULL
+        # clear placeholder
+        output$placeholder.locus <- NULL
+        # clear highlighted gene if chromosome has changed
+        if(!is.null(state$chr)){
+          if(state$chr != chr){
             state$chr <- chr
             state$highlight.gene <- NULL
           }
-          # set window parameters to show whole chromosome
-          chr.boundaries <- find_chr_boundaries(state$association_results, state$chr)
-          state$min.BP <- chr.boundaries$min.BP
-          state$max.BP <- chr.boundaries$max.BP
+        } else{
           state$chr <- chr
-          state$window.left <- state$min.BP
-          state$window.right <- state$max.BP
-          state$slider.left <- state$window.left
-          state$slider.right <- state$window.right
-          updateTabsetPanel(session, inputId = "Tabset", selected = "manhattan.chr")
-          output$plot.annotations <- renderPlot({
-            withProgress(message = 'Rendering plot...', value = 0, {
-              plot_combined_state(state, annotations)})
-            })
+          state$highlight.gene <- NULL
         }
+        # set window parameters to show whole chromosome
+        chr.boundaries <- find_chr_boundaries(state$association_results, state$chr)
+        state$min.BP <- chr.boundaries$min.BP
+        state$max.BP <- chr.boundaries$max.BP
+        state$chr <- chr
+        state$window.left <- state$min.BP
+        state$window.right <- state$max.BP
+        state$slider.left <- state$window.left
+        state$slider.right <- state$window.right
+        updateTabsetPanel(session, inputId = "Tabset", selected = "manhattan.chr")
+        output$plot.annotations <- renderPlot({
+          withProgress(message = 'Rendering plot...', value = 0, {
+            plot_combined_state(state, annotations)})
+        })
       }
-  }
-  )
-  
+    }
+    
+    
+  })
+
   # what to do if "Zoom to gene" button is pressed
   observeEvent(input$zoom.gene,{
     # check if association data are loaded
-    if(is.null(state$phenotype) | is.null(state$association_results)){
-      output$message <- renderText({"Before clicking this button, first select a phenotype and
+    if(is.null(state$chr) | is.null(state$association_results)){
+      output$message <- renderText({"Before clicking this button, first select a chromosome and
         load association results."})
     } else{
        if(input$gene %in% genes){ # check if valid gene name was entered
@@ -234,6 +238,7 @@ server <- function(input, output, session) {
            # set chromosome appropriately
            filtered_exons <- filter(annotations$Exons.canonical, name2==input$gene)
            state$chr <- filtered_exons$chrom[1]
+           print(head(state$association_results))
            state$max.BP <- max(filter(state$association_results$LMM, CHR==state$chr)$BP)
            # set center of gene to be center of window
            gene_min <- min(filtered_exons$txStart)
@@ -264,13 +269,13 @@ server <- function(input, output, session) {
   # what to do if "Zoom in" button is pressed
   observeEvent(input$zoom.in,{
     # check if association results are loaded
-    if(is.null(state$phenotype) | is.null(state$association_results)){
+    if(is.null(state$chr) | is.null(state$association_results)){
       output$message <- renderText({"Before clicking this button, load association results for
-        a phenotype and then choose a chromosome or gene."})
+        a chromosome and then choose a gene."})
     } else{
       # check if window is chosen
       if(is.null(state$window.left) | is.null(state$window.right)){
-        output$message <- renderText({"Before clicking this button, choose a chromosome or gene."})
+        output$message <- renderText({"Before clicking this button, choose a gene."})
       } else{
         # switch to appropriate tab
         updateTabsetPanel(session, inputId = "Tabset", selected = "manhattan.chr")
@@ -292,12 +297,12 @@ server <- function(input, output, session) {
   # what to do if "Zoom out" button is pressed
   observeEvent(input$zoom.out, {
     # check if association results are loaded
-    if(is.null(state$phenotype) | is.null(state$association_results)){
+    if(is.null(state$chr) | is.null(state$association_results)){
       output$message <- renderText({"Before clicking this button, load association results for
-        a phenotype and then choose a chromosome or gene."})
+        a chromosome and then choose a gene."})
     } else{
       if(is.null(state$window.left) | is.null(state$window.right)){
-        output$message <- renderText({"Before clicking this button, choose a chromosome or gene."})
+        output$message <- renderText({"Before clicking this button, choose a gene."})
       } else{
         # switch to appropriate tab
         updateTabsetPanel(session, inputId = "Tabset", selected = "manhattan.chr")
@@ -362,7 +367,7 @@ server <- function(input, output, session) {
   
   # produce chromosome selection UI element
   output$ui_chr_select <- renderUI({textInput(inputId = 'chr', width = "90%", 
-                                           value = state$chr, label = 'Chromosome')
+                                              value = state$chr, label = 'Chromosome')
   })
 }
 
