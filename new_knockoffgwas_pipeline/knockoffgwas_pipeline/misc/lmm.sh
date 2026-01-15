@@ -1,22 +1,40 @@
 #!/bin/bash
 #
 #
+# Modified by Richard Howey for general use
+# January 2026
+
+# Parameters
+#
+# $1 = start chr number
+# $2 = end chr number
+# $3 = path & file prefix (not including "_chrXX") for genetic data, .bim, .bed, .fam
+#      also path & file prefix (not including "_map_chrXX") for genetic map data, .txt
+#      also path & file prefix (not including "_ibd_chrXX") for IBD data, .txt
+# $4 = phenotype name
+# $5 = FDR rate - not used here but included for consistency with other scripts
+# $6 = output folder
+# $7 = LD Table for BOLT-LMM
+# $8 = Genetic map table for BOLT-LMM
+
+# Set dirs
+source ./set_dirs.sh
 
 # Range of chromosomes to include in the analysis
-CHR_MIN=21
-CHR_MAX=22
+CHR_MIN=$1
+CHR_MAX=$2
 CHR_LIST=$(seq $CHR_MIN $CHR_MAX)
 
-GENO_FILE="../data/genotypes/example_chr"
-FAM_FILE="../data/genotypes/example_chr"$CHR_MIN".fam"
+GENO_FILE="$3_chr"
+FAM_FILE="$3_chr"$CHR_MIN".fam"
 
-PHENO_FILE="../data/phenotypes/phenotypes.tab"
-PHENO_NAME="y"
+PHENO_FILE=$3_phenotypes.txt
+PHENO_NAME=$4
 
-OUT_DIR="../data/lmm"
+OUT_DIR="$6/lmm"
 mkdir -p $OUT_DIR
-STATS_FILE=$OUT_DIR"/example_lmm.txt"
-CLUMP_BASENAME=$OUT_DIR"/example"
+STATS_FILE=$OUT_DIR"/stats_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm.txt"
+CLUMP_BASENAME=$OUT_DIR"/clump_chr"$CHR_MIN"_chr"$CHR_MAX
 
 CLUMP_THRESHOLD=0.00000005 # 5e-8
 
@@ -25,8 +43,8 @@ CLUMP_THRESHOLD=0.00000005 # 5e-8
 ####################
 
 # Stuff for bolt
-LD_TABLE="../aux/LDSCORE.1000G_EUR.tab.gz"
-MAP_TABLE="../aux/genetic_map_hg17_withX.txt.gz"
+LD_TABLE=$7 
+MAP_TABLE=$8 
 
 bolt \
     --bed=$GENO_FILE"{$CHR_MIN:$CHR_MAX}.bed" \
@@ -91,4 +109,4 @@ echo "Results written on "$CLUMP_FILE".tab"
 
 # Parse clumped p-values and summarise discoveries
 OUT_FILE=$CLUMP_BASENAME"_lmm_regions.txt"
-Rscript --vanilla summarise_lmm.R
+Rscript --vanilla summarise_lmm.R $CLUMP_FILE".tab" $CLUMP_FILE".txt" 

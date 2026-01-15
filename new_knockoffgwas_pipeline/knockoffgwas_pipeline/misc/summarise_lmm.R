@@ -1,8 +1,13 @@
 #!/usr/bin/env Rscript
 
-# Default parameters
-clump.file <- "../data/lmm/example_lmm_clumped.tab"
-out.file   <- "../data/lmm/example_lmm_clumped.txt"
+args <- commandArgs(trailingOnly = TRUE)
+
+if (length(args) < 2) {
+  stop("Usage: Rscript --vanilla summarise_lmm.R <clump_file> <out_file>\n")
+}
+
+clump.file  <- args[1]
+out.file <- args[2]
 
 # Load libraries
 suppressMessages(library(tidyverse))
