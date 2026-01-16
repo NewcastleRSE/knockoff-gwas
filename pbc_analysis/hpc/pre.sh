@@ -14,7 +14,7 @@ module load R/4.5.1-gfbf-2024a
 module load plink/2.0.0
 
 #Set dirs
-source set_dirs_comet.sh
+source set_dirs.sh
 
 date
 echo "Running on $HOSTNAME PBC pre-analysis data preparing"

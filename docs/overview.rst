@@ -5,12 +5,13 @@ Overview
 
 The KnockOffGWAS pipeline was constructed by adapting the `example <https://msesia.github.io/knockoffgwas/tutorial.html>`_ given by the author(s) of KnockOffGWAS. This example provided all the necessary files to perform KnockOffGWAS for this example but was not suitable for general use. The following list is a description of the new pipeline: 
 
-- The new pipeline is entirely contained within the directory *new_knockoffgwas_pipeline*.
-- The scripts have been updated to include parameters for the name of data files rather than be hard-coded with filenames.
-- There are many data files (such as IBD files) that are required before the KnockOffGWAS analysis can be ran. Therefore there have been many scripts and programs added to the pipeline to perform this required data preparation.
-- The new parts to this pipeline are stored in the *new_bits* directory.
-- In principle, one should be able to run the scripts *run_pre_knockoff_gwas.sh* and *run_knockoff_gwas.sh* in order to perform KnockOffGWAS. This can then be followed by running *run_remove_temporary_files.sh* to delete temporary files and by running the Shiny-R app *app.R* in the visualisation directory to analyse the results.
-- The analysis is computationally intensive for real datasets and will need to be ran on an HPC machine. With this in mind, this webpage describes the process of performing the analysis of a real dataset on an HPC machine.
+1. The new pipeline is entirely contained within the directory *new_knockoffgwas_pipeline*.
+1. The scripts have been updated to include parameters for the name of data files rather than be hard-coded with filenames.
+1. There are many data files (such as IBD files) that are required before the KnockOffGWAS analysis can be ran. Therefore there have been many scripts and programs added to the pipeline to perform this required data preparation.
+1. The new parts to this pipeline are stored in the *new_bits* directory.
+1. In principle, one should be able to run the scripts *run_pre_knockoff_gwas.sh* and *run_knockoff_gwas.sh* in order to perform KnockOffGWAS. This can then be followed by running *run_remove_temporary_files.sh* to delete temporary files and by running the Shiny-R app *app.R* in the visualisation directory to analyse the results.
+1. The analysis is computationally intensive for real datasets and will need to be ran on an High Performance Computing (HPC) machine. With this in mind, this webpage describes the process of performing the analysis of a real dataset on an HPC machine.
+1. The directory *pbc_analysis* contains additional scripts to run analysis for this data on an HPC machine. Hopefully, these can be adapted with minimal changes for other datasets. 
 
 The following is the structure and contents of the *new_knockoffgwas_pipeline* directory:
 
