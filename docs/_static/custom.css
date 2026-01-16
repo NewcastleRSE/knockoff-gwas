@@ -14,10 +14,12 @@
 }
 
 /* Table header colour */
+/*
 .wy-table-responsive table th {
 background-color: #884dff;          
 color:#ffffff;
 }
+*/
 
 /* Change the color of the "Table of Contents" heading */
 
@@ -27,14 +29,19 @@ color:#ffffff;
 }
 */
 
-
+/* Replace #3498db with your desired border color */
+/* Optional: adds space between the image and the border */
+/* Ensures the border wraps tightly around the image */
+/* Optional: adds a background color */
+/*
 .custom-figure {
-    border: 2px solid #884dff; /* Replace #3498db with your desired border color */
-    padding: 10px; /* Optional: adds space between the image and the border */
-    display: inline-block; /* Ensures the border wraps tightly around the image */
-    background-color: #f8f9fa; /* Optional: adds a background color */
+    border: 2px solid #884dff; 
+    padding: 10px; 
+    display: inline-block; 
+    background-color: #f8f9fa; 
     width: 700px;    
 }
+*/
 
 /* For images */ 
 /* .align-default {
