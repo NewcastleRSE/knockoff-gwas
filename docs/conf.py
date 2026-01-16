@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'KnockOFFGWAS'
+project = 'KnockOFFGWAS Pipeline'
 copyright = '2026, Richard Howey'
 author = 'Richard Howey'
 release = '1.0'
