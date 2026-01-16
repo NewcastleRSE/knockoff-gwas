@@ -1,7 +1,7 @@
 .. _bolt_lmm:
 
-BOLT-LMM Analysis
-=================
+Step 3. BOLT-LMM Analysis
+=========================
 
 This is the introduction.
 

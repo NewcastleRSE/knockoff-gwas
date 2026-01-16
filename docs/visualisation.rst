@@ -1,7 +1,7 @@
 .. _visualisation:
 
-Introduction
-============
+Step 4. Visualisation
+=====================
 
 This is the introduction.
 

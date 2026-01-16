@@ -1,7 +1,7 @@
 .. _analysis:
 
-Performing KnockOffGWAS using the Pipeline
-==========================================
+Step 2. Performing KnockOffGWAS
+===============================
 
 This is the...
 

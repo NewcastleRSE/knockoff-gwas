@@ -1,7 +1,7 @@
 .. _prep:
 
-File Preparation
-================
+Step 1. File Preparation
+========================
 
 This is the introduction.
 
