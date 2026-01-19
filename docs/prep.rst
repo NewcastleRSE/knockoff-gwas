@@ -45,6 +45,7 @@ Setup directories for analysis
 
 1. Download the pipeline, see :ref:`downloads`.
 1. Create a directory for your analysis on the same level as the ``new_knockoffgwas_pipeline`` directory, i.e. below the ``knockoff_gwas`` directory. (You could create it elsewhere and change the HPC script appropriately to run the pipeline scripts.) 
+1. Enter this directory.
 1. Create an ``hpc`` directory to store HPC scripts in.
 
 .. _running_prep:
@@ -95,8 +96,15 @@ Create an HPC script to do the preprocessing in the ``hpc`` directory called ``p
 
 This will need to be updated for the requirements of the HPC machine that you are using. Important points to note about this script:
 
-1. **Requirements** The script requires BCFTools, Plink version 1.9 and Plink version 2 and R, so these must be loaded.
-2. **Command Parameters** Near the end of the script the ``run_pre_knockoff_gwas.sh`` script is ran with a number of parameters. These parameters are...
+1. **Requirements** The script requires BCFTools, Plink versions 1.9 and 2, and R, so these must be loaded.
+1. **Command Parameters** Near the end of the script the ``run_pre_knockoff_gwas.sh`` script is ran with a number of parameters.
+
+    a. The first two parameters are the minimum and maximum chromosomes. These are set with the same chromosome using the task job number given by `$SLURM_ARRAY_TASK_ID`. The original example scripts allowed several chromosomes at once to be analysised but in this new pipeline we will only do one chromosome at a time.
+    a. The next parameter is the path and filename prefix of the data, `$DATA/mydata`. The data should be formated as described above, see :ref:`initial_prep`.
+    a. The 4th parameter is the phenotype name to give to the phenotype data. In this case set to `pbc` for the Primary Biliary Cholangitis (PBC) dataset. This phenotype data should be initially stored in the 6th column of the `.fam` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
+    a. The 5th parameter is the false discovery rate, FDR, set to 0.1.
+    a. The 6th parameter is the directory name to store the results, here set to `results`. This will be created automatically by the pipeline. 
+    a. The next two parameters are for the identical by descent (IBD) calculations and are unfortuately not so straightforward. These are the `-d` and `-w` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_. The `-d` is the minimum length in centimorgans, cM, of the IBD segments and the `-w` is the number of SNPS in window used in calculations. The correct settings may need some experimentation. If the SNP data is sparse then the window size may need to be small like in the PBC data which is set to 3, however if it is dense it may need to set to a higher value of 250. The minimum length will depend on your data and is a trade of between how many segments are returned and how reliable they are. A script is below that can be used to check the number of IBD segments returned. If there are too many returned then the KnockoffGWAS analysis will take too long.
 
 
 
@@ -107,3 +115,24 @@ Run the preprocessing as an arrary job on the HPC with the following command:
     sbatch hpc/pre.sh
 
 or whatever is appropriate for the HPC machine you are using.
+
+Script to check the number of IBD segments of each chromosome.
+
+.. code-block:: none
+
+    # Count number of haplotype segments in IBD result files
+
+    #Set dirs 
+    source set_dirs.sh
+
+    # List of chromosomes
+    CHR_LIST=$(seq 1 22)
+
+    for CHR in $CHR_LIST; do
+
+    if [ -e $DATA"/mydata_ibd_chr"$CHR".txt" ]; then
+        w=$(wc -l < ${DATA}"/mydata_ibd_chr"${CHR}".txt")
+        echo Chromosome $CHR has this many IBD segments: $w
+    fi
+
+    done
