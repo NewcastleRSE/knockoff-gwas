@@ -42,7 +42,7 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
         ggplot(aes(x=x, y=xk)) +
         geom_point(alpha=0.2) +
         geom_abline(intercept = 0, slope = 1, color="red", linetype=2) +
-        xlab(TeX("MAF ($X$)")) + ylab(TeX("MAF ($\\tilde{X}$)")) +
+        xlab(TeX("Allele-1 frequency ($X$)")) + ylab(TeX("Allele-1 frequency ($\\tilde{X}$)")) +
         xlim(0,1) +
         ylim(0,1) +
         theme_bw()
