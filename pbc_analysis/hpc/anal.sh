@@ -4,7 +4,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=100GB
 #SBATCH --time=14-00:00:00
-#SBATCH --array=1-5,8-13,15,16,19,20                       # Run tasks for given chromosomes
+#SBATCH --array=1-22                       # Run tasks for given chromosomes
 #SBATCH --output=slurm_anal_%a.out
 
 # Load modules
