@@ -3,6 +3,7 @@
 suppressMessages(library(tidyverse))
 suppressMessages(library(gridExtra))
 suppressMessages(library(shiny))
+library(shinyFiles)
 #suppressMessages(library(dqshiny))
 source("utils_clumping.R")
 source("utils_plotting.R")
@@ -12,7 +13,7 @@ source("utils_manhattan.R")
 print(getwd())
 
 data_dir <- "../../../pbc_analysis/data" #"../data"
-res_dir <- "../../../pbc_analysis/results" #../results"
+#res_dir <- "../../../pbc_analysis/results" #../results"
 lmm_dir <- "../data/lmm"
 
 
@@ -28,6 +29,21 @@ ui <- fluidPage(theme = "theme.css",
   # side panel with inputs, error messages, and information box
   fluidRow(
     column(3,
+           h4("Step 0: Select results directory."),
+           wellPanel(
+             shinyDirButton(
+               id = "results_dir",
+               label = "Choose directory",
+               title = "Select results folder",
+               multiple = FALSE
+             ),
+            
+           
+           verbatimTextOutput("results_dir_path"),
+           tags$small(
+             tags$strong("Selected directory:"),
+             textOutput("res_dir_text")
+           )),
       h4("Step 1: Select a chromosome."),
       wellPanel(
         #selectInput(inputId = 'phenotype', label = 'Phenotype', choices = c(phenotypes)),
@@ -91,6 +107,32 @@ ui <- fluidPage(theme = "theme.css",
 # back-end code
 server <- function(input, output, session) {
 
+  ## existing hard-coded default
+  res_dir <- "/path/to/default/results"
+  
+  ## reactive holder for user choice
+  res_dir_rv <- reactiveVal(res_dir)
+  
+  app_dir  <- normalizePath(getwd())
+  root_dir <- normalizePath(file.path(app_dir, "..", "..", ".."))
+  volumes  <- c(Root = root_dir)
+  
+  shinyDirChoose(input, "results_dir", roots = volumes, session = session)
+  
+  observeEvent(input$results_dir, {
+    res_dir_rv(parseDirPath(volumes, input$results_dir))
+  })
+  
+  ## 🔑 BRIDGE: overwrite text variable right before use
+  observeEvent(input$load.results, {
+    res_dir <<- res_dir_rv()   # plain character string
+    # existing code continues to use res_dir as before
+  })
+  
+  output$res_dir_text <- renderText({
+    res_dir_rv()
+  })
+  
   output$placeholder.manhattan <- renderText({"[Select a chromosome to get started.]"})
   output$placeholder.locus <- renderText({"[Select a gene to produce locus view.]"})
   # all parameters required to describe state of the app  
