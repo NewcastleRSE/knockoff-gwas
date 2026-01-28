@@ -1,0 +1,1553 @@
+Loading required package: tidyverse
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.5.1
+✔ ggplot2   4.0.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: fastcluster
+
+Attaching package: ‘fastcluster’
+
+The following object is masked from ‘package:stats’:
+
+    hclust
+
+Loading required package: latex2exp
+Loading required package: grid
+Loading required package: gridExtra
+
+Attaching package: ‘gridExtra’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+  tidyverse fastcluster   latex2exp        grid   gridExtra 
+       TRUE        TRUE        TRUE        TRUE        TRUE 
+list()
+Loading required package: bigstatsr
+Loading required package: bigsnpr
+bigstatsr   bigsnpr 
+     TRUE      TRUE 
+
+----------------------------------------------------------------------------------------------------
+Partitioning variants
+----------------------------------------------------------------------------------------------------
+
+Processing chromosome 10 ...
+
+Mean group sizes: 
+    res_7     res_6     res_5     res_4     res_3     res_2     res_1 
+ 1.000000  3.765917  8.234597 12.097476 18.783784 37.165775 64.651163 
+Partitions written to: /nobackup/proj/comet_kogwas/data/tmp/partitions/chr10.txt
+
+----------------------------------------------------------------------------------------------------
+Generating knockoffs
+----------------------------------------------------------------------------------------------------
+	+----------------------+
+	|                      |
+	|  SNPKNOCK2, v0.3     |
+	|  July 21, 2020       |
+	|  Matteo Sesia        |
+	|                      |
+	+----------------------+
+
+Copyright (C) 2020 Stanford University.
+Distributed under the GNU GPLv3 open source license.
+
+Use --help for more information.
+
+Command line arguments:
+  --bgen /nobackup/proj/comet_kogwas/data/Nicola_chr{10:10}
+  --keep /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  --extract /nobackup/proj/comet_kogwas/data/Nicola_qc_chr{10:10}.txt
+  --map /nobackup/proj/comet_kogwas/data/Nicola_map_chr{10:10}.txt
+  --part /nobackup/proj/comet_kogwas/data/tmp/partitions/chr{10:10}.txt
+  --ibd /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr{10:10}.txt
+  --K 10
+  --cluster_size_min 1000
+  --cluster_size_max 10000
+  --hmm-rho 1
+  --hmm-lambda 1e-3
+  --windows 0
+  --n_threads 4
+  --seed 2020
+  --compute-references
+  --generate-knockoffs
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr{10:10}
+
+Requested operations:
+  --compute-references
+  --generate_knockoffs
+
+
+--------------------------------------------------------------------------------
+Loading metadata
+--------------------------------------------------------------------------------
+Loading sample information from:
+  /nobackup/proj/comet_kogwas/data/Nicola_chr10.sample
+Loading legend from:
+  /nobackup/proj/comet_kogwas/data/Nicola_chr10.bim
+Loading partitions from:
+  /nobackup/proj/comet_kogwas/data/tmp/partitions/chr10.txt
+Loading IBD segments from:
+  /nobackup/proj/comet_kogwas/data/Nicola_ibd_chr10.txt
+Loaded 1 IBD segments.
+
+Printing summary of 1 windows:
+     0: 0--13900
+Summary of metadata for chromosome 1:
+  number of samples (after | before filtering) : 24510 | 24510
+  number of SNPs (after | before filtering)    : 13900 | 13900
+  number of variant partitions                 : 7
+  size of genomic windows                      : whole-chromosome
+  number of IBD segments                       : 1
+
+
+--------------------------------------------------------------------------------
+Kinship (using only haplotype data)
+--------------------------------------------------------------------------------
+Reached 1
+Chromosome 1 will be loaded from:
+  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr10.bgen
+  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr10.sample
+  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr10.bim
+  thinning factor           : 10
+  sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr10.txt
+  number of SNPs            : 1390
+  number of haplotypes      : 49020
+
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+Solving 1 bifurcating K-means problems using 1 threads.
+
+Bifurcating K-means
+Smallest allowed cluster size: 1000
+ step	 cluster	    size	    left	   right	accepted
+    1	       0	   49020	   25000	   24020	     yes	
+    2	       0	   25000	   11972	   13028	     yes	
+    3	       0	   11972	    4754	    7218	     yes	
+    5	       1	   24020	   12964	   11056	     yes	
+    6	       1	   12964	    6138	    6826	     yes	
+    8	       2	   13028	    6240	    6788	     yes	
+   11	       4	   11056	    5996	    5060	     yes	
+Bifurcating K-means completed after 14 steps.
+Number of clusters: 8.
+
+
+Kinship clusters written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_clust.txt
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10.sample
+
+Assigning references for the whole chromosome using 4 threads: 
+|....................................................................................................|
+|====================================================================================================|
+
+Reached 2
+Individual global references written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_lref.txt
+
+Individual local references written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_ref.txt
+
+
+--------------------------------------------------------------------------------
+Knockoffs for chromosome 1
+--------------------------------------------------------------------------------
+Chromosome 1 will be loaded from:
+  haplotype file            : /nobackup/proj/comet_kogwas/data/Nicola_chr10
+  haplotype file format     : bgen
+  sample file               : /nobackup/proj/comet_kogwas/data/Nicola_chr10.sample
+  legend file               : /nobackup/proj/comet_kogwas/data/Nicola_chr10.bim
+  map file                  : /nobackup/proj/comet_kogwas/data/Nicola_map_chr10.txt
+  sample filter file        : /nobackup/proj/comet_kogwas/data/Nicola_qc_samples.txt
+  variant filter file       : /nobackup/proj/comet_kogwas/data/Nicola_qc_chr10.txt
+  number of SNPs            : 13900
+  number of windows         : 1
+  number of haplotypes      : 49020
+
+Loading data for chromosome 1
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+
+Initializing HMM with user-supplied hyperparameters: rho = 1, lambda = 0.001.
+
+HMM parameters written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_hmm.txt
+
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0_windows.txt
+
+Generating related knockoffs for chromosome 1 (2 haplotypes in 1 families, 13900 variants in 13900 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (49018 haplotypes; 13900 variants in 13900 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0.bed
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0.bim
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0.fam
+Reconstructed ancestries written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0_anc.txt
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1_windows.txt
+
+Generating related knockoffs for chromosome 1 (2 haplotypes in 1 families, 13900 variants in 3691 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (49018 haplotypes; 13900 variants in 3691 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1.bed
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1.bim
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1.fam
+Reconstructed ancestries written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1_anc.txt
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2_windows.txt
+
+Generating related knockoffs for chromosome 1 (2 haplotypes in 1 families, 13900 variants in 1688 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (49018 haplotypes; 13900 variants in 1688 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2.bed
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2.bim
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2.fam
+Reconstructed ancestries written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2_anc.txt
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3_windows.txt
+
+Generating related knockoffs for chromosome 1 (2 haplotypes in 1 families, 13900 variants in 1149 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (49018 haplotypes; 13900 variants in 1149 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3.bed
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3.bim
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3.fam
+Reconstructed ancestries written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3_anc.txt
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4_windows.txt
+
+Generating related knockoffs for chromosome 1 (2 haplotypes in 1 families, 13900 variants in 740 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (49018 haplotypes; 13900 variants in 740 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4.bed
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4.bim
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4.fam
+Reconstructed ancestries written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4_anc.txt
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5_windows.txt
+
+Generating related knockoffs for chromosome 1 (2 haplotypes in 1 families, 13900 variants in 374 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (49018 haplotypes; 13900 variants in 374 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5.bed
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5.bim
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5.fam
+Reconstructed ancestries written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5_anc.txt
+SNP groups written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6_grp.txt
+SNP windows written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6_windows.txt
+
+Generating related knockoffs for chromosome 1 (2 haplotypes in 1 families, 13900 variants in 215 groups):
+|....|
+|====|
+
+Generating unrelated knockoffs for chromosome 1 (49018 haplotypes; 13900 variants in 215 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6.bed
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6.bim
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6.fam
+Reconstructed ancestries written to:
+  /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6_anc.txt
+
+Finished.
+
+
+----------------------------------------------------------------------------------------------------
+Checking knockoffs goodness-of-fit
+----------------------------------------------------------------------------------------------------
+
+Computing goodness-of-fit diagnostics for chromosome 10 at resolution 6 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res6_self.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res6_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr10_res6_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr10_res6_self.frq .
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr10_res6_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res6.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res6
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr10_res6.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr10_res6.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 13900 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 389354 rows [7, 8, 9, 10,
+11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37, 38, 39, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 387761 rows [7, 8, 9, 10,
+11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37, 38, 39, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr10_res6.png
+
+Computing goodness-of-fit diagnostics for chromosome 10 at resolution 5 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res5_self.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res5_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr10_res5_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr10_res5_self.frq .
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr10_res5_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res5.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res5
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr10_res5.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr10_res5.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 13900 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 444354 rows [7, 8, 9, 10,
+11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37, 38, 39, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 443359 rows [7, 8, 9, 10,
+11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37, 38, 39, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr10_res5.png
+
+Computing goodness-of-fit diagnostics for chromosome 10 at resolution 4 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res4_self.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res4_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr10_res4_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr10_res4_self.frq .
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr10_res4_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res4.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res4
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr10_res4.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr10_res4.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 13900 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 499064 rows [7, 8, 9, 10,
+11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37, 38, 39, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 497415 rows [7, 8, 9, 10,
+11, 12, 13, 14, 15, 16, 17, 31, 32, 33, 34, 35, 36, 37, 38, 39, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr10_res4.png
+
+Computing goodness-of-fit diagnostics for chromosome 10 at resolution 3 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res3_self.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res3_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr10_res3_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr10_res3_self.frq .
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr10_res3_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res3.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res3
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr10_res3.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr10_res3.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 13900 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 524915 rows [6, 7, 8, 9,
+10, 11, 12, 13, 14, 15, 16, 28, 29, 30, 31, 32, 33, 34, 35, 36, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 523312 rows [6, 7, 8, 9,
+10, 11, 12, 13, 14, 15, 16, 28, 29, 30, 31, 33, 34, 37, 38, 39, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr10_res3.png
+
+Computing goodness-of-fit diagnostics for chromosome 10 at resolution 2 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res2_self.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res2_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr10_res2_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr10_res2_self.frq .
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr10_res2_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res2.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res2
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr10_res2.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr10_res2.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 13900 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 538632 rows [6, 7, 8, 9,
+10, 11, 12, 13, 14, 15, 16, 17, 18, 27, 28, 29, 30, 31, 32, 33, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 537909 rows [6, 7, 8, 9,
+10, 12, 13, 14, 15, 16, 18, 27, 28, 29, 30, 32, 34, 37, 38, 39, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr10_res2.png
+
+Computing goodness-of-fit diagnostics for chromosome 10 at resolution 1 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res1_self.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res1_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr10_res1_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr10_res1_self.frq .
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr10_res1_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res1.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res1
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr10_res1.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr10_res1.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 13900 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 557549 rows [2, 3, 4, 5,
+6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 556482 rows [2, 4, 6, 8,
+9, 12, 14, 16, 18, 19, 22, 23, 25, 27, 28, 30, 33, 35, 38, 39, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr10_res1.png
+
+Computing goodness-of-fit diagnostics for chromosome 10 at resolution 0 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res0_self.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res0_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr10_res0_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr10_res0_self.frq .
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr10_res0_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr10_res0.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr10_res0
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr10_res0.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr10_res0.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 13900 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 569727 rows [2, 3, 4, 5,
+6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 570417 rows [2, 5, 7, 9,
+10, 13, 16, 18, 20, 21, 24, 26, 28, 30, 31, 34, 35, 37, 39, 40, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr10_res0.png
+
+----------------------------------------------------------------------------------------------------
+Converting augmented genotypes into FBM
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res6
+  --make-bed
+  --memory 5000
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs2448370.k' and 'rs2448370' have the same position.
+Warning: Variants 'rs2448378.k' and 'rs2448378' have the same position.
+Warning: Variants 'rs4880568.k' and 'rs4880568' have the same position.
+13897 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 27800 variants).
+                                              Merged fileset written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6-merge.fam
+.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+[1] TRUE
+Reading genotype file and creating FBM object... done.
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res6.rds
+
+Processing at resolution 5 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res5
+  --make-bed
+  --memory 5000
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs2448370.k' and 'rs2448370' have the same position.
+Warning: Variants 'rs2448378.k' and 'rs2448378' have the same position.
+Warning: Variants 'rs4880568.k' and 'rs4880568' have the same position.
+13897 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 27800 variants).
+                                              Merged fileset written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5-merge.fam
+.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+[1] TRUE
+Reading genotype file and creating FBM object... done.
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res5.rds
+
+Processing at resolution 4 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res4
+  --make-bed
+  --memory 5000
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs2448370.k' and 'rs2448370' have the same position.
+Warning: Variants 'rs2448378.k' and 'rs2448378' have the same position.
+Warning: Variants 'rs4880568.k' and 'rs4880568' have the same position.
+13897 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 27800 variants).
+                                              Merged fileset written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4-merge.fam
+.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+[1] TRUE
+Reading genotype file and creating FBM object... done.
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res4.rds
+
+Processing at resolution 3 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res3
+  --make-bed
+  --memory 5000
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs2448370.k' and 'rs2448370' have the same position.
+Warning: Variants 'rs2448378.k' and 'rs2448378' have the same position.
+Warning: Variants 'rs4880568.k' and 'rs4880568' have the same position.
+13897 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 27800 variants).
+                                              Merged fileset written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3-merge.fam
+.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+[1] TRUE
+Reading genotype file and creating FBM object... done.
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res3.rds
+
+Processing at resolution 2 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res2
+  --make-bed
+  --memory 5000
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs2448370.k' and 'rs2448370' have the same position.
+Warning: Variants 'rs2448378.k' and 'rs2448378' have the same position.
+Warning: Variants 'rs4880568.k' and 'rs4880568' have the same position.
+13897 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 27800 variants).
+                                              Merged fileset written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2-merge.fam
+.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+[1] TRUE
+Reading genotype file and creating FBM object... done.
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res2.rds
+
+Processing at resolution 1 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res1
+  --make-bed
+  --memory 5000
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs2448370.k' and 'rs2448370' have the same position.
+Warning: Variants 'rs2448378.k' and 'rs2448378' have the same position.
+Warning: Variants 'rs4880568.k' and 'rs4880568' have the same position.
+13897 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 27800 variants).
+                                              Merged fileset written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1-merge.fam
+.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+[1] TRUE
+Reading genotype file and creating FBM object... done.
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res1.rds
+
+Processing at resolution 0 ...
+
+PLINK v1.90b6.21 64-bit (19 Oct 2020)          www.cog-genomics.org/plink/1.9/
+(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0.log.
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr10_res0
+  --make-bed
+  --memory 5000
+  --merge-list /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0_mergelist.txt
+  --out /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs2448370.k' and 'rs2448370' have the same position.
+Warning: Variants 'rs2448378.k' and 'rs2448378' have the same position.
+Warning: Variants 'rs4880568.k' and 'rs4880568' have the same position.
+13897 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 27800 variants).
+                                              Merged fileset written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0-merge.bed
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0-merge.bim
++
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0-merge.fam
+.
+27800 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+27800 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0.bed +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0.bim +
+/nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0.fam ...
+0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+[1] TRUE
+Reading genotype file and creating FBM object... done.
+Written /nobackup/proj/comet_kogwas/data/tmp/knockoffs_full/ko_chr10_chr10_res0.rds
+
+----------------------------------------------------------------------------------------------------
+Computing test statistics
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 27800 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 212 × 6
+   CHR   Group SNP.lead      BP.lead  Size       W
+   <chr> <int> <chr>           <int> <int>   <dbl>
+ 1 10       98 rs10821948   63809624    19  0.0908
+ 2 10       15 rs61839660    6094697    12  0.0681
+ 3 10       71 rs593992     34536049    15  0.0664
+ 4 10      151 rs118161359 103906612    15  0.0618
+ 5 10       79 rs10857650   50030023    19  0.0531
+ 6 10       66 rs4301703    30813618     9  0.0440
+ 7 10       24 rs10795685    9017944     8  0.0370
+ 8 10      112 rs7893748    73483976     5  0.0354
+ 9 10      104 rs5030937    70975897    15  0.0345
+10 10      113 rs9664184    75409967    16  0.0327
+11 10       96 rs10994250   61961795    10 -0.0249
+12 10      190 rs6597754   127948238     6  0.0249
+13 10       74 rs2252783    43907495    11  0.0244
+14 10      148 rs3818411   101960966    16  0.0244
+15 10       29 rs10752230   11803185     7  0.0219
+16 10      179 rs2935695   123481200     3  0.0219
+17 10      139 rs2488083    94535940    11  0.0217
+18 10       16 rs602756      6466280    14  0.0216
+19 10       45 rs10904949   17439939     7  0.0210
+20 10       68 rs2769202    32524898     9  0.0203
+# ℹ 192 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr10_chr10_res6_stats.txt
+
+Processing at resolution 5 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 27800 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 346 × 6
+   CHR   Group SNP.lead      BP.lead  Size       W
+   <chr> <int> <chr>           <int> <int>   <dbl>
+ 1 10       26 rs61839660    6094697     8  0.0697
+ 2 10      127 rs593992     34536049    13  0.0659
+ 3 10      140 rs10857650   50030023    14  0.0526
+ 4 10      269 rs118161359 103906612    13  0.0486
+ 5 10      200 rs9664184    75409967    10  0.0462
+ 6 10      175 rs10761654   64405646    12  0.0412
+ 7 10      116 rs4301703    30813618     9  0.0381
+ 8 10      198 rs7893748    73483976     3  0.0369
+ 9 10       42 rs10795685    9017944     5  0.0332
+10 10      353 rs2123425   130883170     3 -0.0299
+11 10      185 rs5030937    70975897     9  0.0298
+12 10      342 rs10765017  129168894     3  0.0264
+13 10      283 rs10884919  111757791     7  0.0264
+14 10      335 rs6597754   127948238     3  0.0248
+15 10       52 rs10752230   11803185     7  0.0227
+16 10      320 rs2935695   123481200     2  0.0224
+17 10      174 rs10821948   63809624    13  0.0218
+18 10       29 rs602756      6466280     9  0.0218
+19 10      346 rs2152143   129906980     8  0.0207
+20 10      121 rs2769202    32524898    12  0.0203
+# ℹ 326 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr10_chr10_res5_stats.txt
+
+Processing at resolution 4 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 27800 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 535 × 6
+   CHR   Group SNP.lead      BP.lead  Size       W
+   <chr> <int> <chr>           <int> <int>   <dbl>
+ 1 10       51 rs61839660    6094697     6  0.0704
+ 2 10      248 rs593992     34536049     9  0.0581
+ 3 10      530 rs118161359 103906612     7  0.0490
+ 4 10      399 rs9664184    75409967     7  0.0430
+ 5 10      229 rs4301703    30813618     6  0.0395
+ 6 10      395 rs7893748    73483976     1  0.0368
+ 7 10      278 rs10857650   50030023    12  0.0368
+ 8 10       81 rs10795685    9017944     4  0.0368
+ 9 10      343 rs10821948   63809624     6  0.0357
+10 10      522 rs3818411   101960966     4  0.0291
+11 10      678 rs10765017  129168894     3  0.0287
+12 10      413 rs703261     79216423    12 -0.0246
+13 10       56 rs602756      6466280     7  0.0242
+14 10      237 rs2769202    32524898     5  0.0227
+15 10      727 rs9419646   133555393     1 -0.0226
+16 10      203 rs651134     27549961     6  0.0216
+17 10      666 rs6597754   127948238     3  0.0210
+18 10      324 rs10826179   60151026     2  0.0209
+19 10      316 rs1572688    57690158     6 -0.0206
+20 10      152 rs10904949   17439939     5  0.0205
+# ℹ 515 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr10_chr10_res4_stats.txt
+
+Processing at resolution 3 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 27800 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 659 × 6
+   CHR   Group SNP.lead      BP.lead  Size       W
+   <chr> <int> <chr>           <int> <int>   <dbl>
+ 1 10       76 rs61839660    6094697     4  0.0513
+ 2 10      427 rs10857650   50030023    14  0.0364
+ 3 10      617 rs7893748    73483976     2  0.0362
+ 4 10      530 rs10821948   63809624     5  0.0349
+ 5 10      625 rs9664184    75409967     4  0.0349
+ 6 10      379 rs593992     34536049     9  0.0348
+ 7 10      121 rs10795685    9017944     3  0.0347
+ 8 10      831 rs118161359 103906612     4  0.0342
+ 9 10      535 rs10761654   64405646     5  0.0325
+10 10      349 rs4301703    30813618     3  0.0273
+11 10      820 rs3818411   101960966     4  0.0255
+12 10     1057 rs10765017  129168894     4  0.0251
+13 10     1074 rs9804335   130247173     4  0.0210
+14 10      360 rs2769202    32524898     2  0.0208
+15 10      819 rs11591518  101775611     5 -0.0200
+16 10      646 rs703261     79216423     8 -0.0199
+17 10      237 rs7079408    18377343     3 -0.0191
+18 10     1038 rs6597754   127948238     2  0.0191
+19 10      501 rs2306604    60148692     2  0.0191
+20 10      556 rs10509258   67783437    10 -0.0190
+# ℹ 639 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr10_chr10_res3_stats.txt
+
+Processing at resolution 2 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 27800 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 781 × 6
+   CHR   Group SNP.lead      BP.lead  Size       W
+   <chr> <int> <chr>           <int> <int>   <dbl>
+ 1 10      113 rs61839660    6094697     6  0.0506
+ 2 10      920 rs9664184    75409967     4  0.0364
+ 3 10      909 rs7893748    73483976     1  0.0361
+ 4 10     1235 rs118161359 103906612     5  0.0340
+ 5 10      553 rs593992     34536049     5  0.0330
+ 6 10      616 rs786772     48601573     3 -0.0318
+ 7 10      782 rs10821948   63809624     3  0.0300
+ 8 10     1217 rs3818411   101960966     5  0.0294
+ 9 10      180 rs10795685    9017944     4  0.0286
+10 10      628 rs10857650   50030023    12  0.0277
+11 10     1562 rs10765017  129168894     3  0.0246
+12 10      510 rs4301703    30813618     1  0.0236
+13 10      122 rs602756      6466280     5  0.0214
+14 10     1465 rs2935695   123481200     3  0.0190
+15 10     1536 rs6597754   127948238     2  0.0185
+16 10      527 rs2769202    32524898     3  0.0175
+17 10      740 rs10826179   60151026     3  0.0173
+18 10      790 rs10761654   64405646     3  0.0169
+19 10      479 rs2783436    29348259     5 -0.0160
+20 10       51 rs2306301     3154339     2  0.0157
+# ℹ 761 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr10_chr10_res2_stats.txt
+
+Processing at resolution 1 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 27800 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 956 × 6
+   CHR   Group SNP.lead      BP.lead  Size       W
+   <chr> <int> <chr>           <int> <int>   <dbl>
+ 1 10      236 rs61839660    6094697     1  0.0362
+ 2 10     2014 rs9664184    75409967     1  0.0361
+ 3 10     1986 rs7893748    73483976     1  0.0349
+ 4 10     1179 rs593992     34536049     1  0.0332
+ 5 10     2733 rs118161359 103906612     2  0.0328
+ 6 10     1327 rs786772     48601573     3 -0.0286
+ 7 10     1683 rs10821948   63809624     3  0.0275
+ 8 10     1352 rs10857650   50030023     3  0.0246
+ 9 10     1082 rs4301703    30813618     1  0.0232
+10 10     3246 rs2935695   123481200     1  0.0210
+11 10     2927 rs9703807   112741551     3 -0.0208
+12 10      254 rs602756      6466280     5  0.0199
+13 10     1122 rs2769202    32524898     3  0.0187
+14 10     1702 rs10761654   64405646     3  0.0183
+15 10     1699 rs4508090    64329247     3 -0.0182
+16 10     1705 rs224071     64508475     2  0.0178
+17 10     1190 rs4934540    35474699     1 -0.0176
+18 10     1263 rs2247979    43923728     2 -0.0175
+19 10     1593 rs10826179   60151026     2  0.0175
+20 10     2695 rs11597390  101861435     2  0.0169
+# ℹ 936 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr10_chr10_res1_stats.txt
+
+Processing at resolution 0 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 27800 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has grouped output by 'CHR'. You can override using the `.groups`
+argument.
+done.
+# A tibble: 1,572 × 6
+   CHR   Group SNP.lead      BP.lead  Size       W
+   <chr> <int> <chr>           <int> <int>   <dbl>
+ 1 10      868 rs61839660    6094697     1  0.0380
+ 2 10     7620 rs9664184    75409967     1  0.0376
+ 3 10     7471 rs7893748    73483976     1  0.0369
+ 4 10     3998 rs593992     34536049     1  0.0340
+ 5 10     6249 rs10821948   63809624     1  0.0297
+ 6 10     1252 rs10795685    9017944     2  0.0289
+ 7 10    10502 rs118161359 103906612     1  0.0276
+ 8 10     3648 rs4301703    30813618     1  0.0252
+ 9 10     6308 rs10761654   64405646     1  0.0244
+10 10     4680 rs3850929    48584981     1 -0.0213
+11 10     6320 rs224071     64508475     1  0.0207
+12 10     9513 rs2488083    94535940     2 -0.0206
+13 10     4381 rs2247979    43923728     1 -0.0201
+14 10    10225 rs11189765  100470788     1 -0.0193
+15 10     4781 rs10857650   50030023     1  0.0179
+16 10    12482 rs2935695   123481200     2 -0.0178
+17 10    12991 rs6597754   127948238     2  0.0176
+18 10    10376 rs3818411   101960966     2 -0.0171
+19 10     3790 rs2769202    32524898     2  0.0166
+20 10     6295 rs10995208   64311230     1 -0.0158
+# ℹ 1,552 more rows
+Test statistics written on:
+/nobackup/proj/comet_kogwas/data/tmp/stats/stats_chr10_chr10_res0_stats.txt
+
+----------------------------------------------------------------------------------------------------
+Filtering the test statistics
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 22 × 9
+     CHR Group SNP.lead      BP.lead  Size      W    BP.min    BP.max BP.width
+   <dbl> <dbl> <chr>           <dbl> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+ 1    10    98 rs10821948   63809624    19 0.0908  63785089  64745589   960500
+ 2    10    15 rs61839660    6094697    12 0.0681   6000259   6233955   233696
+ 3    10    71 rs593992     34536049    15 0.0664  34266223  36000671  1734448
+ 4    10   151 rs118161359 103906612    15 0.0618 103894939 106101986  2207047
+ 5    10    79 rs10857650   50030023    19 0.0531  49406469  50122181   715712
+ 6    10    66 rs4301703    30813618     9 0.0440  30658147  30896831   238684
+ 7    10    24 rs10795685    9017944     8 0.0370   8775730   9617015   841285
+ 8    10   112 rs7893748    73483976     5 0.0354  73290319  73506514   216195
+ 9    10   104 rs5030937    70975897    15 0.0345  69905300  71051643  1146343
+10    10   113 rs9664184    75409967    16 0.0327  73516463  75669319  2152856
+# ℹ 12 more rows
+Discoveries written on: results/results_chr10_chr10_res6_discoveries.txt
+Test statistics written on: results/results_chr10_chr10_res6_stats.txt
+
+Processing at resolution 5 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 21 × 9
+     CHR Group SNP.lead      BP.lead  Size      W    BP.min    BP.max BP.width
+   <dbl> <dbl> <chr>           <dbl> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+ 1    10    26 rs61839660    6094697     8 0.0697   6000259   6182423   182164
+ 2    10   127 rs593992     34536049    13 0.0659  34536049  36000671  1464622
+ 3    10   140 rs10857650   50030023    14 0.0526  49834326  50122181   287855
+ 4    10   269 rs118161359 103906612    13 0.0486 103894939 105244565  1349626
+ 5    10   200 rs9664184    75409967    10 0.0462  73820001  75669319  1849318
+ 6    10   175 rs10761654   64405646    12 0.0412  64276759  64745589   468830
+ 7    10   116 rs4301703    30813618     9 0.0381  30658147  30813618   155471
+ 8    10   198 rs7893748    73483976     3 0.0369  73355056  73506514   151458
+ 9    10    42 rs10795685    9017944     5 0.0332   8775730   9192604   416874
+10    10   185 rs5030937    70975897     9 0.0298  70799421  71051643   252222
+# ℹ 11 more rows
+Discoveries written on: results/results_chr10_chr10_res5_discoveries.txt
+Test statistics written on: results/results_chr10_chr10_res5_stats.txt
+
+Processing at resolution 4 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 11 × 9
+     CHR Group SNP.lead      BP.lead  Size      W    BP.min    BP.max BP.width
+   <dbl> <dbl> <chr>           <dbl> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+ 1    10    51 rs61839660    6094697     6 0.0704   6037553   6182423   144870
+ 2    10   248 rs593992     34536049     9 0.0581  34536049  35159791   623742
+ 3    10   530 rs118161359 103906612     7 0.0490 103894939 104538611   643672
+ 4    10   399 rs9664184    75409967     7 0.0430  74761503  75669319   907816
+ 5    10   229 rs4301703    30813618     6 0.0395  30728101  30813618    85517
+ 6    10   395 rs7893748    73483976     1 0.0368  73455201  73506514    51313
+ 7    10   278 rs10857650   50030023    12 0.0368  49933974  50122181   188207
+ 8    10    81 rs10795685    9017944     4 0.0368   8933437   9035786   102349
+ 9    10   343 rs10821948   63809624     6 0.0357  63785089  64059261   274172
+10    10   522 rs3818411   101960966     4 0.0291 101829514 102085327   255813
+11    10   678 rs10765017  129168894     3 0.0287 129158853 129186924    28071
+Discoveries written on: results/results_chr10_chr10_res4_discoveries.txt
+Test statistics written on: results/results_chr10_chr10_res4_stats.txt
+
+Processing at resolution 3 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 14 × 9
+     CHR Group SNP.lead      BP.lead  Size      W    BP.min    BP.max BP.width
+   <dbl> <dbl> <chr>           <dbl> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+ 1    10    76 rs61839660    6094697     4 0.0513   6037553   6123495    85942
+ 2    10   427 rs10857650   50030023    14 0.0364  49973323  50122181   148858
+ 3    10   617 rs7893748    73483976     2 0.0362  73455201  73506514    51313
+ 4    10   530 rs10821948   63809624     5 0.0349  63785089  63849790    64701
+ 5    10   625 rs9664184    75409967     4 0.0349  75409967  75669319   259352
+ 6    10   379 rs593992     34536049     9 0.0348  34536049  34941134   405085
+ 7    10   121 rs10795685    9017944     3 0.0347   8933437   9035786   102349
+ 8    10   831 rs118161359 103906612     4 0.0342 103894939 104176471   281532
+ 9    10   535 rs10761654   64405646     5 0.0325  64356993  64445760    88767
+10    10   349 rs4301703    30813618     3 0.0273  30790361  30813618    23257
+11    10   820 rs3818411   101960966     4 0.0255 101829514 102085327   255813
+12    10  1057 rs10765017  129168894     4 0.0251 129165419 129186924    21505
+13    10  1074 rs9804335   130247173     4 0.0210 130232922 130278058    45136
+14    10   360 rs2769202    32524898     2 0.0208  32460069  32538176    78107
+Discoveries written on: results/results_chr10_chr10_res3_discoveries.txt
+Test statistics written on: results/results_chr10_chr10_res3_stats.txt
+
+Processing at resolution 2 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr10_chr10_res2_discoveries.txt
+Test statistics written on: results/results_chr10_chr10_res2_stats.txt
+
+Processing at resolution 1 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr10_chr10_res1_discoveries.txt
+Test statistics written on: results/results_chr10_chr10_res1_stats.txt
+
+Processing at resolution 0 ...
+
+`summarise()` has grouped output by 'CHR', 'Group', 'SNP.lead', 'BP.lead',
+'Size'. You can override using the `.groups` argument.
+Selections:
+# A tibble: 0 × 9
+# ℹ 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr10_chr10_res0_discoveries.txt
+Test statistics written on: results/results_chr10_chr10_res0_stats.txt
