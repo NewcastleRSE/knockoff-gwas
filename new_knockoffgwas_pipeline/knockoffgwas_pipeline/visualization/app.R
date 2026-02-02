@@ -80,8 +80,8 @@ ui <- fluidPage(theme = "theme.css",
         fixed = TRUE,        
         div(
           style="padding: 8px; border: 5px solid #CCC; background: #FFFFFF;", 
-          HTML("<font size=\"3\">This website presents the results of the KnockoffGWAS methodology. See <a href=\"https://msesia.github.io/knockoffgwas\" target=\"_blank\"/>this webpage</a> 
-            for more information.</font>")
+          HTML("This website presents the results of the KnockoffGWAS methodology. See <a href=\"https://msesia.github.io/knockoffgwas\" target=\"_blank\"/>this webpage</a> 
+            for more information.")
         )
       )
   ),
@@ -94,8 +94,10 @@ ui <- fluidPage(theme = "theme.css",
                          plotOutput('plot.manhattan', width = "100%", height = "700px")),
                 tabPanel(title = "Locus", value = "manhattan.chr", 
                          h4(textOutput("placeholder.locus")),
+                         
                          splitLayout(width = "100%", cellWidths = c("4.6%", "76.1%", "19.3%"), 
-                                     {}, uiOutput("slider"), {}),
+                                     NULL, uiOutput("slider"), NULL),
+                         
                          plotOutput('plot.annotations', width = "100%", height = "700px")
                          )
     )
@@ -123,7 +125,7 @@ server <- function(input, output, session) {
     res_dir_rv(parseDirPath(volumes, input$results_dir))
   })
   
-  ## 🔑 BRIDGE: overwrite text variable right before use
+  ## overwrite text variable right before use
   observeEvent(input$load.results, {
     res_dir <<- res_dir_rv()   # plain character string
     # existing code continues to use res_dir as before
@@ -212,13 +214,13 @@ server <- function(input, output, session) {
     # Produce "Locus" plot
     error <- TRUE
     # check if association data are loaded
-    if(is.null(state$chr) | is.null(state$association_results)){
+    if(is.null(state$chr) || is.null(state$association_results)){
       output$message <- renderText({"Before clicking this button, first select a 
           chromosome and load association results."})
     } else{
       # check if valid chromosome number was entered
       chr <- as.integer(input$chr)
-      if(is.na(chr) | is.null(chr)){
+      if(is.na(chr) || is.null(chr)){
         error <- TRUE
       } else{
         if(!(chr %in% 1:22)){
@@ -266,8 +268,9 @@ server <- function(input, output, session) {
 
   # what to do if "Zoom to gene" button is pressed
   observeEvent(input$zoom.gene,{
+    
     # check if association data are loaded
-    if(is.null(state$chr) | is.null(state$association_results)){
+    if(is.null(state$chr) || is.null(state$association_results)){
       output$message <- renderText({"Before clicking this button, first select a chromosome and
         load association results."})
     } else{
@@ -311,12 +314,12 @@ server <- function(input, output, session) {
   # what to do if "Zoom in" button is pressed
   observeEvent(input$zoom.in,{
     # check if association results are loaded
-    if(is.null(state$chr) | is.null(state$association_results)){
+    if(is.null(state$chr) || is.null(state$association_results)){
       output$message <- renderText({"Before clicking this button, load association results for
         a chromosome and then choose a gene."})
     } else{
       # check if window is chosen
-      if(is.null(state$window.left) | is.null(state$window.right)){
+      if(is.null(state$window.left) || is.null(state$window.right)){
         output$message <- renderText({"Before clicking this button, choose a gene."})
       } else{
         # switch to appropriate tab
@@ -339,11 +342,11 @@ server <- function(input, output, session) {
   # what to do if "Zoom out" button is pressed
   observeEvent(input$zoom.out, {
     # check if association results are loaded
-    if(is.null(state$chr) | is.null(state$association_results)){
+    if(is.null(state$chr) || is.null(state$association_results)){
       output$message <- renderText({"Before clicking this button, load association results for
         a chromosome and then choose a gene."})
     } else{
-      if(is.null(state$window.left) | is.null(state$window.right)){
+      if(is.null(state$window.left) || is.null(state$window.right)){
         output$message <- renderText({"Before clicking this button, choose a gene."})
       } else{
         # switch to appropriate tab
