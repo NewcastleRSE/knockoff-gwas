@@ -19,7 +19,7 @@
 #      also path & file prefix (not including "_qc_variants") for all QC SNP data, .txt
 #      also path & file prefix (not including "_qc_samples") for all QC SNP data, .txt
 # $4 = phenotype name
-# $5 = FDR rate
+# $5 = FDR rate # Not used, but kept for consistency with analysis script
 # $6 = output folder
 # $7 = -d
 # $8 = -w
