@@ -5,7 +5,7 @@
 # Run BOLT-LMM on any dataset
 #
 # Authors: Richard Howey
-# Date:    15/01/2025
+# Date:    15/01/2026
 #
 # Parameters
 #
