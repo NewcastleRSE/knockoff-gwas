@@ -568,7 +568,7 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
     fg00 <- gtable_frame(g0, width = unit(1, "null"), height = unit(1, "null"), debug = debug.lines)
     fg.r <- gtable_frame(gtable_rbind(fg6,fg7,fg8,fg00),
                          width = unit(1, "null"), height = unit(1, "null"))
-
+   
     # Combine main plots and legends
     grid.newpage()
     combined <- gtable_frame(gtable_cbind(fg.l, fg.r),

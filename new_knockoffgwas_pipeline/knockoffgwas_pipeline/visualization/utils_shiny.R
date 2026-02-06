@@ -211,6 +211,7 @@ autocomplete_input <- function(
   id, label, options, value = "", width = NULL, placeholder = NULL,
   max_options = 0, hide_values = FALSE, create = FALSE, contains = FALSE
 ) {
+ 
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop("jsonlite is needed to convert list of options into json!")
   }
@@ -233,6 +234,7 @@ autocomplete_input <- function(
       script = "js/autocomplete-binding.js", stylesheet = "css/autocomplete.css"
     )
   )
+ 
 }
 
 logical_js <- function(b) {

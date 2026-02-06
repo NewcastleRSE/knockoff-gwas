@@ -12,5 +12,5 @@ check.packages.cran <- function(pkg){
     sapply(pkg, require, character.only = TRUE)
 }
 packages.cran <- c("shiny", "tidyverse", "gridExtra", "dqshiny", "tibbletime", "scales",
-                   "cowplot", "latex2exp", "ggrepel", "egg", "grid")
+                   "cowplot", "latex2exp", "ggrepel", "egg", "grid", "shinyFiles")
 check.packages.cran(packages.cran)

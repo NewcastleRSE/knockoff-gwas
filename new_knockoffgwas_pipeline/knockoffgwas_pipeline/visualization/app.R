@@ -29,7 +29,7 @@ ui <- fluidPage(theme = "theme.css",
   # side panel with inputs, error messages, and information box
   fluidRow(
     column(3,
-           h4("Step 0: Select results directory."),
+           h4("Step 1: Select results directory."),
            wellPanel(
              shinyDirButton(
                id = "results_dir",
@@ -44,7 +44,7 @@ ui <- fluidPage(theme = "theme.css",
              tags$strong("Selected directory:"),
              textOutput("res_dir_text")
            )),
-      h4("Step 1: Select a chromosome."),
+      h4("Step 2: Select a chromosome."),
       wellPanel(
         #selectInput(inputId = 'phenotype', label = 'Phenotype', choices = c(phenotypes)),
         fluidRow(
@@ -55,7 +55,7 @@ ui <- fluidPage(theme = "theme.css",
               )
         )
       ),
-      h4("Optional Step 2: Type a gene."),
+      h4("Optional Step 3: Type a gene."),
       wellPanel(
         fluidRow( 
           
@@ -66,11 +66,22 @@ ui <- fluidPage(theme = "theme.css",
                  )
         )
       ),
-      h4("Optional Step 3: Refine the locus."),
+      h4("Optional Step 4: Refine the locus."),
       wellPanel(
         fluidRow(
           column(6,actionButton("zoom.in", "Zoom in (slider)")),
           column(6,actionButton("zoom.out", "Zoom out (x10)"))          
+        )
+      ),
+      h4("Optional Step 5: Export plots to results directory."),
+      wellPanel(
+        fluidRow(
+          column(6, actionButton("export_manhattan", "Export Manhattan Plot")),
+          column(6, actionButton("export_chicago", "Export Chicago Plot"))
+          ),
+        br(), 
+        fluidRow(
+          column(6,actionButton("export_all", "Export All Plots"))
         )
       ),
       actionButton("info", "?"),
@@ -203,6 +214,7 @@ server <- function(input, output, session) {
     }
     
     # produce plot
+    
     output$plot.manhattan <- renderPlot({
       withProgress(message = 'Rendering plot...', value = 0, {
         plot_manhattan_knockoffs(state$association_results$LMM,
@@ -210,6 +222,8 @@ server <- function(input, output, session) {
                                  ytrans="identity")
       })
     })
+    
+  
     
     # Produce "Locus" plot
     error <- TRUE
@@ -256,10 +270,16 @@ server <- function(input, output, session) {
         state$slider.left <- state$window.left
         state$slider.right <- state$window.right
         updateTabsetPanel(session, inputId = "Tabset", selected = "manhattan.chr")
+        
+        
         output$plot.annotations <- renderPlot({
+          
           withProgress(message = 'Rendering plot...', value = 0, {
-            plot_combined_state(state, annotations)})
+              plot_combined_state(state, annotations)
+          })
+          
         })
+        
       }
     }
     
@@ -303,7 +323,8 @@ server <- function(input, output, session) {
          # produce Chicago plot
          output$plot.annotations <- renderPlot({
            withProgress(message = 'Rendering plot...', value = 0, {
-             plot_combined_state(state, annotations)})
+               plot_combined_state(state, annotations)
+             })
          })
        } else{
          output$message <- renderText({"Type a valid gene name."})
@@ -333,7 +354,8 @@ server <- function(input, output, session) {
         # produce plot
         output$plot.annotations <- renderPlot({
           withProgress(message = 'Rendering plot...', value = 0, {
-            plot_combined_state(state, annotations)})
+              plot_combined_state(state, annotations)
+            })
         })
       }
     }
@@ -364,7 +386,8 @@ server <- function(input, output, session) {
         # produce plot
         output$plot.annotations <- renderPlot({
           withProgress(message = 'Rendering plot...', value = 0, {
-            plot_combined_state(state, annotations)})
+              plot_combined_state(state, annotations)
+            })
         })
       }
     }
@@ -414,6 +437,80 @@ server <- function(input, output, session) {
   output$ui_chr_select <- renderUI({textInput(inputId = 'chr', width = "90%", 
                                               value = state$chr, label = 'Chromosome')
   })
-}
+  
+  # Produce plots
+  observeEvent(input$export_manhattan, {
+    
+    if (!dir.exists(res_dir)) dir.create(res_dir, recursive = TRUE)
+    
+    today <- format(Sys.time(), "%Y-%m-%d-%H_%M_%S")
+    
+    req(state$chr, state$association_results)
+    
+    if(nrow(state$association_results$LMM) > 0) {
+      png(file.path(res_dir, paste0("manhattan-",today,".png") ), 2800, 1400, res=150)
+    
+      # REBUILD the plot fresh
+      p<-plot_pvalues(state$chr, state$window.left, state$window.right,
+                      state$association_results$LMM,
+                      state$association_results$LMM.clumped)
+   
+      print(p)
+      dev.off()
+      
+      showNotification("Manhattan plot exported successfully", type = "message")
+    } else {
+      showNotification("No Manhattan results to plot!", type = "message")
+      
+    }
+  })
+  
+  observeEvent(input$export_chicago, {
+    
+    if (!dir.exists(res_dir)) dir.create(res_dir, recursive = TRUE)
+    
+    today <- format(Sys.time(), "%Y-%m-%d-%H_%M_%S")
+    
+    req(state$chr, state$association_results)
+  
+    if(nrow(state$association_results$Discoveries) > 0) {
+      png(file.path(res_dir, paste0("chicago-",today,".png") ), 2800, 1400, res=150)
+    
+      # REBUILD the plot fresh
+      p<-plot_chicago(state$chr, state$window.left, state$window.right,
+                      state$association_results$Discoveries)
+  
+      print(p)
+      dev.off()
+      
+      showNotification("Plots exported successfully", type = "message")
+    } else {
+      showNotification("No Chicago results to plot!", type = "message")
+      
+    }
+  })
+  
+  observeEvent(input$export_all, {
+    
+    if (!dir.exists(res_dir)) dir.create(res_dir, recursive = TRUE)
+    
+    today <- format(Sys.time(), "%Y-%m-%d-%H_%M_%S")
+    
+    req(state$chr, state$association_results)
+    
+    
+    png(file.path(res_dir, paste0("all-",today,".png") ), 2800, 1400, res=150)
+  
+    # REBUILD the plot fresh
+    p<-plot_combined_state(state, annotations)
+
+    print(p)
+    dev.off()
+    
+    showNotification("Plots exported successfully", type = "message")
+  })
+  
+  
+} # end of server function
 
 shinyApp(ui = ui, server = server)
