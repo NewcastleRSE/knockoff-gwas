@@ -561,14 +561,30 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
                          ), silent=TRUE)
 
     # Combine the legends
-    g0 <- ggplotGrob(ggplot())
     fg6 <- gtable_frame(g6, width = unit(1, "null"), height = unit(0.75, "null"), debug = debug.lines)
     fg7 <- gtable_frame(g7, width = unit(1, "null"), height = unit(1, "null"), debug = debug.lines)
     fg8 <- gtable_frame(g8, width = unit(1, "null"), height = unit(1, "null"), debug = debug.lines)
-    fg00 <- gtable_frame(g0, width = unit(1, "null"), height = unit(1, "null"), debug = debug.lines)
-    fg.r <- gtable_frame(gtable_rbind(fg6,fg7,fg8,fg00),
-                         width = unit(1, "null"), height = unit(1, "null"))
-   
+    
+    g0 <- ggplotGrob(
+      ggplot() + theme_void()
+    )
+    
+    fg00 <- gtable_frame(
+      g0,
+      width = unit(1, "null"),
+      height = unit(1, "null"),
+      debug = debug.lines
+    )
+    
+    
+    # Rebuild legend column
+    fg.r <- gtable_frame(
+      gtable_rbind(fg6, fg7, fg8, fg00),
+      width = unit(1, "null"),
+      height = unit(1, "null"),
+      debug = debug.lines
+    )
+    
     # Combine main plots and legends
     grid.newpage()
     combined <- gtable_frame(gtable_cbind(fg.l, fg.r),
