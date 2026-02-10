@@ -1,0 +1,30 @@
+PLINK v1.90b6.21 64-bit (19 Oct 2020)
+Options in effect:
+  --bfile /nobackup/proj/comet_kogwas/data/tmp/knockoffs/knockoffs_chr1_res3
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results_d25_w3_FDR5/knockoffs_gof/knockoffs_chr1_res3
+  --r2 in-phase
+
+Hostname: compute034.comet.hpc.ncl.ac.uk
+Working directory: /mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/pbc_analysis
+Start time: Mon Feb  2 15:52:57 2026
+
+Random number seed: 1770047577
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+40232 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results_d25_w3_FDR5/knockoffs_gof/knockoffs_chr1_res3.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+40232 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results_d25_w3_FDR5/knockoffs_gof/knockoffs_chr1_res3.ld ...
+done.
+
+End time: Mon Feb  2 16:02:08 2026
