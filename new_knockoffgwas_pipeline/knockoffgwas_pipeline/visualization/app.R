@@ -120,11 +120,8 @@ ui <- fluidPage(theme = "theme.css",
 # back-end code
 server <- function(input, output, session) {
 
-  ## existing hard-coded default
-  res_dir <- "/path/to/default/results"
-  
   ## reactive holder for user choice
-  res_dir_rv <- reactiveVal(res_dir)
+  res_dir_rv <- reactiveVal("/path/to/results")
   
   app_dir  <- normalizePath(getwd())
   root_dir <- normalizePath(file.path(app_dir, "..", "..", ".."))
@@ -134,12 +131,6 @@ server <- function(input, output, session) {
   
   observeEvent(input$results_dir, {
     res_dir_rv(parseDirPath(volumes, input$results_dir))
-  })
-  
-  ## overwrite text variable right before use
-  observeEvent(input$load.results, {
-    res_dir <<- res_dir_rv()   # plain character string
-    # existing code continues to use res_dir as before
   })
   
   output$res_dir_text <- renderText({
@@ -152,6 +143,7 @@ server <- function(input, output, session) {
   state <- reactiveValues(
                          association_results = NULL,
                          chr = NULL,
+                         res_dir = NULL, 
                          max.BP = NULL,
                          window.left = NULL, 
                          window.right = NULL,
@@ -191,8 +183,17 @@ server <- function(input, output, session) {
     output$placeholder.manhattan <- NULL
     # check if chr has changed; if so, clear lower-level variables and 
     # load association results for new chr
-    if(!is.null(state$chr)){
-      if(chr != state$chr){
+    current_dir <- res_dir_rv()
+    
+    need_reload <-
+      is.null(state$association_results) ||
+      is.null(state$chr) ||
+      is.null(state$res_dir) ||
+      chr != state$chr ||
+      current_dir != state$res_dir
+    
+    if (need_reload) {
+      
         state$chr <- chr
         state$highlight.gene <- NULL
         state$max.BP <- NULL
@@ -203,13 +204,13 @@ server <- function(input, output, session) {
         output$plot.annotations <- NULL # important: clear Chicago plot
         output$placeholder.locus <- renderText({"[Select a gene to produce locus view.]"})
         file_prefix<-paste0("results_chr",chr,"_chr",chr)
-        state$association_results <- load_association_results(res_dir, lmm_dir, file_prefix)
-      }
+        state$association_results <- load_association_results(res_dir_rv(), lmm_dir, file_prefix)
+      
     } else{
         state$chr <- chr
         file_prefix<-paste0("results_chr",chr,"_chr",chr)
         withProgress(message = 'Loading results...', value = 0, {
-          state$association_results <- load_association_results(res_dir, lmm_dir, file_prefix)
+          state$association_results <- load_association_results(res_dir_rv(), lmm_dir, file_prefix)
         })
     }
     
@@ -441,69 +442,111 @@ server <- function(input, output, session) {
   # Produce plots
   observeEvent(input$export_manhattan, {
     
-    if (!dir.exists(res_dir)) dir.create(res_dir, recursive = TRUE)
+    if (!dir.exists(res_dir_rv())) {
+      dir.create(res_dir_rv(), recursive = TRUE)
+    }
     
     today <- format(Sys.time(), "%Y-%m-%d-%H_%M_%S")
     
-    req(state$chr, state$association_results)
+    req(
+      state$chr,
+      state$association_results,
+      state$association_results$LMM
+    )
     
-    if(nrow(state$association_results$LMM) > 0) {
-      png(file.path(res_dir, paste0("manhattan-",today,".png") ), 2800, 1400, res=150)
+    df_lmm <- state$association_results$LMM
+    df_clumped <- state$association_results$LMM.clumped
     
-      # REBUILD the plot fresh
-      p<-plot_pvalues(state$chr, state$window.left, state$window.right,
-                      state$association_results$LMM,
-                      state$association_results$LMM.clumped)
-   
-      print(p)
-      dev.off()
+    if (!is.null(df_lmm) && nrow(df_lmm) > 0) {
       
-      showNotification("Manhattan plot exported successfully", type = "message")
+      png(
+        file.path(res_dir_rv(), paste0("manhattan-", today, ".png")),
+        2800, 1400, res = 150
+      )
+      on.exit(dev.off(), add = TRUE)
+      
+      p <- plot_pvalues(
+        state$chr,
+        state$window.left,
+        state$window.right,
+        df_lmm,
+        df_clumped
+      )
+      
+      print(p)
+      
+      showNotification(
+        "Manhattan plot exported successfully",
+        type = "message"
+      )
+      
     } else {
-      showNotification("No Manhattan results to plot!", type = "message")
+      
+      showNotification(
+        "No Manhattan results to plot!",
+        type = "message"
+      )
       
     }
   })
   
+  
   observeEvent(input$export_chicago, {
     
-    if (!dir.exists(res_dir)) dir.create(res_dir, recursive = TRUE)
+    if (!dir.exists(res_dir_rv())) {
+      dir.create(res_dir_rv(), recursive = TRUE)
+    }
     
     today <- format(Sys.time(), "%Y-%m-%d-%H_%M_%S")
     
-    req(state$chr, state$association_results)
-  
-    if(nrow(state$association_results$Discoveries) > 0) {
-      png(file.path(res_dir, paste0("chicago-",today,".png") ), 2800, 1400, res=150)
+    req(
+      state$chr,
+      state$association_results,
+      state$association_results$Discoveries
+    )
     
-      # REBUILD the plot fresh
-      p<-plot_chicago(state$chr, state$window.left, state$window.right,
-                      state$association_results$Discoveries)
-  
+    df <- state$association_results$Discoveries
+    
+    if (!is.null(df) && nrow(df) > 0) {
+      
+      png(
+        file.path(res_dir_rv(), paste0("chicago-", today, ".png")),
+        2800, 1400, res = 150
+      )
+      
+      p <- plot_chicago(
+        state$chr,
+        state$window.left,
+        state$window.right,
+        df
+      )
+      
       print(p)
       dev.off()
       
       showNotification("Plots exported successfully", type = "message")
+      
     } else {
+      
       showNotification("No Chicago results to plot!", type = "message")
       
     }
   })
   
+  
   observeEvent(input$export_all, {
     
-    if (!dir.exists(res_dir)) dir.create(res_dir, recursive = TRUE)
+    if (!dir.exists(res_dir_rv())) dir.create(res_dir_rv(), recursive = TRUE)
     
     today <- format(Sys.time(), "%Y-%m-%d-%H_%M_%S")
     
     req(state$chr, state$association_results)
     
+    png(file.path(res_dir_rv(), paste0("all-",today,".png") ), 2800, 1400, res=150)
     
-    png(file.path(res_dir, paste0("all-",today,".png") ), 2800, 1400, res=150)
-  
     # REBUILD the plot fresh
     p<-plot_combined_state(state, annotations)
-
+    
     print(p)
     dev.off()
     

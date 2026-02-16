@@ -64,7 +64,7 @@ load_annotations <- function(data_dir) {
     arrange(chrom, chromStart)
   
   # Extract color map
-  annotation.color.map <- Annotations.func %>% group_by(name, itemColor) %>% summarise() %>% 
+  annotation.color.map <- Annotations.func %>% group_by(name, itemColor) %>% summarise( .groups = "drop") %>% 
     ungroup() %>%
     mutate(name.num=parse_number(as.character(name))) %>% 
     mutate(label=gsub("\\d+_", "",name), label=gsub(fixed("_"), " ",label)) %>%
@@ -115,7 +115,7 @@ load_annotations <- function(data_dir) {
   # with the largest sum of exon lengths
   Exons.canonical <- Exons %>%
     mutate(exonLength=exonEnds-exonStarts) %>%
-    group_by(name, name2) %>% summarise(Length=sum(exonLength)) %>%
+    group_by(name, name2) %>% summarise(Length=sum(exonLength), .groups = "drop") %>%
     ungroup() %>% group_by(name2) %>% top_n(1, Length) %>%
     inner_join(Exons, by=c("name", "name2")) 
   

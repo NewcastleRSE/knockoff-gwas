@@ -134,124 +134,80 @@ theme_minimal <- theme_bw() +
 
 plot_pvalues <- function(window.chr, window.left, window.right, LMM, LMM.clumped,
                          p.significant=5e-8, p.max=1e-0) {
-
-    # Extract LMM p-values within this window
-    LMM.window <- LMM %>% filter(CHR==window.chr, BP<=window.right, BP>=window.left) %>%
-        left_join(LMM.clumped, by = c("SNP", "CHR", "BP")) %>%
-        mutate(BP.lead=factor(BP.lead))
-
-    #cat(sprintf("There are %d LMM pvalues within this window, %d of which are significant.\n",
-    #            nrow(LMM.window), sum(LMM.window$P<p.significant)))
-
-    # Extract clumps that overlap with this window
-    LMM.clumped.window <- LMM.clumped %>% filter(CHR==window.chr) %>%
-        group_by(CHR, SNP.lead, BP.lead) %>%
-        summarise(BP.min=min(BP), BP.max=max(BP)) %>%
-        filter(BP.min<=window.right, BP.max>=window.left) %>%
-        select(CHR, SNP.lead) %>%
-        inner_join(LMM.clumped, by = c("CHR", "SNP.lead"))
-
-    #cat(sprintf("There are %d LMM clumps that overlap with this window.\n",
-    #            length(unique(LMM.clumped.window$SNP.lead))))
-
-    # Manhattan plot
-    if(nrow(LMM.window)>0) {
-
-        # Significance level for pvalues
-        Window.nominal <- LMM.window %>% mutate(Importance = -log10(p.significant))
-
-        LMM.window$BP.lead <- round((LMM.window$BP.lead %>% as.character %>% parse_number)/1e6,3) %>% factor
-        clump.lead.snps <- unique(LMM.clumped.window$SNP.lead)
-        
-        if(all(is.na(LMM.window$BP.lead))) {
-            p.manhattan <- LMM.window %>%
-                filter(P<p.max) %>%
-                mutate(P=pmax(1e-300,P)) %>%
-                ggplot(aes(x=BP, y=-log10(P))) +
-                geom_point(color="black", alpha=0.25, size=dot.size)
-        } else {
-            p.manhattan <- LMM.window %>%
-                filter(P<p.max) %>%
-                mutate(SNP.lead=factor(SNP.lead, levels=clump.lead.snps, labels=clump.lead.snps)) %>%
-                mutate(P=pmax(1e-300,P)) %>%
-                ggplot(aes(x=BP, y=-log10(P), color=SNP.lead, alpha=is.na(SNP.lead))) +
-                geom_point(size=dot.size) +
-                scale_colour_discrete(na.value = "black", name="Lead SNP (LMM)", guide=FALSE)
-        }
+  
+  # Extract LMM p-values within this window
+  LMM.window <- LMM %>% filter(CHR==window.chr, BP<=window.right, BP>=window.left) %>%
+    left_join(LMM.clumped, by = c("SNP", "CHR", "BP")) %>%
+    mutate(BP.lead=factor(BP.lead))
+  
+  clump.lead.snps <- unique(LMM.clumped$SNP.lead)
+  
+  if(nrow(LMM.window)>0) {
+    LMM.window <- LMM.window %>% mutate(P=pmax(P, 1e-300))
+    manhattan.y.max <- max(-log10(LMM.window$P), na.rm=TRUE)
+    manhattan.y.breaks <- c(0,7.3, manhattan.y.max)
+    
+    # Base Manhattan plot
+    if(all(is.na(LMM.window$BP.lead))) {
+      p.manhattan <- ggplot(LMM.window %>% filter(P<p.max), aes(x=BP, y=-log10(P))) +
+        geom_point(color="black", alpha=0.25, size=dot.size)
     } else {
-        p.manhattan <- ggplot(tibble()) + geom_blank()
+      p.manhattan <- ggplot(LMM.window %>% filter(P<p.max), 
+                            aes(x=BP, y=-log10(P), color=SNP.lead, alpha=is.na(SNP.lead))) +
+        geom_point(size=dot.size) +
+        scale_colour_discrete(na.value = "black", name="Lead SNP (LMM)", guide="none") +
+        scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 1), guide="none")
     }
-
-    # Vertical limits for Manhattan plots
-    manhattan.y.max <- NA
-    manhattan.y.breaks <- c(0,7.3,NA)
-
+    
+    # Add the y-scale once, now that we know the max
     p.manhattan <- p.manhattan +
-        geom_hline(yintercept=-log10(p.significant), linetype="dashed", color = "black") +
-        scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 1), guide=FALSE) +
-        coord_cartesian(xlim = c(window.left,window.right)) +
-        scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
-        scale_y_continuous(limits=c(1.8,manhattan.y.max), breaks=manhattan.y.breaks, trans="sqrt") +
-        theme_bw() +
-        xlab(sprintf("Chromosome %d (Mb)", window.chr)) + ylab(TeX("$-\\log_{10}(p)$")) +
-        theme(text = element_text(size=font.size),
-              plot.title = element_text(size=title.font.size),
-              axis.title = element_text(size=axis.font.size),
-              legend.text = element_text(size=legend.font.size),
-              legend.title = element_text(size=legend.font.size),
-              panel.border = element_blank(),
-              panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
-              panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")
-              ) +
-        ggtitle(sprintf("Manhattan plot (BOLT-LMM)"))
-
-    # Plot clumped LMM discoveries
-    if(nrow(LMM.clumped.window)>0) {
-        LMM.clumps.window <- LMM.clumped.window %>% group_by(CHR, SNP.lead, BP.lead) %>%
-            summarise(BP.min=min(BP), BP.max=max(BP)) %>%
-            ungroup() %>%
-            mutate(BP.lead=factor(BP.lead)) %>%
-            mutate(SNP.lead=factor(SNP.lead, levels=clump.lead.snps, labels=clump.lead.snps)) %>%
-            mutate(start=BP.min, end=BP.max) %>% mutate(width=end-start) %>% arrange(desc(width)) %>%
-            place_segments(gap=1e4) %>%
-            mutate(Height=-Height)
-
-        p.clumped <- LMM.clumps.window %>%
-            ggplot() +
-            geom_segment(aes(x=BP.min, y=Height,
-                             xend=BP.max, yend=Height, color=SNP.lead)) +
-            geom_segment(aes(x=BP.min, y=Height-0.4, xend=BP.min, yend=Height+0.4, color=SNP.lead)) +
-            geom_segment(aes(x=BP.max, y=Height-0.4, xend=BP.max, yend=Height+0.4, color=SNP.lead)) +
-            scale_colour_discrete(na.value = "black", name="Lead SNP (LMM)") +
-                    coord_cartesian(xlim = c(window.left,window.right)) +
-            scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
-            scale_y_continuous(breaks = NULL) +
-            ylab("") + xlab("") +
-            theme_void() +
-            theme(text = element_text(size=font.size),
-                  plot.title = element_text(size=title.font.size),
-                  axis.title = element_text(size=axis.font.size),
-                  legend.text = element_text(size=legend.font.size),
-                  legend.title = element_text(size=legend.font.size),
-                  legend.key.size = unit(0.5,"line")) +
-            guides(color=guide_legend(ncol=2))
-
-      # Determine whether we would list all lead SNPs in the legend
-      if(length(unique(LMM.clumps.window$SNP.lead))>20) {
-        p.clumped <- p.clumped +
-          theme(legend.position = "none")
-      }
-    } else {
-      LMM.clumps.window <- tibble()
-      p.clumped <- ggplot(tibble()) + geom_blank()
-    }
-
-    # Return plot objects
-    plots <- c()
-    plots$manhattan <- p.manhattan
-    plots$clumped <- p.clumped
-    return(plots)
+      scale_y_continuous(limits=c(1.8, manhattan.y.max), 
+                         breaks=manhattan.y.breaks, trans="sqrt") +
+      geom_hline(yintercept=-log10(p.significant), linetype="dashed", color = "black") +
+      scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
+      coord_cartesian(xlim=c(window.left, window.right)) +
+      theme_bw() +
+      xlab(sprintf("Chromosome %d (Mb)", window.chr)) + ylab(TeX("$-\\log_{10}(p)$")) +
+      theme(text = element_text(size=font.size),
+            plot.title = element_text(size=title.font.size),
+            axis.title = element_text(size=axis.font.size),
+            legend.text = element_text(size=legend.font.size),
+            legend.title = element_text(size=legend.font.size),
+            panel.border = element_blank(),
+            panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
+            panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")) +
+      ggtitle("Manhattan plot (BOLT-LMM)")
+    
+  } else {
+    # Empty plot if no data
+    p.manhattan <- ggplot(tibble()) + geom_blank()
+  }
+  
+  # Clumped LMM signals (simplified)
+  if(nrow(LMM.clumped)>0) {
+    LMM.clumps.window <- LMM.clumped %>% 
+      group_by(CHR, SNP.lead, BP.lead) %>%
+      summarise(BP.min=min(BP), BP.max=max(BP), .groups="drop") %>%
+      place_segments(gap=1e4) %>%
+      mutate(Height=-Height)
+    
+    p.clumped <- ggplot(LMM.clumps.window) +
+      geom_segment(aes(x=BP.min, xend=BP.max, y=Height, yend=Height, color=SNP.lead)) +
+      geom_segment(aes(x=BP.min, xend=BP.min, y=Height-0.4, yend=Height+0.4, color=SNP.lead)) +
+      geom_segment(aes(x=BP.max, xend=BP.max, y=Height-0.4, yend=Height+0.4, color=SNP.lead)) +
+      scale_colour_discrete(na.value = "black", name="Lead SNP (LMM)") +
+      scale_y_continuous(breaks=NULL) +
+      coord_cartesian(xlim=c(window.left, window.right)) +
+      scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
+      theme_void()
+  } else {
+    p.clumped <- ggplot(tibble()) + geom_blank()
+  }
+  
+  plots <- list(manhattan=p.manhattan, clumped=p.clumped)
+  return(plots)
 }
+
 
 plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
     
@@ -316,7 +272,7 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
 
 plot_annotations <- function(window.chr, window.left, window.right, Annotations.func) {
     # Extract color map
-    annotation.color.map <- Annotations.func %>% group_by(name, itemColor) %>% summarise() %>%
+    annotation.color.map <- Annotations.func %>% group_by(name, itemColor) %>% summarise(.groups = "drop") %>%
         ungroup() %>%
         mutate(name.num=parse_number(as.character(name))) %>%
         mutate(label=gsub("\\d+_", "",name), label=gsub(fixed("_"), " ",label)) %>%
@@ -347,7 +303,7 @@ plot_annotations <- function(window.chr, window.left, window.right, Annotations.
             ylab("") + xlab("") +
             coord_cartesian(xlim = c(window.left,window.right)) +
             scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
-            scale_color_manual(values=myColors, guide=FALSE) +
+            scale_color_manual(values=myColors, guide="none") +
             scale_fill_manual(values=myColors, name="Variant annotation") +
             ggtitle("Functional annotations") +
             theme_void() +
@@ -379,7 +335,7 @@ plot_genes <- function(window.chr, window.left, window.right, Exons.canonical,
 
     # Find out how many genes there are and determine whether we would plot all of them
     Genes.window <- Exons.window %>% group_by(name, name2, strand) %>%
-        summarise(txStart=min(txStart), txEnd=max(txEnd)) %>%
+        summarise(txStart=min(txStart), txEnd=max(txEnd), .groups = "drop") %>%
         mutate(txStart=max(txStart, window.left), txEnd=min(txEnd, window.right)) %>%
         mutate(start=txStart, end=txEnd)
 
@@ -399,7 +355,7 @@ plot_genes <- function(window.chr, window.left, window.right, Exons.canonical,
         } else {
             plot.genes <- FALSE
             genes.toshow <- unique(Genes.window$name)[1:max.genes]
-            Genes.window <- Genes.window %>% filter((name %in% genes.toshow) || (highlight))
+            Genes.window <- Genes.window %>% filter((name %in% genes.toshow) | (highlight))
         }
 
         # Sort the genes by length, making sure that the highlighted gene is first;
@@ -463,7 +419,7 @@ plot_genes <- function(window.chr, window.left, window.right, Exons.canonical,
             scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
             scale_y_continuous(expand=c(0.01,0.01), breaks = NULL,
                                limits=c(min(Genes.window$Height)-0.25,max(Genes.window$Height)+0.25)) +
-            scale_fill_manual(values = c("FALSE" = "white", "TRUE" = "yellow"), guide=FALSE) +
+            scale_fill_manual(values = c("FALSE" = "white", "TRUE" = "yellow"), guide="none") +
             theme_void() +
             ggtitle("Genes") +
             theme(text = element_text(size=font.size),
@@ -532,9 +488,17 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
     # Convert the plot objects for placement
     debug.lines <- FALSE
     g1 <-  ggplotGrob(p.lmm$manhattan)
-    g2 <-  ggplotGrob(p.lmm$clumped + theme(legend.position="none"))
-    g3 <-  ggplotGrob(p.knockoffs + theme(legend.position="none"))
-    g4 <-  ggplotGrob(p.functional + theme(legend.position="none"))
+    
+    # Ensure legend.position is set *before* ggplotGrob
+    p.lmm$clumped <- p.lmm$clumped + theme(legend.position="none")
+    p.knockoffs <- p.knockoffs + theme(legend.position="none")
+    p.functional <- p.functional + theme(legend.position="none")
+    
+    # Then convert to grobs
+    g2 <- ggplotGrob(p.lmm$clumped)
+    g3 <- ggplotGrob(p.knockoffs)
+    g4 <- ggplotGrob(p.functional)
+    
     g5 <-  ggplotGrob(p.genes)
     fg1 <- gtable_frame(g1, width = unit(1, "null"), height = unit(heights[1], "null"), debug = debug.lines)
     fg2 <- gtable_frame(g2, width = unit(1, "null"), height = unit(heights[2], "null"), debug = debug.lines)
@@ -546,20 +510,16 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
     fg.l <- gtable_frame(gtable_rbind(fg1, fg2, fg3, fg4, fg5),
                          width = unit(4, "null"), height = unit(1, "null"))
 
-    # Extract the legends
-    g6 <- ggplotGrob(ggplot())
-    try(g6 <- ggplotGrob(ggplotify::as.ggplot(get_legend(p.lmm$clumped))+
-                         theme(text = element_text(size=legend.font.size))
-                         ), silent=TRUE)
-    g7 <- ggplotGrob(ggplot())
-    try(g7 <- ggplotGrob(ggplotify::as.ggplot(get_legend(p.knockoffs))+
-                         theme(text = element_text(size=legend.font.size))
-                         ), silent=TRUE)
-    g8 <- ggplotGrob(ggplot())
-    try(g8 <- ggplotGrob(ggplotify::as.ggplot(get_legend(p.functional))+
-                         theme(text = element_text(size=legend.font.size))
-                         ), silent=TRUE)
-
+    extract_legend_safe <- function(p) {
+      guides <- get_plot_component(p, "guide-box", return_all = TRUE)
+      if (length(guides) == 0) return(ggplot())
+      ggplotify::as.ggplot(guides[[1]])
+    }
+    
+    g6 <- ggplotGrob(extract_legend_safe(p.lmm$clumped))
+    g7 <- ggplotGrob(extract_legend_safe(p.knockoffs))
+    g8 <- ggplotGrob(extract_legend_safe(p.functional))
+    
     # Combine the legends
     fg6 <- gtable_frame(g6, width = unit(1, "null"), height = unit(0.75, "null"), debug = debug.lines)
     fg7 <- gtable_frame(g7, width = unit(1, "null"), height = unit(1, "null"), debug = debug.lines)
