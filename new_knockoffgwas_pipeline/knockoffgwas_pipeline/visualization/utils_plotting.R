@@ -325,120 +325,120 @@ plot_annotations <- function(window.chr, window.left, window.right, Annotations.
 
 plot_genes <- function(window.chr, window.left, window.right, Exons.canonical,
                        highlight.gene=NULL, max.gene.rows=10) {
-
-    # Select exons within this windows
-    Exons.window <- Exons.canonical %>%
-        filter(chrom==window.chr, txStart<=window.right, txEnd>=window.left)
-    #cat(sprintf("There are %d exons within this window, divided into %d genes.\n",
-    #            nrow(Exons.window), length(unique(Exons.window$name2))))
-
-
-    # Find out how many genes there are and determine whether we would plot all of them
-    Genes.window <- Exons.window %>% group_by(name, name2, strand) %>%
-        summarise(txStart=min(txStart), txEnd=max(txEnd), .groups = "drop") %>%
-        mutate(txStart=max(txStart, window.left), txEnd=min(txEnd, window.right)) %>%
-        mutate(start=txStart, end=txEnd)
-
-    # Highlight special gene, if available
-    if(nrow(Genes.window) > 0) {
-        if(is.null(highlight.gene)) {
-            Genes.window$highlight <- FALSE
-        } else {
-            Genes.window <- Genes.window %>% mutate(highlight = (name2==highlight.gene))
-        }
-
-        # Do not attempt to place more than a max number of genes
-        n.genes <- length(unique(Genes.window$name))
-        max.genes <- 50
-        if(n.genes<=max.genes) {
-            plot.genes <- TRUE
-        } else {
-            plot.genes <- FALSE
-            genes.toshow <- unique(Genes.window$name)[1:max.genes]
-            Genes.window <- Genes.window %>% filter((name %in% genes.toshow) | (highlight))
-        }
-
-        # Sort the genes by length, making sure that the highlighted gene is first;
-        # then, place them on different rows so they don't overlap
-        Genes.window <- Genes.window %>% mutate(width = end-start) %>% arrange(desc(highlight), desc(width)) %>%
-            place_segments()
-
-        # Remove genes that do not fit in 3 rows
-        if(length(unique(Genes.window$Height))>max.gene.rows) {
-            plot.genes <- FALSE
-            Genes.window <- Genes.window %>% filter(Height<=max.gene.rows)
-        }
-    } else{
-        plot.genes <- FALSE
-        n.genes <- 0
-    }        
-    
-    # Plot exons and genes, if they fit
-    if(plot.genes) {
-        # Rescale the gene heights
-        Genes.window <- Genes.window %>% mutate(Height=-(Height-0.5)) %>%
-            mutate(txCenter=(txStart+txEnd)/2, Height=Height/2)
-
-        # Extract genes within this window
-        strand.levels <- c("+", "-")
-        strand.labels <- c("->", "<-")
-        Genes.window <- Genes.window %>%
-            mutate(strand.latex=factor(strand, labels=strand.labels, levels=strand.levels)) %>%
-            mutate(strand.latex=as.character(strand.latex))
-
-        p.genes <- Exons.window %>%
-            filter(exonStarts>=window.left, exonEnds<=window.right) %>%
-            inner_join(Genes.window %>% select(name, name2, Height), by = c("name", "name2")) %>%
-            ggplot() +
-            geom_rect(aes(xmin=exonStarts, xmax=exonEnds, ymin=Height-0.1, ymax=Height+0.1),
-                      alpha=1, color="black", fill="black") +
-            geom_segment(data=Genes.window, aes(x=txStart, y=Height, xend=txEnd, yend=Height, group=name2),
-                         color="black") +
-            geom_label_repel(data=Genes.window, aes(x=txCenter, y=Height+0.1, label="NA"),
-                             size=1, alpha=0, max.iter=0) +
-            geom_label_repel(data=Genes.window, aes(x=txCenter, y=Height-0.1, label="NA"),
-                             size=1, alpha=0, max.iter=0) +
-            geom_label_repel(data=Genes.window, aes(x=txStart, y=Height+0.1, label="NA"),
-                             size=1, alpha=0, max.iter=0) +
-            geom_label_repel(data=Genes.window, aes(x=txStart, y=Height-0.1, label="NA"),
-                             size=1, alpha=0, max.iter=0) +
-            geom_label_repel(data=Genes.window, aes(x=txEnd, y=Height+0.1, label="NA"),
-                             size=1, alpha=0, max.iter=0) +
-            geom_label_repel(data=Genes.window, aes(x=txEnd, y=Height-0.1, label="NA"),
-                             size=1, alpha=0, max.iter=0) +
-            geom_label_repel(data=Genes.window, aes(x=txCenter, y=Height,
-                                                    label=paste(name2,strand.latex,sep=" "),
-                                                    fill=highlight),
-                             size=5, direction="both", force=1, max.iter=2000,
-                             box.padding=0.1,
-                             point.padding=1,
-                             label.padding=0.15,
-                             segment.color = 'grey50', segment.alpha=0.5, seed=2019) +
-            ylab("") + xlab("") +
-            coord_cartesian(xlim = c(window.left,window.right)) +
-            scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
-            scale_y_continuous(expand=c(0.01,0.01), breaks = NULL,
-                               limits=c(min(Genes.window$Height)-0.25,max(Genes.window$Height)+0.25)) +
-            scale_fill_manual(values = c("FALSE" = "white", "TRUE" = "yellow"), guide="none") +
-            theme_void() +
-            ggtitle("Genes") +
-            theme(text = element_text(size=font.size),
-                  plot.title = element_text(size=title.font.size),
-                  axis.title = element_text(size=axis.font.size),
-                  panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
-                  panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")
-                  )
+  
+  # Select exons within this windows
+  Exons.window <- Exons.canonical %>%
+    filter(chrom==window.chr, txStart<=window.right, txEnd>=window.left)
+  #cat(sprintf("There are %d exons within this window, divided into %d genes.\n",
+  #            nrow(Exons.window), length(unique(Exons.window$name2))))
+  
+  
+  # Find out how many genes there are and determine whether we would plot all of them
+  Genes.window <- Exons.window %>% group_by(name, name2, strand) %>%
+    summarise(txStart=min(txStart), txEnd=max(txEnd), .groups = "drop_last") %>%
+    mutate(txStart=max(txStart, window.left), txEnd=min(txEnd, window.right)) %>%
+    mutate(start=txStart, end=txEnd)
+  
+  # Highlight special gene, if available
+  if(nrow(Genes.window) > 0) {
+    if(is.null(highlight.gene)) {
+      Genes.window$highlight <- FALSE
     } else {
-        if(n.genes==0) {
-            gene.title <- sprintf("There are no genes in this region.")
-        } else {
-            gene.title <- sprintf("There are %d genes in this region. Zoom in to see them.", n.genes)
-        }
-        p.genes <- ggplot(tibble()) + geom_blank() + ggtitle(gene.title)
+      Genes.window <- Genes.window %>% mutate(highlight = (name2==highlight.gene))
     }
-
-    # Return plot
-    return(p.genes)
+    
+    # Do not attempt to place more than a max number of genes
+    n.genes <- length(unique(Genes.window$name))
+    max.genes <- 50
+    if(n.genes<=max.genes) {
+      plot.genes <- TRUE
+    } else {
+      plot.genes <- FALSE
+      genes.toshow <- unique(Genes.window$name)[1:max.genes]
+      Genes.window <- Genes.window %>% filter((name %in% genes.toshow) | (highlight))
+    }
+    
+    # Sort the genes by length, making sure that the highlighted gene is first;
+    # then, place them on different rows so they don't overlap
+    Genes.window <- Genes.window %>% mutate(width = end-start) %>% arrange(desc(highlight), desc(width)) %>%
+      place_segments()
+    
+    # Remove genes that do not fit in 3 rows
+    if(length(unique(Genes.window$Height))>max.gene.rows) {
+      plot.genes <- FALSE
+      Genes.window <- Genes.window %>% filter(Height<=max.gene.rows)
+    }
+  } else{
+    plot.genes <- FALSE
+    n.genes <- 0
+  }        
+  
+  # Plot exons and genes, if they fit
+  if(plot.genes) {
+    # Rescale the gene heights
+    Genes.window <- Genes.window %>% mutate(Height=-(Height-0.5)) %>%
+      mutate(txCenter=(txStart+txEnd)/2, Height=Height/2)
+    
+    # Extract genes within this window
+    strand.levels <- c("+", "-")
+    strand.labels <- c("->", "<-")
+    Genes.window <- Genes.window %>%
+      mutate(strand.latex=factor(strand, labels=strand.labels, levels=strand.levels)) %>%
+      mutate(strand.latex=as.character(strand.latex))
+    
+    p.genes <- Exons.window %>%
+      filter(exonStarts>=window.left, exonEnds<=window.right) %>%
+      inner_join(Genes.window %>% select(name, name2, Height), by = c("name", "name2")) %>%
+      ggplot() +
+      geom_rect(aes(xmin=exonStarts, xmax=exonEnds, ymin=Height-0.1, ymax=Height+0.1),
+                alpha=1, color="black", fill="black") +
+      geom_segment(data=Genes.window, aes(x=txStart, y=Height, xend=txEnd, yend=Height, group=name2),
+                   color="black") +
+      geom_label_repel(data=Genes.window, aes(x=txCenter, y=Height+0.1, label="NA"),
+                       size=1, alpha=0, max.iter=0) +
+      geom_label_repel(data=Genes.window, aes(x=txCenter, y=Height-0.1, label="NA"),
+                       size=1, alpha=0, max.iter=0) +
+      geom_label_repel(data=Genes.window, aes(x=txStart, y=Height+0.1, label="NA"),
+                       size=1, alpha=0, max.iter=0) +
+      geom_label_repel(data=Genes.window, aes(x=txStart, y=Height-0.1, label="NA"),
+                       size=1, alpha=0, max.iter=0) +
+      geom_label_repel(data=Genes.window, aes(x=txEnd, y=Height+0.1, label="NA"),
+                       size=1, alpha=0, max.iter=0) +
+      geom_label_repel(data=Genes.window, aes(x=txEnd, y=Height-0.1, label="NA"),
+                       size=1, alpha=0, max.iter=0) +
+      geom_label_repel(data=Genes.window, aes(x=txCenter, y=Height,
+                                              label=paste(name2,strand.latex,sep=" "),
+                                              fill=highlight),
+                       size=5, direction="both", force=1, max.iter=2000,
+                       box.padding=0.1,
+                       point.padding=1,
+                       label.padding=0.15,
+                       segment.color = 'grey50', segment.alpha=0.5, seed=2019) +
+      ylab("") + xlab("") +
+      coord_cartesian(xlim = c(window.left,window.right)) +
+      scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
+      scale_y_continuous(expand=c(0.01,0.01), breaks = NULL,
+                         limits=c(min(Genes.window$Height)-0.25,max(Genes.window$Height)+0.25)) +
+      scale_fill_manual(values = c("FALSE" = "white", "TRUE" = "yellow"), guide=FALSE) +
+      theme_void() +
+      ggtitle("Genes") +
+      theme(text = element_text(size=font.size),
+            plot.title = element_text(size=title.font.size),
+            axis.title = element_text(size=axis.font.size),
+            panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
+            panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")
+      )
+  } else {
+    if(n.genes==0) {
+      gene.title <- sprintf("There are no genes in this region.")
+    } else {
+      gene.title <- sprintf("There are %d genes in this region. Zoom in to see them.", n.genes)
+    }
+    p.genes <- ggplot(tibble()) + geom_blank() + ggtitle(gene.title)
+  }
+  
+  # Return plot
+  return(p.genes)
 }
 
 plot_combined <- function(window.chr, window.left, window.right, Discoveries, LMM, LMM.clumped,
