@@ -490,14 +490,17 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
     g1 <-  ggplotGrob(p.lmm$manhattan)
     
     # Ensure legend.position is set *before* ggplotGrob
-    p.lmm$clumped <- p.lmm$clumped + theme(legend.position="none")
-    p.knockoffs <- p.knockoffs + theme(legend.position="none")
-    p.functional <- p.functional + theme(legend.position="none")
+    # Keep originals for legend extraction
+    p.lmm_clumped_noleg   <- p.lmm$clumped   + theme(legend.position = "none")
+    p.knockoffs_noleg     <- p.knockoffs     + theme(legend.position = "none")
+    p.functional_noleg    <- p.functional    + theme(legend.position = "none")
+    
     
     # Then convert to grobs
-    g2 <- ggplotGrob(p.lmm$clumped)
-    g3 <- ggplotGrob(p.knockoffs)
-    g4 <- ggplotGrob(p.functional)
+    g2 <- ggplotGrob(p.lmm_clumped_noleg)
+    g3 <- ggplotGrob(p.knockoffs_noleg)
+    g4 <- ggplotGrob(p.functional_noleg)
+    
     
     g5 <-  ggplotGrob(p.genes)
     fg1 <- gtable_frame(g1, width = unit(1, "null"), height = unit(heights[1], "null"), debug = debug.lines)
@@ -550,7 +553,11 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
     combined <- gtable_frame(gtable_cbind(fg.l, fg.r),
                          width = unit(1, "null"),
                          height = unit(1, "null"))
-    p.final <- ggplotify::as.ggplot(combined)
+    
+    # Suppress y-scale warning
+    p.final <- suppressWarnings(
+      ggplotify::as.ggplot(combined)
+    )
 
     # Return complete plot
     return(p.final)

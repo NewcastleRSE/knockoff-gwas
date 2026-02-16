@@ -128,8 +128,27 @@ load_annotations <- function(data_dir) {
 
 load_association_results <- function(data_dir, lmm_dir, phenotype){
 
-    # Load knockoffs discovereries
-    resolution.list <- paste("res", 0:6, sep="")
+    # Check results exist firstly
+    resolution.list <- paste0("res", 0:6)
+    
+    # Build expected filenames
+    expected_files <- file.path(
+      data_dir,
+      paste0(phenotype, "_", resolution.list, "_discoveries.txt")
+    )
+    
+    # Check all exist
+    missing <- expected_files[!file.exists(expected_files)]
+    
+    if (length(missing) > 0) {
+      warning(
+        "Missing knockoff files:\n",
+        paste(missing, collapse = "\n")
+      )
+      return(NULL)
+    }
+  
+    # Load knockoffs discoveries
     phenotype.list <- c(phenotype)
     Params <- expand.grid(Resolution=resolution.list, Phenotype=phenotype.list) %>% as_tibble()
     Discoveries <- lapply(1:nrow(Params), function(idx) {

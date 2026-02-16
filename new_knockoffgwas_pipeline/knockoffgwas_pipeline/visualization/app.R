@@ -137,7 +137,7 @@ server <- function(input, output, session) {
     res_dir_rv()
   })
   
-  output$placeholder.manhattan <- renderText({"[Select a chromosome to get started.]"})
+  output$placeholder.manhattan <- renderText({"[Select a results directory and chromosome to get started.]"})
   output$placeholder.locus <- renderText({"[Select a gene to produce locus view.]"})
   # all parameters required to describe state of the app  
   state <- reactiveValues(
@@ -214,13 +214,29 @@ server <- function(input, output, session) {
         })
     }
     
+    # Check if results loaded
+    if(is.null(state$association_results))
+    {
+      showNotification("Unable to load results!", type = "message")
+      return(NULL)
+    }
+    
     # produce plot
     
     output$plot.manhattan <- renderPlot({
+      
+      req(
+        state$association_results,
+        state$window.left,
+        state$window.right,
+        state$chr
+      )
+      
       withProgress(message = 'Rendering plot...', value = 0, {
+        suppressWarnings(
         plot_manhattan_knockoffs(state$association_results$LMM,
                                  state$association_results$Pvalues,
-                                 ytrans="identity")
+                                 ytrans="identity"))
       })
     })
     
@@ -275,8 +291,16 @@ server <- function(input, output, session) {
         
         output$plot.annotations <- renderPlot({
           
+          req(
+            state$association_results,
+            state$window.left,
+            state$window.right,
+            state$chr
+          )
+          
           withProgress(message = 'Rendering plot...', value = 0, {
-              plot_combined_state(state, annotations)
+            suppressWarnings(
+            plot_combined_state(state, annotations))
           })
           
         })
@@ -354,9 +378,10 @@ server <- function(input, output, session) {
         state$slider.right <- state$window.right
         # produce plot
         output$plot.annotations <- renderPlot({
+          suppressWarnings(
           withProgress(message = 'Rendering plot...', value = 0, {
               plot_combined_state(state, annotations)
-            })
+            }))
         })
       }
     }
@@ -387,7 +412,8 @@ server <- function(input, output, session) {
         # produce plot
         output$plot.annotations <- renderPlot({
           withProgress(message = 'Rendering plot...', value = 0, {
-              plot_combined_state(state, annotations)
+            suppressWarnings(
+              plot_combined_state(state, annotations))
             })
         })
       }
