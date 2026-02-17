@@ -122,7 +122,7 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
     p.self <- LD %>% filter(BP_A==BP_B) %>%
         ggplot(aes(x=R2)) +
         geom_histogram(bins=30) +
-        xlab(TeX("|corr($X_{j},\\tilde{X}_{j}$|)")) +
+        xlab(TeX("|corr($X_{j},\\tilde{X}_{j}$)|")) +
         theme_bw()
 
     ## Combine plots
