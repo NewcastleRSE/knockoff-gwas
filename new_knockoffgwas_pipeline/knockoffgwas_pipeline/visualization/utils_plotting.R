@@ -375,6 +375,7 @@ plot_genes <- function(window.chr, window.left, window.right, Exons.canonical,
   
   # Plot exons and genes, if they fit
   if(plot.genes) {
+  #if(TRUE) {
     # Rescale the gene heights
     Genes.window <- Genes.window %>% mutate(Height=-(Height-0.5)) %>%
       mutate(txCenter=(txStart+txEnd)/2, Height=Height/2)

@@ -329,7 +329,7 @@ server <- function(input, output, session) {
            filtered_exons <- filter(annotations$Exons.canonical, name2==input$gene)
            state$chr <- filtered_exons$chrom[1]
            print(head(state$association_results))
-           state$max.BP <- max(filter(state$association_results$LMM, CHR==state$chr)$BP)
+           state$max.BP <- max(state$association_results$Stats$BP.max) #max(filter(state$association_results$LMM, CHR==state$chr)$BP)
            # set center of gene to be center of window
            gene_min <- min(filtered_exons$txStart)
            gene_max <- max(filtered_exons$txEnd)
