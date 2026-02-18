@@ -12,10 +12,11 @@ source("utils_manhattan.R")
 
 print(getwd())
 
-data_dir <- "../../../pbc_analysis/data" #"../data"
+#data_dir <- "../../../pbc_analysis/data" #"../data"
 #res_dir <- "../../../pbc_analysis/results" #../results"
 lmm_dir <- "../data/lmm"
-
+gwas_dir < - "../../../pbc_analysis/results_gwas"
+use_plink_gwas <- TRUE
 
 annotations <- load_annotations(".")
 genes <- unique(annotations$Exons.canonical$name2)
@@ -212,6 +213,18 @@ server <- function(input, output, session) {
         withProgress(message = 'Loading results...', value = 0, {
           state$association_results <- load_association_results(res_dir_rv(), lmm_dir, file_prefix)
         })
+    }
+    
+    # Update to use Plink GWAS results
+    if(use_plink_gwas) {
+      withProgress(message = 'Loading Plink GWAS results...', value = 0, {
+        state$association_results <- update_lmm_from_plink(
+          association_results = state$association_results,
+          gwas_dir  = gwas_dir,
+          type = "logistic"
+        )
+      })
+      
     }
     
     # Check if results loaded

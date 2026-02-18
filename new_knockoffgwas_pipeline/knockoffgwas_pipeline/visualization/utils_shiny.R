@@ -259,3 +259,124 @@ autocomplete_input <- function(
 logical_js <- function(b) {
   tolower(isTRUE(b))
 }
+
+update_lmm_from_plink <- function(association_results,
+                                             gwas_dir,
+                                             type = c("linear", "logistic")) {
+  
+  type <- match.arg(type)
+  
+  ############################
+  # Find GWAS files
+  ############################
+  
+  gwas_pattern <- if (type == "linear") {
+    "\\.assoc\\.linear$"
+  } else {
+    "\\.assoc\\.logistic$"
+  }
+  
+  gwas_files <- list.files(
+    gwas_dir,
+    pattern = gwas_pattern,
+    full.names = TRUE
+  )
+  
+  if (length(gwas_files) == 0) {
+    stop("No GWAS files found in ", gwas_dir)
+  }
+  
+  ############################
+  # Load GWAS
+  ############################
+  
+  gwas_list <- lapply(gwas_files, function(f) {
+    
+    df <- read.table(f, header = TRUE, stringsAsFactors = FALSE)
+    
+    df %>%
+      dplyr::select(CHR, BP, SNP, P)
+  })
+  
+  LMM <- dplyr::bind_rows(gwas_list) %>%
+    dplyr::filter(!is.na(P)) %>%
+    dplyr::mutate(P = as.numeric(P))
+  
+  
+  ############################
+  # Load clumps
+  ############################
+  
+  clump_files <- list.files(
+    gwas_dir,
+    pattern = "\\.clumped$",
+    full.names = TRUE
+  )
+  
+  clump_list <- lapply(clump_files, function(f) {
+    
+    if (file.size(f) == 0) return(NULL)
+    
+    df <- read.table(f, header = TRUE, stringsAsFactors = FALSE)
+    
+    if (!"SNP" %in% names(df)) return(NULL)
+    
+    df
+  })
+  
+  clump_list <- Filter(Negate(is.null), clump_list)
+  
+  
+  ############################
+  # Process clumps
+  ############################
+  
+  if (length(clump_list) > 0) {
+    
+    clumps <- dplyr::bind_rows(clump_list)
+    
+    clumps_long <- clumps %>%
+      dplyr::select(
+        CHR,
+        SNP.lead = SNP,
+        BP.lead = BP,
+        SP2
+      ) %>%
+      tidyr::separate_rows(SP2, sep = ",") %>%
+      dplyr::mutate(
+        SNP = ifelse(is.na(SP2) | SP2 == "", SNP.lead, SP2)
+      )
+    
+    clumps_long <- clumps_long %>%
+      dplyr::left_join(
+        LMM %>% dplyr::select(SNP, BP),
+        by = "SNP"
+      )
+    
+    LMM.clumped <- clumps_long %>%
+      dplyr::mutate(
+        Importance = -log10(
+          LMM$P[match(SNP.lead, LMM$SNP)]
+        ),
+        Method = "LMM",
+        Resolution = "GWAS"
+      ) %>%
+      dplyr::filter(!is.na(BP))
+    
+  } else {
+    
+    LMM.clumped <- tibble::tibble()
+    
+  }
+  
+  
+  ############################
+  # Update object
+  ############################
+  
+  association_results$LMM <- LMM
+  association_results$LMM.clumped <- LMM.clumped
+  
+  return(association_results)
+}
+
