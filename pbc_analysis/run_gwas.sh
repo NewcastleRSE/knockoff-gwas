@@ -36,6 +36,11 @@ CLUMP_KB=5000
 CHR_MIN=1
 CHR_MAX=22
 
+# Absolute path to this script
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 ############################
 # Setup
 ############################
@@ -144,51 +149,7 @@ echo "Example output:"
 echo "  ${OUTDIR}/chr1_gwas.assoc.*"
 echo "  ${OUTDIR}/gwas_clump_chr1.*"
 
-# Parse clumped p-values and summarise discoveries all together
-# Put all chr1_gwas.assoc.* in one file
-# Put all gwas_clump_chr1.* in one file
+###############################################
 
-STATS_FILE=${OUT_DIR}"/stats_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm.txt"
-CLUMP_FILE=${OUT_DIR}"/clump_chr"$CHR_MIN"_chr"$CHR_MAX".tab"
-OUT_FILE=${OUTDIR}/$CLUMP_BASENAME"_lmm_regions.txt"
-
-STATS_FILE="${OUT_DIR}/stats_chr${CHR_MIN}_chr${CHR_MAX}_lmm.txt"
-CLUMP_FILE="${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}.tab"
-
-# Remove output files if they already exist
-rm -f "$STATS_FILE" "$CLUMP_FILE"
-
-first_stats=1
-first_clump=1
-
-for CHR in $(seq $CHR_MIN $CHR_MAX); do
-
-    stats_in="${OUTDIR}/chr${CHR}_gwas.assoc."
-    clump_in="${OUTDIR}/gwas_clump_chr${CHR}."*
-
-    # ---- Combine GWAS stats ----
-    if [ -f "$stats_in" ]; then
-        if [ $first_stats -eq 1 ]; then
-            cat "$stats_in" >> "$STATS_FILE"
-            first_stats=0
-        else
-            tail -n +2 "$stats_in" >> "$STATS_FILE"
-        fi
-    fi
-
-    # ---- Combine clump files ----
-    for f in $clump_in; do
-        if [ -f "$f" ]; then
-            if [ $first_clump -eq 1 ]; then
-                cat "$f" >> "$CLUMP_FILE"
-                first_clump=0
-            else
-                tail -n +2 "$f" >> "$CLUMP_FILE"
-            fi
-        fi
-    done
-
-done
-
-Rscript --vanilla $SCRIPTPATH/summarise_lmm.R ${CLUMP_FILE} ${OUT_FILE} $1 ${STATS_FILE} 1
+$SCRIPTPATH/run_summarise_gwas.sh $1
 
