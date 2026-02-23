@@ -61,7 +61,7 @@ done
 done
 
 # Summarise files
-Rscript --vanilla $SCRIPTPATH/summarise_lmm.R ${CLUMP_FILE} ${OUT_FILE} $1 ${STATS_FILE} 1
+Rscript --vanilla $SCRIPTPATH/../new_knockoffgwas_pipeline/knockoffgwas_pipeline/misc/summarise_lmm.R ${CLUMP_FILE} ${OUT_FILE} $1 ${STATS_FILE} 1
 
 # Get rid of temp files
 rm ${CLUMP_FILE}
