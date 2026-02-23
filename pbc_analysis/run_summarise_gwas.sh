@@ -27,8 +27,8 @@ first_clump=1
 
 for CHR in $(seq $CHR_MIN $CHR_MAX); do
 
-stats_in="${OUTDIR}/chr${CHR}_gwas.assoc."
-clump_in="${OUTDIR}/gwas_clump_chr${CHR}."*
+stats_in="${OUTDIR}/gwas_chr${CHR}.assoc.logistic"
+clump_in="${OUTDIR}/gwas_clump_chr${CHR}.clumped"
   
   # ---- Combine GWAS stats ----
 if [ -f "$stats_in" ]; then
