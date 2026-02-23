@@ -20,6 +20,11 @@ OUT_FILE=${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}_lmm_regions.txt
 STATS_FILE=${OUT_DIR}/stats_chr${CHR_MIN}_chr${CHR_MAX}_lmm.txt
 CLUMP_FILE=${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}.tab
 
+# Absolute path to this script
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 # Remove output files if they already exist
 rm -f "$STATS_FILE" "$CLUMP_FILE"
 
