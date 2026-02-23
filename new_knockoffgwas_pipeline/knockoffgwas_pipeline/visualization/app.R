@@ -15,7 +15,7 @@ print(getwd())
 #data_dir <- "../../../pbc_analysis/data" #"../data"
 #res_dir <- "../../../pbc_analysis/results" #../results"
 lmm_dir <- "../data/lmm"
-gwas_dir < - "../../../pbc_analysis/results_gwas"
+gwas_dir <- "../../../pbc_analysis/results_gwas"
 use_plink_gwas <- TRUE
 
 annotations <- load_annotations(".")
@@ -156,12 +156,20 @@ server <- function(input, output, session) {
   observeEvent(input$info, {
     if(input$Tabset == "manhattan"){
       box.title <- "Information on low-resolution results"
-      box.message.1 <- "Top: Manhattan plot with BOLT-LMM p-values."
+      if(use_plink_gwas) {
+        box.message.1 <- "Top: Manhattan plot with BOLT-LMM p-values."
+      } else {
+        box.message.1 <- "Top: Manhattan plot with Plink p-values." 
+      }
       box.message.2 <- "Bottom: Manhattan plot with KnockoffGWAS test statistics at low-resolution."
       box.message <- sprintf("%s<br>%s", box.message.1, box.message.2)
     } else{
       box.title <- "Information on high-resolution results"
-      box.message.1 <- "Top: Manhattan plot with BOLT-LMM p-values."
+      if(use_plink_gwas) {
+        box.message.1 <- "Top: Manhattan plot with BOLT-LMM p-values."
+      } else {
+        box.message.1 <- "Top: Manhattan plot with Plink p-values." 
+      }
       box.message.2 <- "Middle: Chicago plot with KnockoffGWAS test statistics at multiple resolutions."
       box.message.3 <- "Bottom: Functional annotations and gene positions."
       box.message <- sprintf("%s<br>%s<br>%s", box.message.1, box.message.2, box.message.3)

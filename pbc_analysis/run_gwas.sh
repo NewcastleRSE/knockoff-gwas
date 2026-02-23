@@ -30,9 +30,8 @@ GWAS_TYPE="logistic"
 
 # Clumping parameters (standard GWAS defaults)
 CLUMP_P1=5e-8
-CLUMP_P2=1e-2
 CLUMP_R2=0.1
-CLUMP_KB=250
+CLUMP_KB=5000
 
 ############################
 # Setup
@@ -124,7 +123,6 @@ for CHR in $(seq 1 22); do
       --bfile "$DATA" \
       --clump "${ASSOC_FILE}" \
       --clump-p1 "$CLUMP_P1" \
-      --clump-p2 "$CLUMP_P2" \
       --clump-r2 "$CLUMP_R2" \
       --clump-kb "$CLUMP_KB" \
       --out "$CLUMP_OUT"

@@ -176,7 +176,7 @@ plot_pvalues <- function(window.chr, window.left, window.right, LMM, LMM.clumped
             panel.border = element_blank(),
             panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
             panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")) +
-      ggtitle("Manhattan plot (BOLT-LMM)")
+      ggtitle("Manhattan plot")
     
   } else {
     # Empty plot if no data
