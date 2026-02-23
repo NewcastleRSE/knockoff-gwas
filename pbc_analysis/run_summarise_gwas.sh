@@ -9,15 +9,15 @@ source set_dirs.sh
 CHR_MIN=1
 CHR_MAX=22
 
+# Output directory
+OUTDIR="results_gwas"
+
 STATS_FILE=${OUT_DIR}"/stats_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm.txt"
 CLUMP_FILE=${OUT_DIR}"/clump_chr"$CHR_MIN"_chr"$CHR_MAX".tab"
 OUT_FILE=${OUTDIR}/$CLUMP_BASENAME"_lmm_regions.txt"
 
 STATS_FILE="${OUT_DIR}/stats_chr${CHR_MIN}_chr${CHR_MAX}_lmm.txt"
 CLUMP_FILE="${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}.tab"
-
-# Output directory
-OUTDIR="results_gwas"
 
 # Remove output files if they already exist
 rm -f "$STATS_FILE" "$CLUMP_FILE"
