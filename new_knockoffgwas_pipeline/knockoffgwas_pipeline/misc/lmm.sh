@@ -114,4 +114,4 @@ echo "Results written on "$CLUMP_FILE".tab"
 
 # Parse clumped p-values and summarise discoveries
 OUT_FILE=$CLUMP_BASENAME"_lmm_regions.txt"
-Rscript --vanilla $SCRIPTPATH/summarise_lmm.R $CLUMP_FILE".tab" $CLUMP_FILE".txt" 
+Rscript --vanilla $SCRIPTPATH/summarise_lmm.R $CLUMP_FILE".tab" $CLUMP_FILE".txt" $3 $STATS_FILE

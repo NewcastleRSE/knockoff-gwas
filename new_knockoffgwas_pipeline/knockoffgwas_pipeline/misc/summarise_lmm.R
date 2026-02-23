@@ -8,6 +8,15 @@ if (length(args) < 2) {
 
 clump.file  <- args[1]
 out.file <- args[2]
+data.prefix <- args[3]
+stats.file <- args[4]
+
+argsLen <- length(args)
+if(argsLen > 4) {
+  use_plink_results<- (args[5] == 1)  
+} else {
+  use_plink_results<- FALSE
+}
 
 # Load libraries
 suppressMessages(library(tidyverse))
@@ -19,7 +28,7 @@ Clumped.raw <- read.table(clump.file, header=TRUE) %>% as_tibble() %>% select(CH
 chr.list <- unique(Clumped.raw$CHR)
 Variants <- lapply(chr.list, function(chr) {
     cat(sprintf("Loading list of variants for chromosome %d...\n", chr))
-    bim.file <- sprintf("../data/genotypes/example_chr%d.bim", chr)
+    bim.file <- paste0(data.prefix,"_chr",chr,".bim")
     read_tsv(bim.file, col_names=c("CHR", "SNP", "X1", "BP", "A0", "A1"), col_types=cols())
 })
 Variants <- do.call("rbind", Variants)
@@ -46,15 +55,23 @@ if(nrow(Clumped.raw)>0) {
 }
 
 # Load the LMM p-values and add them to the list of clumped results
-lmm.file <- sprintf("../data/lmm/example_lmm.txt")
-LMM <- read_tsv(lmm.file, col_types=cols())
-if(! "P" %in% colnames(LMM)) {
-    if("P_BOLT_LMM" %in% colnames(LMM)) {
-        LMM <- LMM %>% mutate(P=P_BOLT_LMM)
-    } else {
-        LMM <- LMM %>% mutate(P=P_BOLT_LMM_INF)
-    }
+if(!use_plink_results)
+{
+  lmm.file <- stats.file
+  LMM <- read_tsv(lmm.file, col_types=cols())
+  if(! "P" %in% colnames(LMM)) {
+      if("P_BOLT_LMM" %in% colnames(LMM)) {
+          LMM <- LMM %>% mutate(P=P_BOLT_LMM)
+      } else {
+          LMM <- LMM %>% mutate(P=P_BOLT_LMM_INF)
+      }
+  }
+} else {
+  # Load plink GWAS file
+  LMM <- read.table(stats.file, header=TRUE)
+  
 }
+
 Clumped <- Clumped %>% inner_join(LMM %>% select(CHR,SNP,BP,P), by = c("CHR", "SNP", "BP"))
 
 # Summarise results by clump
