@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Parameters
+#
+# $1 = path & file prefix (not including "_chrXX") for genetic data, .bim, .bed, .fam
+#      also path & file prefix (not including "_map_chrXX") for genetic map data, .txt
+#      also path & file prefix (not including "_ibd_chrXX") for IBD data, .txt
+
 source set_dirs.sh
 
 # Parse clumped p-values and summarise discoveries all together
@@ -63,7 +69,7 @@ done
 # Summarise files
 Rscript --vanilla $SCRIPTPATH/../new_knockoffgwas_pipeline/knockoffgwas_pipeline/misc/summarise_lmm.R ${CLUMP_FILE} ${OUT_FILE} $1 ${STATS_FILE} 1
 
-# Get rid of temp files
-rm ${CLUMP_FILE}
-rm ${STATS_FILE}
+# Get rid of temp files - Keep
+#rm ${CLUMP_FILE}
+#rm ${STATS_FILE}
 

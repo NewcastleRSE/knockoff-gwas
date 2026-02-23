@@ -57,7 +57,7 @@ if(nrow(Clumped.raw)>0) {
 # Load the LMM p-values and add them to the list of clumped results
 if(!use_plink_results)
 {
-  lmm.file <- stats.file
+  lmm.file <- stats.file #lmm.file <- sprintf("../data/lmm/example_lmm.txt")
   LMM <- read_tsv(lmm.file, col_types=cols())
   if(! "P" %in% colnames(LMM)) {
       if("P_BOLT_LMM" %in% colnames(LMM)) {
