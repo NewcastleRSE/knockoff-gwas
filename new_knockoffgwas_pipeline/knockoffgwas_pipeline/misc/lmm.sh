@@ -2,7 +2,7 @@
 #
 #
 # Modified by Richard Howey for general use
-# January 2026
+# January-February 2026
 
 # Parameters
 #
@@ -19,6 +19,11 @@
 
 # Set dirs
 source ./set_dirs.sh
+
+# Absolute path to this script
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in
+SCRIPTPATH=$(dirname "$SCRIPT")
 
 # Range of chromosomes to include in the analysis
 CHR_MIN=$1
@@ -109,4 +114,4 @@ echo "Results written on "$CLUMP_FILE".tab"
 
 # Parse clumped p-values and summarise discoveries
 OUT_FILE=$CLUMP_BASENAME"_lmm_regions.txt"
-Rscript --vanilla summarise_lmm.R $CLUMP_FILE".tab" $CLUMP_FILE".txt" 
+Rscript --vanilla $SCRIPTPATH/summarise_lmm.R $CLUMP_FILE".tab" $CLUMP_FILE".txt" 
