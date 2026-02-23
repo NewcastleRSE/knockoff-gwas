@@ -12,13 +12,13 @@ CHR_MAX=22
 # Output directory
 OUT_DIR="results_gwas"
 
-STATS_FILE=${OUT_DIR}"/stats_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm.txt"
-CLUMP_FILE=${OUT_DIR}"/clump_chr"$CHR_MIN"_chr"$CHR_MAX".tab"
+STATS_FILE=${OUT_DIR}/stats_chr${CHR_MIN}_chr${CHR_MAX}_lmm.txt
+CLUMP_FILE=${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}.tab
 
-OUT_FILE=${OUT_DIR}/clump_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm_regions.txt"
+OUT_FILE=${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}_lmm_regions.txt
 
-STATS_FILE="${OUT_DIR}/stats_chr${CHR_MIN}_chr${CHR_MAX}_lmm.txt"
-CLUMP_FILE="${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}.tab"
+STATS_FILE=${OUT_DIR}/stats_chr${CHR_MIN}_chr${CHR_MAX}_lmm.txt
+CLUMP_FILE=${OUT_DIR}/clump_chr${CHR_MIN}_chr${CHR_MAX}.tab
 
 # Remove output files if they already exist
 rm -f "$STATS_FILE" "$CLUMP_FILE"
@@ -28,8 +28,8 @@ first_clump=1
 
 for CHR in $(seq $CHR_MIN $CHR_MAX); do
 
-stats_in="${OUT_DIR}/gwas_chr${CHR}.assoc.logistic"
-clump_in="${OUT_DIR}/gwas_clump_chr${CHR}.clumped"
+stats_in=${OUT_DIR}/gwas_chr${CHR}.assoc.logistic
+clump_in=${OUT_DIR}/gwas_clump_chr${CHR}.clumped
   
 # ---- Combine GWAS stats ----
 if [ -f "$stats_in" ]; then
