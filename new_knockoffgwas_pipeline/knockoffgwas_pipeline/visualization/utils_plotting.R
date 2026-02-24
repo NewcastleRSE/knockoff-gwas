@@ -185,21 +185,45 @@ plot_pvalues <- function(window.chr, window.left, window.right, LMM, LMM.clumped
   
   # Clumped LMM signals (simplified)
   if(nrow(LMM.clumped)>0) {
-    LMM.clumps.window <- LMM.clumped %>% 
-      group_by(CHR, SNP.lead, BP.lead) %>%
-      summarise(BP.min=min(BP), BP.max=max(BP), .groups="drop") %>%
-      place_segments(gap=1e4) %>%
-      mutate(Height=-Height)
     
-    p.clumped <- ggplot(LMM.clumps.window) +
-      geom_segment(aes(x=BP.min, xend=BP.max, y=Height, yend=Height, color=SNP.lead)) +
-      geom_segment(aes(x=BP.min, xend=BP.min, y=Height-0.4, yend=Height+0.4, color=SNP.lead)) +
-      geom_segment(aes(x=BP.max, xend=BP.max, y=Height-0.4, yend=Height+0.4, color=SNP.lead)) +
-      scale_colour_discrete(na.value = "black", name="Lead SNP (LMM)") +
-      scale_y_continuous(breaks=NULL) +
-      coord_cartesian(xlim=c(window.left, window.right)) +
-      scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
+    # 1. Filter to current chromosome and window
+    df_chr_window <- LMM.clumped %>%
+      filter(
+        CHR == window.chr,             # current chromosome
+        BP >= window.left,
+        BP <= window.right
+      )
+    
+    # 2. Pick top 8 SNPs in this window
+    top_snps <- df_chr_window %>%
+      group_by(SNP.lead) %>%
+      summarise(max_importance = max(Importance), .groups = "drop") %>%
+      arrange(desc(max_importance)) %>%
+      slice_head(n = 8) %>%
+      pull(SNP.lead)
+    
+    # 3. Build clump segments for top SNPs only
+    LMM.clumps.window.filtered <- df_chr_window %>%
+      group_by(SNP.lead, BP.lead) %>%
+      summarise(BP.min = min(BP), BP.max = max(BP), .groups = "drop") %>%
+      filter(SNP.lead %in% top_snps) %>%
+      arrange(BP.min)
+    
+    # 4. Assign Height sequentially
+    LMM.clumps.window.filtered <- LMM.clumps.window.filtered %>%
+      mutate(Height = row_number())  # or multiply to increase spacing
+    
+  
+    p.clumped <- ggplot(LMM.clumps.window.filtered) +
+      geom_segment(aes(x = BP.min, xend = BP.max, y = Height, yend = Height, color = SNP.lead)) +
+      geom_segment(aes(x = BP.min, xend = BP.min, y = Height - 0.4, yend = Height + 0.4, color = SNP.lead)) +
+      geom_segment(aes(x = BP.max, xend = BP.max, y = Height - 0.4, yend = Height + 0.4, color = SNP.lead)) +
+      scale_colour_discrete(na.value = "black", name = "Lead SNP (LMM)") +
+      scale_y_continuous(breaks = NULL) +
+      scale_x_continuous(labels = bp.labeler, expand = c(0.01, 0.01)) +
+      coord_cartesian(xlim = c(window.left, window.right)) +
       theme_void()
+    
   } else {
     p.clumped <- ggplot(tibble()) + geom_blank()
   }
@@ -480,7 +504,7 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
 
     # Determine relative heights of each subplot
     height.manhattan <- 0.75
-    height.clumps <- 0.3
+    height.clumps <- 0.6
     height.knockoffs <- 1.25
     height.functional <- 0.3
     height.genes <- 0.25*max.gene.rows
