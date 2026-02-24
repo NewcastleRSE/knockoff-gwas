@@ -128,8 +128,8 @@ theme_minimal <- theme_bw() +
           axis.text.y=element_blank(),axis.ticks=element_blank(),
           axis.title.x=element_blank(), axis.title.y=element_blank(),
           panel.border=element_blank(),
-          panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
-          panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")
+          panel.grid.major.x = element_line(linewidth = 0.2, colour = "darkgray"),
+          panel.grid.minor.x = element_line(linewidth = 0.1, colour = "darkgray")
           )
 
 plot_pvalues <- function(window.chr, window.left, window.right, LMM, LMM.clumped,
@@ -174,8 +174,8 @@ plot_pvalues <- function(window.chr, window.left, window.right, LMM, LMM.clumped
             legend.text = element_text(size=legend.font.size),
             legend.title = element_text(size=legend.font.size),
             panel.border = element_blank(),
-            panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
-            panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")) +
+            panel.grid.major.x = element_line(linewidth = 0.2, colour = "darkgray"),
+            panel.grid.minor.x = element_line(linewidth = 0.1, colour = "darkgray")) +
       ggtitle("Manhattan plot")
     
   } else {
@@ -257,8 +257,8 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
               axis.line=element_blank(),
               axis.title.x=element_blank(),
               panel.border=element_blank(),
-              panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
-              panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray"),
+              panel.grid.major.x = element_line(linewidth = 0.2, colour = "darkgray"),
+              panel.grid.minor.x = element_line(linewidth = 0.1, colour = "darkgray"),
               text = element_text(size=font.size),
               axis.title.y = element_text(size=title.font.size),
               plot.title = element_text(size=title.font.size),
@@ -426,8 +426,8 @@ plot_genes <- function(window.chr, window.left, window.right, Exons.canonical,
       theme(text = element_text(size=font.size),
             plot.title = element_text(size=title.font.size),
             axis.title = element_text(size=axis.font.size),
-            panel.grid.major.x = element_line(size = 0.2, colour = "darkgray"),
-            panel.grid.minor.x = element_line(size = 0.1, colour = "darkgray")
+            panel.grid.major.x = element_line(linewidth = 0.2, colour = "darkgray"),
+            panel.grid.minor.x = element_line(linewidth = 0.1, colour = "darkgray")
       )
   } else {
     if(n.genes==0) {
@@ -516,8 +516,19 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
 
     extract_legend_safe <- function(p) {
       guides <- get_plot_component(p, "guide-box", return_all = TRUE)
+      
       if (length(guides) == 0) return(ggplot())
-      ggplotify::as.ggplot(guides[[1]])
+      
+      # If it's already a grob, use it directly
+      if (inherits(guides, "grob")) {
+        legend <- guides
+      } else if (is.list(guides) && length(guides) > 0) {
+        legend <- guides[[1]]
+      } else {
+        return(ggplot())
+      }
+      
+      ggplotify::as.ggplot(legend)
     }
     
     g6 <- ggplotGrob(extract_legend_safe(p.lmm$clumped))

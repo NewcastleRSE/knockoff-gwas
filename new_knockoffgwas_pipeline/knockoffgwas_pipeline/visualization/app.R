@@ -16,7 +16,7 @@ print(getwd())
 #res_dir <- "../../../pbc_analysis/results" #../results"
 lmm_dir <- "../../../pbc_analysis/results/lmm"
 gwas_dir <- "../../../pbc_analysis/results_gwas"
-use_plink_gwas <- TRUE #FALSE #TRUE
+use_plink_gwas <- TRUE
 
 annotations <- load_annotations(".")
 genes <- unique(annotations$Exons.canonical$name2)
