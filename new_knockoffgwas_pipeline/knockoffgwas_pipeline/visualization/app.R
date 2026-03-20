@@ -14,9 +14,9 @@ print(getwd())
 
 #data_dir <- "../../../pbc_analysis/data" #"../data"
 #res_dir <- "../../../pbc_analysis/results" #../results"
-lmm_dir <- "../data/lmm"
+lmm_dir <- "../../../pbc_analysis/results/lmm"
 gwas_dir <- "../../../pbc_analysis/results_gwas"
-use_plink_gwas <- TRUE
+use_plink_gwas <- FALSE
 
 annotations <- load_annotations(".")
 genes <- unique(annotations$Exons.canonical$name2)
@@ -505,14 +505,16 @@ server <- function(input, output, session) {
     df_clumped <- state$association_results$LMM.clumped
     
     if (!is.null(df_lmm) && nrow(df_lmm) > 0) {
-      
       png(
         file.path(res_dir_rv(), paste0("manhattan-", today, ".png")),
-        2800, 1400, res = 150
+        width = 2800,
+        height = 1400,
+        res = 150
       )
+      
       on.exit(dev.off(), add = TRUE)
       
-      p <- plot_pvalues(
+      plots <- plot_pvalues(
         state$chr,
         state$window.left,
         state$window.right,
@@ -520,7 +522,18 @@ server <- function(input, output, session) {
         df_clumped
       )
       
-      print(p)
+      # If plot_pvalues returns a list of two plots
+      if (is.list(plots) && length(plots) == 2) {
+        
+        # Stack vertically
+        gridExtra::grid.arrange(
+          grobs = plots,
+          ncol = 1
+        )
+        
+      } else {
+        print(plots)
+      }
       
       showNotification(
         "Manhattan plot exported successfully",

@@ -180,7 +180,8 @@ load_association_results <- function(data_dir, lmm_dir, phenotype){
     Discoveries <- local_fdp(Discoveries, Stats)
 
     # Load LMM p-values
-    lmm.file <- sprintf("%s/%s_lmm.txt", lmm_dir, phenotype)
+    lmm.file <- paste0(lmm_dir,"/stats_chr",1,"_chr",22,"_lmm.txt") #sprintf("%s/%s_lmm.txt", lmm_dir, phenotype)
+   
     if(file.exists(lmm.file)) {
         LMM <- read_delim(lmm.file, delim="\t", col_types=cols()) %>% as_tibble()
         if("P_BOLT_LMM" %in% colnames(LMM)) {
@@ -193,7 +194,8 @@ load_association_results <- function(data_dir, lmm_dir, phenotype){
     }
 
     # Load clumped LMM results
-    lmm.file <- sprintf("%s/%s_lmm_clumped.txt", lmm_dir, phenotype)
+    lmm.file <- paste0(lmm_dir,"/clump_chr",1,"_chr",22,"_lmm_regions.txt") #sprintf("%s/%s_lmm_clumped.txt", lmm_dir, phenotype)
+   
     if(file.exists(lmm.file)) {
         LMM.clumped <- read_delim(lmm.file, delim=" ", col_types=cols()) %>%
             mutate(Phenotype=phenotype, Method="LMM", Importance=-log10(P), Resolution="GWAS") %>%
@@ -307,69 +309,17 @@ update_lmm_from_plink <- function(association_results,
   # Load clumps
   ############################
   
-  clump_files <- list.files(
-    gwas_dir,
-    pattern = "\\.clumped$",
-    full.names = TRUE
-  )
+  # Load clumped LMM results
+  lmm.file <- paste0(gwas_dir,"/clump_chr",1,"_chr",22,"_lmm_regions.txt") #sprintf("%s/%s_lmm_clumped.txt", lmm_dir, phenotype)
   
-  clump_list <- lapply(clump_files, function(f) {
-    
-    if (file.size(f) == 0) return(NULL)
-    
-    df <- read.table(f, header = TRUE, stringsAsFactors = FALSE)
-    
-    if (!"SNP" %in% names(df)) return(NULL)
-    
-    df
-  })
-  
-  clump_list <- Filter(Negate(is.null), clump_list)
-  
-  
-  ############################
-  # Process clumps
-  ############################
-  
-  if (length(clump_list) > 0) {
-    
-    clumps <- dplyr::bind_rows(clump_list)
-    
-    clumps_long <- clumps %>%
-      dplyr::select(
-        CHR,
-        SNP.lead = SNP,
-        BP.lead = BP,
-        SP2
-      ) %>%
-      tidyr::separate_rows(SP2, sep = ",") %>%
-      dplyr::mutate(
-        SNP = ifelse(is.na(SP2) | SP2 == "", SNP.lead, SP2)
-      )
-    
-    clumps_long <- clumps_long %>%
-      dplyr::left_join(
-        LMM %>% dplyr::select(SNP, BP),
-        by = "SNP"
-      )
-    
-    LMM.clumped <- clumps_long %>%
-      dplyr::mutate(
-        Importance = -log10(
-          LMM$P[match(SNP.lead, LMM$SNP)]
-        ),
-        Method = "LMM",
-        Resolution = "GWAS"
-      ) %>%
-      dplyr::filter(!is.na(BP))
-    
+  if(file.exists(lmm.file)) {
+    LMM.clumped <- read_delim(lmm.file, delim=" ", col_types=cols()) %>%
+      mutate(Phenotype="phenotype", Method="LMM", Importance=-log10(P), Resolution="GWAS") %>%
+      select(-c("P"))
   } else {
-    
-    LMM.clumped <- tibble::tibble()
-    
+    LMM.clumped <- tibble()
   }
-  
-  
+  head(LMM.clumped)
   ############################
   # Update object
   ############################
