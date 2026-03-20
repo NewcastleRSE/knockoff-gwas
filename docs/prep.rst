@@ -61,6 +61,10 @@ Running data preprocessing
     DATA=/nobackup/proj/your_account/data
     IBD_DATA=/nobackup/proj/your_account/ibd_data
 
+
+XXX Run  the create map files....
+
+
 Create an HPC script to do the preprocessing in the ``hpc`` directory called ``pre.sh`` which should look something like the following:
 
 .. code-block:: none

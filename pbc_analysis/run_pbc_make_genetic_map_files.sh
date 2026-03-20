@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Needs run on finan to access the genetic map data
-
 # Run interpolate_genetic_map.R for chromosomes 1-22
 
 R_SCRIPT="../new_knockoffgwas_pipeline/knockoffgwas_pipeline/new_bits/interpolate_genetic_map.R"
