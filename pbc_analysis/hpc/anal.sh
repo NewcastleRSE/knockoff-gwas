@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --partition=long_free
+#SBATCH --partition=default_free
 #SBATCH --account=comet_kogwas
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=100GB
-#SBATCH --time=14-00:00:00
+# --time=14-00:00:00
 #SBATCH --array=1-22                       # Run tasks for given chromosomes
-#SBATCH --output=slurm_anal_%a.out
+#SBATCH --output=slurm_anal_FDR20.out
 
 # Load modules
 
@@ -19,6 +19,6 @@ source ./set_dirs.sh
 date
 echo "Running on $HOSTNAME PBC analysis"
 
-../new_knockoffgwas_pipeline/run_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.05 results_d25_w3_FDR5
+../new_knockoffgwas_pipeline/run_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.2 results_d25_w3_FDR20
 
 date
