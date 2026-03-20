@@ -107,7 +107,7 @@ ui <- fluidPage(theme = "theme.css",
                 tabPanel(title = "Locus", value = "manhattan.chr", 
                          h4(textOutput("placeholder.locus")),
                          
-                         splitLayout(width = "100%", cellWidths = c("4.6%", "76.1%", "19.3%"), 
+                         splitLayout(width = "100%", cellWidths = c("6.8%", "75.6%", "17.6%"), 
                                      NULL, uiOutput("slider"), NULL),
                          
                          plotOutput('plot.annotations', width = "100%", height = "700px")

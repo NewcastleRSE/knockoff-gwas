@@ -258,13 +258,31 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
             ggplot() +
             geom_rect(aes(xmin=BP.min, xmax=BP.max, ymin=Height-0.5, ymax=Height+0.5, fill=1-FDP.local),
                       color="black") +
-            scale_fill_gradient(name="Local FDP (estimated)",
-                                #low="red1", high="dodgerblue1",
-                                low="gray98", high="gray30",
-                                limits=c(0.5, 1),
-                                breaks=c(0.5,0.75,1),
-                                space="Lab", na.value="gray", guide="colourbar",
-                                labels=function(x){1-x})
+        #    scale_fill_gradientn(
+        #      name = "Local FDP (estimated)",
+        #      colours = c("red", "orange", "yellow", "green", "blue"),
+        #      limits = c(0.5, 1),
+        #      breaks = c(0.5, 0.75, 1),
+        #      na.value = "grey",
+        #      guide = "colourbar",
+        #      labels = function(x) {1 - x}
+         #   )
+        scale_fill_viridis_c(
+          name = "Local FDP (estimated)",
+          limits = c(0.5, 1),
+          breaks = c(0.5, 0.75, 1),
+          na.value = "grey",
+          option = "D",
+          direction = -1,
+          labels = function(x) {1 - x}
+        )
+            #scale_fill_gradient(name="Local FDP (estimated)",
+            #                    #low="red1", high="dodgerblue1",
+            #                    low="gray98", high="gray30",
+            #                    limits=c(0.5, 1),
+            #                    breaks=c(0.5,0.75,1),
+            #                    space="Lab", na.value="gray", guide="colourbar",
+            #                    labels=function(x){1-x})
     } else {
         p.knockoffs <- ggplot(tibble()) + geom_blank()
     }

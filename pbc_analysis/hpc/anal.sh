@@ -5,7 +5,7 @@
 #SBATCH --mem=100GB
 # --time=14-00:00:00
 #SBATCH --array=1-22                       # Run tasks for given chromosomes
-#SBATCH --output=slurm_anal_FDR20.out
+#SBATCH --output=slurm_anal_%a_FDR20.out
 
 # Load modules
 

@@ -110,7 +110,7 @@ This will need to be updated for the requirements of the HPC machine that you ar
 
    c. The fourth parameter is the phenotype name to give to the phenotype data. In this case it is set to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
 
-   d. The fifth parameter is the false discovery rate (FDR), set to 0.1.
+   d. The fifth parameter is the false discovery rate (FDR), set to 0.1. This is not actually used in the data preparation stage but is included to keep the parameters consistent. So you do not need to wory about it yet.
 
    e. The sixth parameter is the directory name used to store the results, here set to ``results``. This directory will be created automatically by the pipeline.
 
@@ -118,7 +118,7 @@ This will need to be updated for the requirements of the HPC machine that you ar
       The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
 
 
-Run the preprocessing as an arrary job on the HPC with the following command:
+Run the preprocessing as an array job on the HPC with the following command:
 
 .. code-block:: none
 
