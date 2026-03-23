@@ -42,9 +42,9 @@ Setup directories for analysis
 ------------------------------
 
 1. Download the pipeline, see :ref:`downloads`.
-1. Create a directory for your analysis on the same level as the ``new_knockoffgwas_pipeline`` directory, i.e. below the ``knockoff_gwas`` directory. (You could create it elsewhere and change the HPC script appropriately to run the pipeline scripts.) 
-1. Enter this directory.
-1. Create an ``hpc`` directory to store HPC scripts in.
+2. Create a directory for your analysis on the same level as the ``new_knockoffgwas_pipeline`` directory, i.e. below the ``knockoff_gwas`` directory. (You could create it elsewhere and change the HPC script appropriately to run the pipeline scripts.) 
+3. Enter this directory.
+4. Create an ``hpc`` directory to store HPC scripts in.
 
 .. _running_prep:
 
@@ -69,13 +69,13 @@ There is a shell script called `run_pre_create_map_files.sh` to do this. This sc
 
     1. The first parameter is the minimum chromosome number. 
 
-    1. The second parameter is the maximum chromosome number.
+    2. The second parameter is the maximum chromosome number.
 
-    1. The third parameter is the path and filename prefix of the data. The data should be formatted as described above; see :ref:`initial_prep`.
+    3. The third parameter is the path and filename prefix of the data. The data should be formatted as described above; see :ref:`initial_prep`.
 
-    1. The fourth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
+    4. The fourth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
 
-    1. The fifth paramter is the path and filename prefix of the genetic map data. 
+    5. The fifth paramter is the path and filename prefix of the genetic map data. 
 
 To run this an HPC shell script called `pre_create_map_files.sh` can be created in the ``hpc`` directory and should look something like the following:
 
@@ -120,15 +120,15 @@ To perform the bulk of the preprocessing there is a script called ``run_pre_knoc
 
     1. The first parameter is the minimum chromosome number. 
 
-    1. The second parameter is the maximum chromosome number.
+    2. The second parameter is the maximum chromosome number.
 
-    1. The third parameter is the path and filename prefix of the data.
+    3. The third parameter is the path and filename prefix of the data.
   
-    1. The fourth parameter is the phenotype name to give to the phenotype data. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
+    4. The fourth parameter is the phenotype name to give to the phenotype data. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
 
-    1. The fifth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
+    5. The fifth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
 
-    1. The final two parameters control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. These correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
+    6. The final two parameters control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. These correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
 
 To run this shell script create an HPC shell script to do the preprocessing in the ``hpc`` directory called ``pre.sh``, which should look something like the following:
 
