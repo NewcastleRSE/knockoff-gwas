@@ -9,6 +9,18 @@ The easiest way to run the app is to open the `app.R` file in RStudio :cite:`rst
 
 Follow steps 1. and 2. to the right to choose the directory where the results that you wish to load are stored, and then the chromosome data that you wish to load.
 
+.. _flow-fig:
+
+.. figure:: images/shiny-app1.png
+   :class: custom-figure
+
+   Shiny app of KnockOffGWAS results on chromosome 11.
+
 Plots may be exported using the buttons in step 5. The filenames for these plots will be timestamped and stored in the selected results directory.
 
+.. _flow-fig:
 
+.. figure:: images/shiny-app1.png
+   :class: custom-figure
+
+   Shiny app of KnockOffGWAS zoomed in results on chromosome 11.
