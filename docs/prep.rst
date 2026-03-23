@@ -18,8 +18,6 @@ To use the use the pipeline your data must be given in `binary <https://zzz.bwh.
 
 This will create the binary pedigree file, ``myfile.bed``, map file, ``myfile.bim``, and family file, ``myfile.fam`` required.
 
-|
-
 Furthermore, to use this pipeline the files need to be separated by chromosome and be named ``<some_name>_chr<number>.bed`` so that they can be processed. Thus your files should look something like the following:
 
 .. code-block:: none
@@ -35,7 +33,7 @@ Furthermore, to use this pipeline the files need to be separated by chromosome a
     mydata_chr22.bim
     mydata_chr22.fam
 
-Quality Control of Data
+Quality control of data
 -----------------------
 
 The pipeline will not perform any kind of quality control on the data, so this needs to be done by yourself and is not in the scope of this project.
@@ -61,11 +59,78 @@ Running data preprocessing
     DATA=/nobackup/proj/your_account/data
     IBD_DATA=/nobackup/proj/your_account/ibd_data
 
+**Genetic Map Files**
 
-XXX Run  the create map files....
+Before the main part of data preprocessing can run it is necessary to create some genetic map files in the correct format. Firstly, you will need some initial genetic map data files. You should try and locate genetic map file appropriate for your dataset. For example, from the 1000 genomes project. These should organised such athat there is a file for each chromosome and is named to end with `_chrXX.txt`. The genetic map files should be text tab separated files with columns chromosome, base position, rate (cM/Mb) and centimorgans. 
+
+There is a shell script called `run_pre_create_map_files.sh` to do this. This script runs an R script which fills in or interpolates any missing rates and renames the headers to be compatible with the rest of the pipeline. This shell script has the following parameters:
+
+**Script run_pre_create_map_files.sh Command Parameters**
+
+    1. The first parameter is the minimum chromosome number. 
+
+    1. The second parameter is the maximum chromosome number.
+
+    1. The third parameter is the path and filename prefix of the data. The data should be formatted as described above; see :ref:`initial_prep`.
+
+    1. The fourth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
+
+    1. The fifth paramter is the path and filename prefix of the genetic map data. 
+
+To run this an HPC shell script called `pre_create_map_files.sh` can be created in the ``hpc`` directory and should look something like the following:
+
+.. code-block:: none
+
+    #!/bin/bash
+    #SBATCH --partition=default_free
+    #SBATCH --account=your_account
+    #SBATCH --cpus-per-task=1
+    #SBATCH --mem=20GB
+    #SBATCH --output=slurm_pre_create_map_files.out
+
+    # Load modules
+    module load R/4.5.1-gfbf-2024a
+
+    #Set dirs
+    source set_dirs.sh
+
+    date
+    echo "Running on $HOSTNAME PBC pre-analysis data preparing"
+
+    ../new_knockoffgwas_pipeline/run_pre_create_map_files.sh 1 22 $DATA/mydata results $DATA/genetic_maps/genetic_map_GRCh37
+
+    date
+
+The script parameters have been set to process data for all chromosomes (1-22), give the path and file prefix for the data, give the name of the results directory and the path and file prefix of the genetic data. Note that R is required.
+
+This script can be run as a job on the HPC machine with the following command:
+
+.. code-block:: none
+
+    sbatch hpc/pre_create_map_files.sh
+
+or whatever is appropriate for the HPC machine you are using.
 
 
-Create an HPC script to do the preprocessing in the ``hpc`` directory called ``pre.sh`` which should look something like the following:
+**Further Preprocessing of Data**
+
+To perform the bulk of the preprocessing there is a script called ``run_pre_knockoff_gwas.sh`` which must be run. The parameters for this script are as follows:
+
+**Script run_pre_knockoff_gwas.sh Command Parameters**
+
+    1. The first parameter is the minimum chromosome number. 
+
+    1. The second parameter is the maximum chromosome number.
+
+    1. The third parameter is the path and filename prefix of the data.
+  
+    1. The fourth parameter is the phenotype name to give to the phenotype data. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
+
+    1. The fifth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
+
+    1. The final two parameters control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. These correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
+
+To run this shell script create an HPC shell script to do the preprocessing in the ``hpc`` directory called ``pre.sh``, which should look something like the following:
 
 .. code-block:: none
 
@@ -93,36 +158,23 @@ Create an HPC script to do the preprocessing in the ``hpc`` directory called ``p
     # Run different chromosomes with different window sizes to get reasonable number of IBDs returned
 
     # Try different window sizes for chromosomes here until a suitable size is found
-    ../new_knockoffgwas_pipeline/run_pre_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc 0.1 results 10 3
+    ../new_knockoffgwas_pipeline/run_pre_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results 25 3
 
-    echo "Node memory state: `free`"
     date
 
-This will need to be updated for the requirements of the HPC machine that you are using. Important points to note about this script:
+This will need to be updated for the requirements of the HPC machine that you are using. Note that to run ``run_pre_knockoff_gwas.sh`` it is required to have available BCFTools, Plink versions 1.9 and 2, and R.
 
-1. **Requirements**
+When running this script each chromosome is ran separately so the minimum and maximum chromosome are set to the same value given by the task job number ``$SLURM_ARRAY_TASK_ID``. (The original example scripts with KnockOfGWAS allowed several chromosomes at once to be analysed, but in this new pipeline only one chromosome is processed at a time.)
 
-   The script requires BCFTools, Plink versions 1.9 and 2, and R, so these must be loaded.
+The path and filename prefix of the data is given next by ``$DATA/mydata``.
 
-2. **Command Parameters**
+The phenotype name is given next, which is set here to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. 
 
-   Near the end of the script the ``run_pre_knockoff_gwas.sh`` script is run with a number of parameters.
+The results directory is set to ``results``.
 
-   a. The first two parameters are the minimum and maximum chromosomes. These are set to the same chromosome using the task job number given by ``$SLURM_ARRAY_TASK_ID``. The original example scripts allowed several chromosomes at once to be analysed, but in this new pipeline only one chromosome is processed at a time.
+The next two parameters are for use with RaPID. See parameter description above.
 
-   b. The next parameter is the path and filename prefix of the data, ``$DATA/mydata``. The data should be formatted as described above; see :ref:`initial_prep`.
-
-   c. The fourth parameter is the phenotype name to give to the phenotype data. In this case it is set to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
-
-   d. The fifth parameter is the false discovery rate (FDR), set to 0.1. This is not actually used in the data preparation stage but is included to keep the parameters consistent. So you do not need to wory about it yet.
-
-   e. The sixth parameter is the directory name used to store the results, here set to ``results``. This directory will be created automatically by the pipeline.
-
-   f. The final two parameters control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. These correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  
-      The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
-
-
-Run the preprocessing as an array job on the HPC with the following command:
+Run the preprocessing script as an array job on the HPC with the following command:
 
 .. code-block:: none
 
@@ -130,7 +182,7 @@ Run the preprocessing as an array job on the HPC with the following command:
 
 or whatever is appropriate for the HPC machine you are using.
 
-Script to check the number of IBD segments of each chromosome.
+To check the number of IBD segments the following shell script can be used to return the number of IBD segments of each chromosome.
 
 .. code-block:: none
 

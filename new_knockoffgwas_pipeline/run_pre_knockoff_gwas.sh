@@ -19,10 +19,9 @@
 #      also path & file prefix (not including "_qc_variants") for all QC SNP data, .txt
 #      also path & file prefix (not including "_qc_samples") for all QC SNP data, .txt
 # $4 = phenotype name
-# $5 = FDR rate # Not used, but kept for consistency with analysis script
-# $6 = output folder
-# $7 = -d
-# $8 = -w
+# $5 = output folder
+# $6 = -d
+# $7 = -w
 
 # Set dirs
 source set_dirs.sh
@@ -33,14 +32,14 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 # Log file
-LOG_FILE=$6"/pre_knockoffgwas_"$1"_"$2".log"
+LOG_FILE=$5"/pre_knockoffgwas_"$1"_"$2".log"
 rm -f $LOG_FILE
 touch $LOG_FILE
 echo "Log file: "$LOG_FILE
 
 # Temporary folder for temporary files
 TMP_DIR=$DATA"/tmp"
-mkdir -p $6
+mkdir -p $5
 mkdir -p $TMP_DIR
 mkdir -p data
 
@@ -107,9 +106,7 @@ else
     $SCRIPTPATH/knockoffgwas_pipeline/new_bits/phase_common_static --input "$3_chr"$CHR".bcf" --pedigree "$3_chr"$CHR"_shapeit.fam" --region $CHR --map "$3_map_chr"$CHR"_shapeit.txt" --output "$3_phased_chr"$CHR".bcf" --thread 8 &>> $LOG_FILE
 
     # Convert phased chr to bgen
-    # bcftools convert --bgen-plain --output-type b --output "$3_chr"$CHR".bgen" "$3_phased_chr"$CHR".bcf" &>> $LOG_FILE
-    
-    # Create .sample file?
+    # Also, create .sample file?
 
     bcftools view "$3_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE
  
@@ -142,7 +139,7 @@ stop_spinner $?
 # If IBD data exists, .txt, then it is used otherwise it is calculated
 for CHR in $CHR_LIST; do
 
-if [ -e "$3_ibd_chr"$CHR".txtXXX" ]; then
+if [ -e "$3_ibd_chr"$CHR".txt" ]; then
     echo "IBD data for chromosome "$CHR" exists"
 else
     echo ""
@@ -176,9 +173,9 @@ else
     echo "Interpolating loci..."
     Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/interpolate_loci.R "$3_map_filtered_chr${CHR}.txt" "$3_phased_chr${CHR}.vcf.gz" "$3_map_rapid_chr${CHR}.txt" &>> $LOG_FILE
     
-    # Usage: ./RaPID_v.1.7 -i <input_file_vcf_compressed>  -g <genetic_mapping_file> -d <min_length_in_cM> -o <output_folder>   -w  <window_size>  -r <#runs> -s <#success>
+    # Usage: ./RaPID_v.1.7 -i <input_file_vcf_compressed> -g <genetic_mapping_file> -d <min_length_in_cM> -o <output_folder> -w  <window_size> -r <#runs> -s <#success>
     
-    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_phased_chr${CHR}.vcf.gz" -g "$3_map_rapid_chr${CHR}.txt" -d $7 -w $8 -r 10 -s 5 -o $TMP_DIR/"ibd_chr"$CHR &>> $LOG_FILE
+    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$3_phased_chr${CHR}.vcf.gz" -g "$3_map_rapid_chr${CHR}.txt" -d $6 -w $7 -r 10 -s 5 -o $TMP_DIR/"ibd_chr"$CHR &>> $LOG_FILE
 
     gunzip -f $TMP_DIR/"ibd_chr"$CHR/results.max.gz
     mv $TMP_DIR/"ibd_chr"$CHR/results.max "$3_temp_ibd_chr${CHR}.txt"
@@ -206,6 +203,6 @@ done
 # R libraries
 
 start_spinner " - Creating QC files (if necessary) for KnockOffGWAS pipeline..."
-Rscript --vanilla "$SCRIPTPATH/knockoffgwas_pipeline/new_bits/make_qc_files.R" $1 $2 $3 $6 &>> $LOG_FILE
+Rscript --vanilla "$SCRIPTPATH/knockoffgwas_pipeline/new_bits/make_qc_files.R" $1 $2 $3 $5 &>> $LOG_FILE
 stop_spinner $?
 
