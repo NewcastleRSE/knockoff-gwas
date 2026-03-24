@@ -20,7 +20,7 @@ Plots may be exported using the buttons in step 5. The filenames for these plots
 
 .. _flow-fig:
 
-.. figure:: images/shiny-app1.png
+.. figure:: images/shiny-app2.png
    :class: custom-figure
 
    Shiny app of KnockOffGWAS zoomed in results on chromosome 11.
