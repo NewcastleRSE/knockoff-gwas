@@ -3,6 +3,7 @@ pbc_analysis/data/
 pbc_analysis/ibd*
 *slurm*out
 pbc_analysis/results/pre*.log
+pbc_test/
 *.ld
 *.frq
 *.nosex
