@@ -57,11 +57,10 @@ Running data preprocessing
 
     # Run this file using "source set_dirs.sh" to set the following variables
     DATA=/nobackup/proj/your_account/data
-    IBD_DATA=/nobackup/proj/your_account/ibd_data
 
 **Genetic Map Files**
 
-Before the main part of data preprocessing can run it is necessary to have some genetic map files in the correct format. These can be created from downloaded genetic map files using the script below. Firstly, you will need to find appropriate initial genetic map data files to download for your dataset. For example, from the 1000 genomes project. These should organised such athat there is a file for each chromosome and is named to end with `_chrXX.txt`. The genetic map files should be text tab separated files with columns chromosome, base position, rate (cM/Mb) and centimorgans. 
+Before the main part of data preprocessing can run it is necessary to have some genetic map files in the correct format. These can be created from downloaded genetic map files using the script below. Firstly, you will need to find appropriate initial genetic map data files to download for your dataset. For example, from the 1000 genomes project. These should organised such that there is a file for each chromosome and is named to end with `_chrXX.txt`. The genetic map files should be text tab separated files with columns chromosome, base position, rate (cM/Mb) and centimorgans. 
 
 There is a shell script called `run_pre_create_map_files.sh` to do this. This script runs an R script which fills in or interpolates any missing rates and renames the headers to be compatible with the rest of the pipeline. This shell script has the following parameters:
 
@@ -109,24 +108,23 @@ This script can be run as a job on the HPC machine with the following command:
 
     sbatch hpc/pre_create_map_files.sh
 
-or whatever is appropriate for the HPC machine you are using. This may take an hour or so to run. This script will output genetic map files for each chromosome named ``map_chrXX.txt`` that will be needed later.
-
+or whatever is appropriate for the HPC machine you are using. This may take an hour or so to run. This script will output genetic map files for each chromosome named ``mydata_map_chrXX.txt`` in the data directory that will be needed later.
 
 **Further Preprocessing of Data**
 
-To perform the bulk of the preprocessing there is a script called ``run_pre_knockoff_gwas.sh`` which must be run. The parameters for this script are as follows:
+To perform the bulk of the preprocessing there is a script called ``run_pre_knockoff_gwas.sh`` which must be run. The main purpose of this preprocessing is to produce phased haplotype (`mydata_chrXX.sample` and `mydata_phased_chrXX.bgen`) and IBD segment files (`mydata_ibd_chrXX.txt`) which are needed for KnockOffGWAS. The parameters for this script are as follows:
 
 **Script run_pre_knockoff_gwas.sh Command Parameters**
 
-    1. The first parameter is the minimum chromosome number. 
+    1. Minimum chromosome number. 
 
-    2. The second parameter is the maximum chromosome number.
+    2. Maximum chromosome number.
 
-    3. The third parameter is the path and filename prefix of the data.
+    3. Path and filename prefix of the data.
   
-    4. The fourth parameter is the phenotype name to give to the phenotype data. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
+    4. Phenotype name to give to the phenotype data. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
 
-    5. The fifth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
+    5. Directory name used to store the results. This directory will be created automatically by the pipeline.
 
     6. The final two parameters control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. These correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
 
@@ -180,7 +178,7 @@ Run the preprocessing script as an array job on the HPC with the following comma
 
     sbatch hpc/pre.sh
 
-or whatever is appropriate for the HPC machine you are using.
+or whatever is appropriate for the HPC machine you are using. This can potentially take quite a long time to run. If the settings to calculate the IBD segments returns too many IBD segments the jobs may fail due to memory or time constraints. For a reasonable number of IBD segments it could still take a number of hours to calculate.
 
 To check the number of IBD segments the following shell script can be used to return the number of IBD segments of each chromosome.
 
@@ -202,3 +200,4 @@ To check the number of IBD segments the following shell script can be used to re
     fi
 
     done
+

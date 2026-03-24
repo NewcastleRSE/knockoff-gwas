@@ -122,7 +122,6 @@ for CHR in $CHR_LIST; do
 done
 stop_spinner $?
 
-
 # If IBD data exists, .txt, then it is used otherwise it is calculated
 for CHR in $CHR_LIST; do
 
@@ -176,7 +175,20 @@ for CHR in $CHR_LIST; do
     rm -f "$3_phased_chr"$CHR".vcf.gz"
     rm -f "$3_phased_chr"$CHR".vcf"
     rm -f "$3_map_filtered_chr"$CHR".txt"
-    
+    rm -f "$3_chr"$CHR".vcf.gz"
+    rm -f "$3_chr"$CHR".bcf"
+    rm -f "$3_chr"$CHR".bcf.csi"
+    rm -f "$3_phased_chr"$CHR".bcf"
+    rm -f "$3_phased_chr"$CHR".bcf.csi"
+    rm -f "$3_temp_chr"$CHR".pgen"
+    rm -f "$3_temp_chr"$CHR".psam"
+    rm -f "$3_temp_chr"$CHR".pvar"
+    rm -f "$3_temp_chr"$CHR".log"
+    rm -f "$3_chr"$CHR".log"
+    rm -f "$3_phased_chr"$CHR".log"
+    rm -f "$3_temp_ibd_chr"$CHR".txt"
+    rm -f "$3_chr"$CHR".sample"
+
 done
 
 # Make QC files required for the pipeline if they do not exist:
