@@ -17,7 +17,7 @@ The KnockOffGWAS pipeline was constructed by adapting the `example <https://mses
 
     6. The analysis is computationally intensive for real datasets and will need to be ran on an High Performance Computing (HPC) machine. With this in mind, this webpage describes the process of performing the analysis of a real dataset on an HPC machine.
 
-    7. The directory *pbc_analysis* contains additional scripts to run analysis for this data on an HPC machine. Hopefully, these can be adapted with minimal changes for other datasets. 
+    7. By following the steps on this website it should be possible to perform KnockOffGWAS on your dataset. As an example of using this pipeline, the directory *pbc_analysis* contains additional scripts to run analysis for this data on an HPC machine. Hopefully, with this pipeline, guide and worked example it should be as straightforward as it can be to perform KnockOffGWAS considering the many programs and different data formats involved.
 
 The following is the structure and contents of the *new_knockoffgwas_pipeline* directory:
 

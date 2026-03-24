@@ -35,11 +35,8 @@ rm -f $LOG_FILE
 touch $LOG_FILE
 echo "Log file: "$LOG_FILE
 
-# Temporary folder for temporary files
-TMP_DIR=$DATA"/tmp"
+# Ouput folder
 mkdir -p $4
-mkdir -p $TMP_DIR
-mkdir -p data
 
 # Run interpolate_genetic_map.R for chromosomes 1-22
 R_SCRIPT=$SCRIPTPATH/knockoffgwas_pipeline/new_bits/interpolate_genetic_map.R

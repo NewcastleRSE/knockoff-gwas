@@ -36,7 +36,7 @@ Furthermore, to use this pipeline the files need to be separated by chromosome a
 Quality control of data
 -----------------------
 
-The pipeline will not perform any kind of quality control on the data, so this needs to be done by yourself and is not in the scope of this project.
+The pipeline will not perform any kind of quality control on the data, so this needs to be done by yourself and is not in the scope of this pipeline.
 
 Setup directories for analysis
 ------------------------------
@@ -51,7 +51,7 @@ Setup directories for analysis
 Running data preprocessing
 --------------------------
 
-**Important** Create a script called ``set_dirs.sh`` and save it in your analysis directory. This script should define Bash variables ``DATA`` and ``IBD_DATA`` to point the directory where your data is stored and where IBD data should be stored. These files may be too big to store in your personal quota on an HPC machine so may need to be stored elsewhere which is still accessible when preprocessing and analysis is performed. For example, the file may be as follows:
+**Important:** Create a script called ``set_dirs.sh`` and save it in your analysis directory. This script should define Bash variables ``DATA`` and ``IBD_DATA`` to point to the directory where your data is stored and where IBD data should be stored. These files may be too big to store in your personal quota on an HPC machine, so may need to be stored elsewhere which is still accessible when preprocessing and analysis is performed. For example, the file may be as follows:
 
 .. code-block:: none
 
@@ -61,21 +61,21 @@ Running data preprocessing
 
 **Genetic Map Files**
 
-Before the main part of data preprocessing can run it is necessary to create some genetic map files in the correct format. Firstly, you will need some initial genetic map data files. You should try and locate genetic map file appropriate for your dataset. For example, from the 1000 genomes project. These should organised such athat there is a file for each chromosome and is named to end with `_chrXX.txt`. The genetic map files should be text tab separated files with columns chromosome, base position, rate (cM/Mb) and centimorgans. 
+Before the main part of data preprocessing can run it is necessary to have some genetic map files in the correct format. These can be created from downloaded genetic map files using the script below. Firstly, you will need to find appropriate initial genetic map data files to download for your dataset. For example, from the 1000 genomes project. These should organised such athat there is a file for each chromosome and is named to end with `_chrXX.txt`. The genetic map files should be text tab separated files with columns chromosome, base position, rate (cM/Mb) and centimorgans. 
 
 There is a shell script called `run_pre_create_map_files.sh` to do this. This script runs an R script which fills in or interpolates any missing rates and renames the headers to be compatible with the rest of the pipeline. This shell script has the following parameters:
 
 **Script run_pre_create_map_files.sh Command Parameters**
 
-    1. The first parameter is the minimum chromosome number. 
+    1. Minimum chromosome number. 
 
-    2. The second parameter is the maximum chromosome number.
+    2. Maximum chromosome number.
 
-    3. The third parameter is the path and filename prefix of the data. The data should be formatted as described above; see :ref:`initial_prep`.
+    3. Path and filename prefix of the data. The data should be formatted as described above; see :ref:`initial_prep`.
 
-    4. The fourth parameter is the directory name used to store the results. This directory will be created automatically by the pipeline.
+    4. Directory name used to store the results. This directory will be created automatically by the pipeline.
 
-    5. The fifth paramter is the path and filename prefix of the genetic map data. 
+    5. Path and filename prefix of the genetic map data. 
 
 To run this an HPC shell script called `pre_create_map_files.sh` can be created in the ``hpc`` directory and should look something like the following:
 
@@ -109,7 +109,7 @@ This script can be run as a job on the HPC machine with the following command:
 
     sbatch hpc/pre_create_map_files.sh
 
-or whatever is appropriate for the HPC machine you are using.
+or whatever is appropriate for the HPC machine you are using. This may take an hour or so to run. This script will output genetic map files for each chromosome named ``map_chrXX.txt`` that will be needed later.
 
 
 **Further Preprocessing of Data**

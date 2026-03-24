@@ -60,11 +60,6 @@ CHR_LIST=$(seq $1 $2)
 start_spinner " - Phasing chromosome data (if necessary) for KnockOffGWAS pipeline..."
 for CHR in $CHR_LIST; do
 
-if [ -e "$3_phased_chr"$CHR".bgenXXX" ]; then
-    echo ""
-    echo "Phasing for chromosome "$CHR" exists"
-    echo ""
-else
     echo ""
     echo "Phasing chromosome "$CHR" ..."
     echo ""
@@ -106,7 +101,7 @@ else
     $SCRIPTPATH/knockoffgwas_pipeline/new_bits/phase_common_static --input "$3_chr"$CHR".bcf" --pedigree "$3_chr"$CHR"_shapeit.fam" --region $CHR --map "$3_map_chr"$CHR"_shapeit.txt" --output "$3_phased_chr"$CHR".bcf" --thread 8 &>> $LOG_FILE
 
     # Convert phased chr to bgen
-    # Also, create .sample file?
+    # Also, create .sample file
 
     bcftools view "$3_phased_chr"$CHR".bcf" -Ov -o "$3_phased_chr"$CHR".vcf" &>> $LOG_FILE
  
@@ -120,28 +115,17 @@ else
     Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_sample_format.R "$3_temp_phased_chr"$CHR".sample" "$3_chr"$CHR".sample" &>> $LOG_FILE
 
     # Remove temporary files
-    #rm -f data/*${CHR}*
     rm -f "$3_temp_phased_chr"$CHR"".*
     rm -f "$3_map_chr"$CHR"_shapeit.txt"
     rm -f "$3_chr"$CHR"_shapeit.fam"
-    #rm -f "$3_chr"$CHR".vcf"
-    #rm -f "$3_phased_chr"$CHR".bcf"
-    #rm -f "$3_phased_chr"$CHR".bcf.csi"
-fi
     
 done
 stop_spinner $?
 
 
-# Make directory for results
-# mkdir -p ibd
-
 # If IBD data exists, .txt, then it is used otherwise it is calculated
 for CHR in $CHR_LIST; do
 
-if [ -e "$3_ibd_chr"$CHR".txt" ]; then
-    echo "IBD data for chromosome "$CHR" exists"
-else
     echo ""
     echo "Creating IBD data for chromosome "$CHR" ..."
     echo ""
@@ -182,17 +166,16 @@ else
 
     # Convert IBD format from RaPIDv1.7 to v1.2.3
     if [ -s "$3_temp_ibd_chr${CHR}.txt" ]; then
-       Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_ibd_format3.R "$3_temp_ibd_chr${CHR}.txt" "$3_ibd_chr${CHR}.txt"
+       Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_ibd_format3.R "$3_temp_ibd_chr${CHR}.txt" "$3_ibd_chr${CHR}.txt" &>> $LOG_FILE
     else
        touch "$3_ibd_chr${CHR}.txt"
     fi
 
     # Remove temporary files
-    #rm -f "$3_map_rapid_chr"$CHR".txt" 
-    #rm -f "$3_phased_chr"$CHR".vcf.gz"
-    #rm -f "$3_phased_chr"$CHR".vcf"
-    #rm -f "$3_map_filtered_chr"$CHR".txt"
-fi
+    rm -f "$3_map_rapid_chr"$CHR".txt" 
+    rm -f "$3_phased_chr"$CHR".vcf.gz"
+    rm -f "$3_phased_chr"$CHR".vcf"
+    rm -f "$3_map_filtered_chr"$CHR".txt"
     
 done
 
