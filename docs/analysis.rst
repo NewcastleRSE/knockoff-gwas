@@ -11,7 +11,6 @@ You should have already have created a script called ``set_dirs.sh`` and saved i
 
     # Run this file using "source set_dirs.sh" to set the following variables
     DATA=/nobackup/proj/your_account/data
-    IBD_DATA=/nobackup/proj/your_account/ibd_data
 
 Next you should create an HPC script to do the analysis in the ``hpc`` directory called ``my_analysis.sh`` or something and should look something like the following:
 

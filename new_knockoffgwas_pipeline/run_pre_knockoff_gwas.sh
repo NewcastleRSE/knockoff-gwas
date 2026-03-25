@@ -187,7 +187,7 @@ for CHR in $CHR_LIST; do
     rm -f "$3_chr"$CHR".log"
     rm -f "$3_phased_chr"$CHR".log"
     rm -f "$3_temp_ibd_chr"$CHR".txt"
-    rm -f "$3_chr"$CHR".sample"
+    #rm -f "$3_chr"$CHR".sample" # needed for analysis
 
 done
 
