@@ -112,11 +112,11 @@ or whatever is appropriate for the HPC machine you are using. This may take an h
 
 **Further Preprocessing of Data**
 
-To perform the bulk of the preprocessing there is a script called ``run_pre_knockoff_gwas.sh`` which must be run. The main purpose of this preprocessing is to produce phased haplotype (`mydata_chrXX.sample` and `mydata_phased_chrXX.bgen`) and IBD segment files (`mydata_ibd_chrXX.txt`) which are needed for KnockOffGWAS. The parameters for this script are as follows:
+To perform the bulk of the preprocessing there are two scripts called `run_pre_phasing.sh` and `run_pre_ibd.sh` which must be run. The main purpose of this preprocessing is to produce phased haplotype files (`mydata_chrXX.sample` and `mydata_phased_chrXX.bgen`) and IBD segment files (`mydata_ibd_chrXX.txt`) which are needed for KnockOffGWAS. The parameters for the scripts are as follows:
 
 **Script run_pre_knockoff_gwas.sh Command Parameters**
 
-    1. Minimum chromosome number. 
+    1. Minimum chromosome number.
 
     2. Maximum chromosome number.
 
@@ -126,7 +126,7 @@ To perform the bulk of the preprocessing there is a script called ``run_pre_knoc
 
     5. Directory name used to store the results. This directory will be created automatically by the pipeline.
 
-    6. The final two parameters control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. These correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
+    6. For the IBD calculation script there are two more parameters. These control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. They correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
 
 To run this shell script create an HPC shell script to do the preprocessing in the ``hpc`` directory called ``pre.sh``, which should look something like the following:
 
@@ -153,14 +153,15 @@ To run this shell script create an HPC shell script to do the preprocessing in t
     date
     echo "Running on $HOSTNAME pre-analysis data preparing"
 
-    # Run different chromosomes with different window sizes to get reasonable number of IBDs returned
+    # Phase chromosome data
+    ../new_knockoffgwas_pipeline/run_pre_phasing.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results
 
-    # Try different window sizes for chromosomes here until a suitable size is found
-    ../new_knockoffgwas_pipeline/run_pre_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results 25 3
+    # It may be necessary to change the segment length and window size until a suitable IBD data is returned
+    ../new_knockoffgwas_pipeline/run_pre_ibd.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results 25 3
 
     date
 
-This will need to be updated for the requirements of the HPC machine that you are using. Note that to run ``run_pre_knockoff_gwas.sh`` it is required to have available BCFTools, Plink versions 1.9 and 2, and R.
+This will need to be updated for the requirements of the HPC machine that you are using. Note that to run the scripts it is required to have available BCFTools, Plink versions 1.9 and 2, and R.
 
 When running this script each chromosome is ran separately so the minimum and maximum chromosome are set to the same value given by the task job number ``$SLURM_ARRAY_TASK_ID``. (The original example scripts with KnockOfGWAS allowed several chromosomes at once to be analysed, but in this new pipeline only one chromosome is processed at a time.)
 
@@ -178,7 +179,9 @@ Run the preprocessing script as an array job on the HPC with the following comma
 
     sbatch hpc/pre.sh
 
-or whatever is appropriate for the HPC machine you are using. This can potentially take quite a long time to run. If the settings to calculate the IBD segments returns too many IBD segments the jobs may fail due to memory or time constraints. For a reasonable number of IBD segments it could still take a number of hours to calculate.
+or whatever is appropriate for the HPC machine you are using. The scripts must be run in this order as the IBD calculations required the phased data. The phasing may take a long time, so if the IBD calculations need to be repeated then it would be a good idea to comment out the phasing step in `pre.sh`.
+
+The IBD calculations may also take quite a long time. If the settings to calculate the IBD segments returns too many IBD segments then the job may fail due to memory or time constraints. For a reasonable number of IBD segments it could still take a number of hours to calculate.
 
 To check the number of IBD segments the following shell script can be used to return the number of IBD segments of each chromosome.
 

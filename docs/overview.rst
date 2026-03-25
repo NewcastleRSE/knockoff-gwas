@@ -13,7 +13,7 @@ The KnockOffGWAS pipeline was constructed by adapting the `example <https://mses
 
     4. The new parts to this pipeline are stored in the *new_bits* directory.
 
-    5. In principle, one should be able to run the scripts *run_pre_create_map_files.sh*, *run_pre_knockoff_gwas.sh* and *run_knockoff_gwas.sh* in order to perform KnockOffGWAS.
+    5. In principle, one should be able to run the scripts *run_pre_create_map_files.sh*, *run_pre_phasing.sh*, *run_pre_ibd.sh* and *run_knockoff_gwas.sh* in order to perform KnockOffGWAS (in this order).
     
     6. To view the results and produce plots the the Shiny-R app, *app.R*, in the visualisation directory can be run.
 
