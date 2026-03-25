@@ -71,8 +71,20 @@ or whatever is appropriate for the HPC machine you are using.
 
 Results for the analysis will be stored in the ``results`` with a statistics file for each chromosome 1-22 and seven different resolutions 0-6, for example: ``results_chr1_chr1_res0_stats.txt``. There are also accompanying files for regions passing the FDR criteria, set to 10% above, for example: ``results_chr1_chr1_res0_discoveries.txt``.
 
-Goodness of fit plots (PNG files) are created and stored in ``results/knonkoffs_gof_plots``.
+Goodness of fit plots (PNG files) are created and stored in ``results/knockoffs_gof_plots``.
 
+Removing temporary files
+------------------------
 
+A number of files are produced during the data preprocessing and during analysis calculations. These files can be removed by running a script, which also restores the `.fam` file which needed to have its format altered. If you remove the temporary files and wish to rerun the analysis for any reason you will need to rerun the data preprocessing scripts also.
+
+The script, `run_remove_temporary_files.sh`, can be ran as follows:
+
+.. code-block:: none
+
+    source set_dirs.sh
+    ../new_knockoffgwas_pipeline/run_remove_temporary_files.sh 1 22 $DATA/mydata
+
+Where the parameters are the start and end chromosome and the path and filename of the data used in the analysis.
 
 

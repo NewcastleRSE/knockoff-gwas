@@ -13,11 +13,15 @@ The KnockOffGWAS pipeline was constructed by adapting the `example <https://mses
 
     4. The new parts to this pipeline are stored in the *new_bits* directory.
 
-    5. In principle, one should be able to run the scripts *run_pre_create_map_files.sh*, *run_pre_knockoff_gwas.sh* and *run_knockoff_gwas.sh* in order to perform KnockOffGWAS. This can then be followed by running *run_remove_temporary_files.sh* to delete temporary files and by running the Shiny-R app *app.R* in the visualisation directory to analyse the results.
+    5. In principle, one should be able to run the scripts *run_pre_create_map_files.sh*, *run_pre_knockoff_gwas.sh* and *run_knockoff_gwas.sh* in order to perform KnockOffGWAS.
+    
+    6. To view the results and produce plots the the Shiny-R app, *app.R*, in the visualisation directory can be run.
 
-    6. The analysis is computationally intensive for real datasets and will need to be ran on an High Performance Computing (HPC) machine. With this in mind, this webpage describes the process of performing the analysis of a real dataset on an HPC machine.
+    7. To remove all remaining temporary files produced during analysis the *run_remove_temporary_files.sh* script can be ran. If you wish to rerun the analysis for any reason you will need to rerun the data preprocessing scripts if you remove the temporary files.  
 
-    7. By following the steps on this website it should be possible to perform KnockOffGWAS on your dataset. As an example of using this pipeline, the directory *pbc_analysis* contains additional scripts to run analysis for this data on an HPC machine. Hopefully, with this pipeline, guide and worked example it should be as straightforward as it can be to perform KnockOffGWAS considering the many programs and different data formats involved.
+    8. The analysis is computationally intensive for real datasets and will need to be ran on an High Performance Computing (HPC) machine. With this in mind, this webpage describes the process of performing the analysis of a real dataset on an HPC machine.
+
+    9. By following the steps on this website it should be possible to perform KnockOffGWAS on your dataset. As an example of using this pipeline, the directory *pbc_analysis* contains additional scripts to run analysis for this data on an HPC machine. Hopefully, with this pipeline, guide and worked example it should be as straightforward as it can be to perform KnockOffGWAS considering the many programs and different data formats involved.
 
 The following is the structure and contents of the *new_knockoffgwas_pipeline* directory:
 

@@ -55,9 +55,7 @@ source "$SCRIPTPATH/knockoffgwas_pipeline/misc/spinner.sh"
 # List of chromosomes
 CHR_LIST=$(seq $1 $2)
 
-# If haplotype data exists, .bgen, .sample then it is used otherwise it is calculated
-
-start_spinner " - Phasing chromosome data (if necessary) for KnockOffGWAS pipeline..."
+start_spinner " - Phasing chromosome data for KnockOffGWAS pipeline..."
 for CHR in $CHR_LIST; do
 
     echo ""
