@@ -31,8 +31,8 @@ for CHR in $CHR_LIST; do
     rm -f "$3_ibd_chr"$CHR".txt"
 
     # Move .fam file back to original 
-    mv "$3_original_chr"$CHR".fam" "$3_chr"$CHR".fam"
-    mv "$3_original_chr"$CHR".bim" "$3_chr"$CHR".bim"
+    [ -f "$3_original_chr"$CHR".fam" ] && mv "$3_original_chr"$CHR".fam" "$3_chr"$CHR".fam"
+    [ -f "$3_original_chr"$CHR".bim" ] && mv "$3_original_chr"$CHR".bim" "$3_chr"$CHR".bim"
 
     # Remove phased data
     rm -f "$3_phased_chr"$CHR".log"
