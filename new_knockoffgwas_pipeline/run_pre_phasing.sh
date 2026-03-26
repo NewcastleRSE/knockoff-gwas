@@ -109,12 +109,20 @@ for CHR in $CHR_LIST; do
     # Fixed .sample file to have the same family and individual ID
     Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_sample_format.R "$3_temp_phased_chr"$CHR".sample" "$3_chr"$CHR".sample" &>> $LOG_FILE
 
+    # Create .bim file for phased data
+    plink2 --bgen "$3_phased_chr"$CHR".bgen" ref-first --sample "$3_phased_chr"$CHR".sample" --make-bed --out "$3_phased_chr"$CHR""
+
+    # Remove .bed and .fam
+    rm -f "$3_phased_chr"$CHR".bed"
+    rm -f "$3_phased_chr"$CHR".fam"
+
     # Remove temporary files
     rm -f "$3_temp_chr"$CHR".pgen"
     rm -f "$3_temp_chr"$CHR".psam"
     rm -f "$3_temp_chr"$CHR".pvar"
     rm -f "$3_temp_chr"$CHR".log"
-
+    rm -f "$3_temp_chr"$CHR".bim"
+   
     rm -f "$3_temp_phased_chr"$CHR"".*
     rm -f "$3_map_chr"$CHR"_shapeit.txt"
     rm -f "$3_chr"$CHR"_shapeit.fam"

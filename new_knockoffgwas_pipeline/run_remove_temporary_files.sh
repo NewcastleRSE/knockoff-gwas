@@ -32,6 +32,7 @@ for CHR in $CHR_LIST; do
 
     # Move .fam file back to original 
     mv "$3_original_chr"$CHR".fam" "$3_chr"$CHR".fam"
+    mv "$3_original_chr"$CHR".bim" "$3_chr"$CHR".bim"
 
     # Remove phased data
     rm -f "$3_phased_chr"$CHR".log"
@@ -41,7 +42,33 @@ for CHR in $CHR_LIST; do
     rm -f "$3_phased_chr"$CHR".bcf.csi"
     rm -f "$3_phased_chr"$CHR".sample"
     rm -f "$3_phased_chr"$CHR".bgen"
+    rm -f "$3_phased_chr"$CHR".bim"
+
+    # Ensure temp files that should have already been deleted are (phasing)
+    rm -f "$3_phased_chr"$CHR".bed"
+    rm -f "$3_phased_chr"$CHR".fam"
+    rm -f "$3_temp_chr"$CHR".pgen"
+    rm -f "$3_temp_chr"$CHR".psam"
+    rm -f "$3_temp_chr"$CHR".pvar"
+    rm -f "$3_temp_chr"$CHR".log"
+    rm -f "$3_temp_chr"$CHR".bim"
+    rm -f "$3_temp_chr"$CHR".bed"
+    rm -f "$3_temp_chr"$CHR".fam"
+
+    rm -f "$3_temp_phased_chr"$CHR"".*
+    rm -f "$3_map_chr"$CHR"_shapeit.txt"
+    rm -f "$3_chr"$CHR"_shapeit.fam"
+
+    # Ensure temp files that should have already been deleted are (IBD calc)
+    rm -f "$3_map_rapid_chr"$CHR".txt" 
     
+    rm -f "$3_map_filtered_chr"$CHR".txt"
+    rm -f "$3_chr"$CHR".vcf.gz"
+    rm -f "$3_chr"$CHR".bcf"
+    rm -f "$3_chr"$CHR".bcf.csi"
+    rm -f "$3_chr"$CHR".log"    
+    rm -f "$3_temp_ibd_chr"$CHR".txt"
+
 done
 
 # Remove QC data
