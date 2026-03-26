@@ -39,7 +39,9 @@ for CHR in $CHR_LIST; do
     rm -f "$3_phased_chr"$CHR".vcf"
     rm -f "$3_phased_chr"$CHR".bcf"
     rm -f "$3_phased_chr"$CHR".bcf.csi"
-
+    rm -f "$3_phased_chr"$CHR".sample"
+    rm -f "$3_phased_chr"$CHR".bgen"
+    
 done
 
 # Remove QC data

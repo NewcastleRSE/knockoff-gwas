@@ -65,7 +65,7 @@ if [[ $FLAG_GENERATE_KNOCKOFFS == 1 ]]; then
 
   # Run snpknock2
   $SNPKNOCK2 \
-    --bgen "$3_chr{"$CHR_MIN":"$CHR_MAX"}" \
+    --bgen "$3_phased_chr{"$CHR_MIN":"$CHR_MAX"}" \
     --keep "$3_qc_samples.txt" \
     --extract "$3_qc_chr{"$CHR_MIN":"$CHR_MAX"}.txt" \
     --map "$3_map_chr{"$CHR_MIN":"$CHR_MAX"}.txt" \
