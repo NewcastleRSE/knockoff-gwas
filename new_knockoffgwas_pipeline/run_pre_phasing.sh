@@ -107,7 +107,7 @@ for CHR in $CHR_LIST; do
     cp "$3_phased_chr"$CHR".sample" "$3_temp_phased_chr"$CHR".sample"
 
     # Fixed .sample file to have the same family and individual ID
-    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_sample_format.R "$3_temp_phased_chr"$CHR".sample" "$3_chr"$CHR".sample" &>> $LOG_FILE
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/convert_sample_format.R "$3_temp_phased_chr"$CHR".sample" "$3_phased_chr"$CHR".sample" &>> $LOG_FILE
 
     # Create .bim file for phased data
     plink2 --bgen "$3_phased_chr"$CHR".bgen" ref-first --sample "$3_phased_chr"$CHR".sample" --make-bed --out "$3_phased_chr"$CHR""
