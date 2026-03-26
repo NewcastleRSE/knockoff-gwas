@@ -22,6 +22,12 @@ CHR_LIST=$(seq $1 $2)
 
 for CHR in $CHR_LIST; do
 
+    # Remove map data
+    rm -f "$3_map_chr"$CHR".txt"
+
+    # Remove QC data
+    rm -f "$3_qc_chr"$CHR".txt"
+
     # Remove reformated data
     rm -f "$3_qc_chr"$CHR".sample"
     rm -f "$3_chr"$CHR".sample"
