@@ -83,8 +83,8 @@ The script, `run_remove_temporary_files.sh`, can be ran as follows:
 .. code-block:: none
 
     source set_dirs.sh
-    ../new_knockoffgwas_pipeline/run_remove_temporary_files.sh 1 22 $DATA/mydata
+    ../new_knockoffgwas_pipeline/run_remove_temporary_files.sh $DATA/mydata
 
-Where the parameters are the start and end chromosome and the path and filename of the data used in the analysis.
+Where the parameter is the path and filename of the data used in the analysis.
 
 
