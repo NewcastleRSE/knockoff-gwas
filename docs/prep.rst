@@ -55,7 +55,7 @@ Running data preprocessing
 
 .. code-block:: none
 
-    # Run this file using "source set_dirs.sh" to set the following variables
+    # Run this file using "source set_dirs.sh" to set the following variable
     DATA=/nobackup/proj/your_account/data
 
 **Genetic Map Files**
@@ -114,19 +114,17 @@ or whatever is appropriate for the HPC machine you are using. This may take an h
 
 To perform the bulk of the preprocessing there are two scripts called `run_pre_phasing.sh` and `run_pre_ibd.sh` which must be run. The main purpose of this preprocessing is to produce phased haplotype files (`mydata_chrXX.sample` and `mydata_phased_chrXX.bgen`) and IBD segment files (`mydata_ibd_chrXX.txt`) which are needed for KnockOffGWAS. The parameters for the scripts are as follows:
 
-**Script run_pre_knockoff_gwas.sh Command Parameters**
+**Command Parameters for run_pre_phasing.sh and run_pre_ibd.sh**
 
-    1. Minimum chromosome number.
+    1. Chromosome number.
 
-    2. Maximum chromosome number.
-
-    3. Path and filename prefix of the data.
+    2. Path and filename prefix of the data.
   
-    4. Phenotype name to give to the phenotype data. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
+    3. Phenotype name to give to the phenotype data. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
 
-    5. Directory name used to store the results. This directory will be created automatically by the pipeline.
+    4. Directory name used to store the results. This directory will be created automatically by the pipeline.
 
-    6. For the IBD calculation script there are two more parameters. These control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. They correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
+    5. For the IBD calculation script there are two more parameters. These control the identical-by-descent (IBD) calculations and are unfortunately not straightforward. They correspond to the ``-d`` and ``-w`` parameters for `RaPID v1.7 <https://github.com/ZhiGroup/RaPID/tree/master>`_.  The ``-d`` parameter is the minimum length of IBD segments in centimorgans (cM), and ``-w`` is the number of SNPs in the window used for calculations. Appropriate settings may require experimentation. If the SNP data are sparse, the window size may need to be small (e.g., 3, as in the PBC data), whereas dense data may require a larger value (e.g., 250). The minimum length depends on the data and represents a trade-off between the number of segments returned and their reliability. A script is provided below to check the number of IBD segments returned; if too many are returned, the KnockoffGWAS analysis may take too long.
 
 To run this shell script create an HPC shell script to do the preprocessing in the ``hpc`` directory called ``pre.sh``, which should look something like the following:
 
@@ -154,20 +152,20 @@ To run this shell script create an HPC shell script to do the preprocessing in t
     echo "Running on $HOSTNAME pre-analysis data preparing"
 
     # Phase chromosome data
-    ../new_knockoffgwas_pipeline/run_pre_phasing.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results
+    ../new_knockoffgwas_pipeline/run_pre_phasing.sh $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results
 
     # It may be necessary to change the segment length and window size until a suitable IBD data is returned
-    ../new_knockoffgwas_pipeline/run_pre_ibd.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results 25 3
+    ../new_knockoffgwas_pipeline/run_pre_ibd.sh $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results 25 3
 
     date
 
 This will need to be updated for the requirements of the HPC machine that you are using. Note that to run the scripts it is required to have available BCFTools, Plink versions 1.9 and 2, and R.
 
-When running this script each chromosome is ran separately so the minimum and maximum chromosome are set to the same value given by the task job number ``$SLURM_ARRAY_TASK_ID``. (The original example scripts with KnockOfGWAS allowed several chromosomes at once to be analysed, but in this new pipeline only one chromosome is processed at a time.)
+When running this script each chromosome is ran separately and the chromosome number is given by the task job number ``$SLURM_ARRAY_TASK_ID``.
 
 The path and filename prefix of the data is given next by ``$DATA/mydata``.
 
-The phenotype name is given next, which is set here to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. 
+The phenotype name is given next, which is set here to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
 
 The results directory is set to ``results``.
 

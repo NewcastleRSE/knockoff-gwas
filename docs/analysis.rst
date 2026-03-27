@@ -5,14 +5,29 @@ Step 2. Performing KnockOffGWAS
 
 To perform KnockOffGWAS it is necessary that the data has been prepared as described in section :ref:`_prep`. 
 
-You should have already have created a script called ``set_dirs.sh`` and saved it in your analysis directory. This script should look something like:
+You should have already have created a script called ``set_dirs.sh`` saved it in your analysis directory. This script should look something like:
 
 .. code-block:: none
 
-    # Run this file using "source set_dirs.sh" to set the following variables
+    # Run this file using "source set_dirs.sh" to set the following variable
     DATA=/nobackup/proj/your_account/data
 
-Next you should create an HPC script to do the analysis in the ``hpc`` directory called ``my_analysis.sh`` or something and should look something like the following:
+To run the analysis there is a script called ``run_knockoff_gwas.sh`` with the floowing parameters. 
+
+**Script run_knockoff_gwas.sh Command Parameters**
+
+    1. Chromosome number.
+
+    2. Path and filename prefix of the data.
+
+    3. The phenotype name to give to the phenotype data. 
+
+    4. The false discovery rate (FDR).
+
+    5. The directory name used to store the results. This directory will be created automatically by the pipeline.
+
+
+As the analysis will take a long time is is best to run the analysis as an array job on an HPC machine. This can be done by creating a script in the ``hpc`` directory called ``my_analysis.sh`` (or something) and should look something like the following:
 
 .. code-block:: none
 
@@ -36,30 +51,23 @@ Next you should create an HPC script to do the analysis in the ``hpc`` directory
     date
     echo "Running on $HOSTNAME PBC analysis"
 
-    ../new_knockoffgwas_pipeline/run_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/mydata pbc 0.1 results_d25_w3_FDR20
+    ../new_knockoffgwas_pipeline/run_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $DATA/mydata pbc 0.1 results_d25_w3_FDR20
 
     date
 
-As before, this will need to be updated for the requirements of the HPC machine that you are using. Important points to note about this script:
+As before, this will need to be updated for the requirements of the HPC machine that you are using. The script requires BCFTools, Plink version 1.9 and R, so these must be loaded.
 
-1. **Requirements**
+The chromosome is set using the task job number given by ``$SLURM_ARRAY_TASK_ID``.
 
-   The script requires BCFTools, Plink version 1.9 and R, so these must be loaded.
+The path and filename prefix of the data is given next by ``$DATA/mydata``. The data should be formatted as described in the previous section; see :ref:`initial_prep`.
 
-2. **Command Parameters**
+The phenotype name is given next, which is set here to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. 
 
-   Near the end of the script the ``run_knockoff_gwas.sh`` script is run with a number of parameters. These are the same parameters used with the data preparation script except the last two are omitted.
+The results directory is set to ``results``.
 
-   a. The first two parameters are the minimum and maximum chromosomes. These are set to the same chromosome using the task job number given by ``$SLURM_ARRAY_TASK_ID``. The original example scripts allowed several chromosomes at once to be analysed, but in this new pipeline only one chromosome is processed at a time.
+In this case it is set to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. 
 
-   b. The next parameter is the path and filename prefix of the data, ``$DATA/mydata``. The data should be formatted as described in the previous section; see :ref:`initial_prep`.
-
-   c. The fourth parameter is the phenotype name to give to the phenotype data. In this case it is set to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
-
-   d. The fifth parameter is the false discovery rate (FDR), set to 0.1.
-
-   e. The sixth parameter is the directory name used to store the results, here set to ``results``. This directory will be created automatically by the pipeline.
-
+The False Discovery Rate (FDR) is set to 0.1 for the KnockOffGWAS analysis.
 
 Run the analysis as an array job on the HPC with the following command:
 
