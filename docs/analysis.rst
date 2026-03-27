@@ -12,9 +12,9 @@ You should have already have created a script called ``set_dirs.sh`` saved it in
     # Run this file using "source set_dirs.sh" to set the following variable
     DATA=/nobackup/proj/your_account/data
 
-To run the analysis there is a script called ``run_knockoff_gwas.sh`` with the floowing parameters. 
+To run the analysis there is a script called ``run_knockoff_gwas.sh`` with the following parameters. 
 
-**Script run_knockoff_gwas.sh Command Parameters**
+**Command-Line Parameters for run_knockoff_gwas.sh**
 
     1. Chromosome number.
 

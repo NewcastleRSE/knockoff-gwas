@@ -2,10 +2,7 @@
 
 .. code-block:: none
 
-🚧 **Work in Progress** 🚧
-===========================
-
-This website is under active development.
+🚧 **Work in Progress** 🚧 This website is under active development.
 
 Welcome to the KnockOffGWAS pipeline webpage!
 =============================================

@@ -5,7 +5,23 @@ Step 3. BOLT-LMM Analysis
 
 Comparison of the KnockOffGWAS results with a more traditional GWAS can be done with the use of `BOLT-LMM <https://storage.googleapis.com/broad-alkesgroup-public/BOLT-LMM/BOLT-LMM_manual.html>`_.
 
-Once BOLT-LMM is installed on your HPC machine (or elsewhere), it can be ran 
+Once BOLT-LMM is installed on your HPC machine (or elsewhere), the analysis can be run with the script called ``run_lmm.sh`` which has the following parameters. 
+
+**Command-Line Parameters for run_lmm.sh**
+
+    1. Start chromosome number.
+
+    1. End chromosome number.
+
+    3. Path and filename prefix of the data.
+
+    4. The phenotype name to give to the phenotype data. 
+
+    5. The directory name used to store the results. This directory will be created automatically by the pipeline.
+
+    6. Linkage disequilibrium (LD) tables for BOLT-LMM. These should be appropriate for the data you are using. See `BOLT-LMM <https://storage.googleapis.com/broad-alkesgroup-public/BOLT-LMM/BOLT-LMM_manual.html>`_ documentation for details.
+
+    7. Genetic map table for BOLT-LMM. Again, these should be appropriate for the data you are using. See `BOLT-LMM <https://storage.googleapis.com/broad-alkesgroup-public/BOLT-LMM/BOLT-LMM_manual.html>`_ documentation for details.
 
 Create an HPC script to do the preprocessing in the ``hpc`` directory called ``bolt-lmm.sh`` which should look something like the following:
 
@@ -18,9 +34,6 @@ Create an HPC script to do the preprocessing in the ``hpc`` directory called ``b
     #SBATCH --mem=10GB
     #SBATCH --output=slurm_bolt_lmm_%a.out
 
-    MIN_CHR=1
-    MAX_CHR=22
-
     # Load modules
     module load BOLT-LMM
     module load PLINK/1.9b_6.21-x86_64
@@ -30,37 +43,35 @@ Create an HPC script to do the preprocessing in the ``hpc`` directory called ``b
     source ./set_dirs.sh
 
     date
-    echo "Running on $HOSTNAME PBC analysis"
+    echo "Running on $HOSTNAME PBC BOLT-LMM analysis"
 
-    ../new_knockoffgwas_pipeline/run_lmm.sh ${MIN_CHR} ${MAX_CHR} $DATA/mydata pbc 0.1 results $DATA"/tables/LDSCORE.1000G_EUR.GRCh38.tab.gz" $DATA"/tables/genetic_map_hg19_withX.txt.gz"
+    ../new_knockoffgwas_pipeline/run_lmm.sh 1 22 $DATA/mydata pbc results $DATA"/tables/LDSCORE.1000G_EUR.GRCh38.tab.gz" $DATA"/tables/genetic_map_hg19_withX.txt.gz"
 
     date
 
+As before, this will need to be updated for the requirements of the HPC machine that you are using. The script requires BCFTools, Plink version 1.9 and R, so these must be loaded.
 
-As before, this will need to be updated for the requirements of the HPC machine that you are using. Important points to note about this script:
+The start and end chromosomes are set to 1 and 22.
 
-1. **Requirements**
+The path and filename prefix of the data is given next by ``$DATA/mydata``. The data should be formatted as described in the previous section; see :ref:`initial_prep`.
 
-   The script requires BCFTools, Plink version 1.9 and R, so these must be loaded.
+The phenotype name is given next, which is set here to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. 
 
-2. **Command Parameters**
+The results directory is set to ``results``.
 
-   Near the end of the script the ``run_lmm.sh`` script is run with a number of parameters. 
+The linkage disequilibrium (LD) tables have been included as data download from the 1000 genomes project.
 
-   a. The first two parameters are the minimum and maximum chromosomes. These are set to calculate results for the whole genome.
+The genetic map tables have been downloaded in advance as appropriate for the PBC data we are using.
 
-   b. The next parameter is the path and filename prefix of the data, ``$DATA/mydata``. The data should be formatted as described in the previous section; see :ref:`initial_prep`.
+Run the analysis as an array job on the HPC with the following command:
 
-   c. The fourth parameter is the phenotype name to give to the phenotype data. In this case it is set to ``pbc`` for the Primary Biliary Cholangitis (PBC) dataset. This phenotype data should be initially stored in the sixth column of the ``.fam`` file. The necessary phenotype file for the pipeline will then be automatically created from this data.
+.. code-block:: none
 
-   d. The fifth parameter is the false discovery rate (FDR), set to 0.1. It has no purpose here but is included for consistency.
+    sbatch hpc/bolt-lmm.sh
 
-   e. The sixth parameter is the directory name used to store the results, here set to ``results``. This directory will be created automatically by the pipeline.
+or whatever is appropriate for the HPC machine you are using.
 
-   f. The seventh parameter is a file for linkage disequilibrium (LD) tables for BOLT-LMM. These should be appropriate for the data you are using. See `BOLT-LMM <https://storage.googleapis.com/broad-alkesgroup-public/BOLT-LMM/BOLT-LMM_manual.html>`_ documentation for details.
-
-   g. The eighth parameter is a file for a genetic map table for BOLT-LMM. Again, these should be appropriate for the data you are using. See `BOLT-LMM <https://storage.googleapis.com/broad-alkesgroup-public/BOLT-LMM/BOLT-LMM_manual.html>`_ documentation for details.
-
+Results for the analysis will be stored in the ``results/lmm`` with a statistics file for chromosomes 1-22 named ``stats_chr1_chr22_lmm.txt`` along with two clumping files `clump_chr1_chr22_lmm_regions.txt` and `clump_chr1_chr22_lmm_clumped.tab`.
 
 Run the analysis on the HPC with the following command:
 

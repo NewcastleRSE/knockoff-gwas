@@ -19,10 +19,9 @@
 #      also path & file prefix (not including "_qc_variants") for all QC SNP data, .txt
 #      also path & file prefix (not including "_qc_samples") for all QC SNP data, .txt
 # $4 = phenotype name
-# $5 = FDR rate - not used here but included for consistency with other scripts
-# $6 = output folder
-# $7 = LD Table for BOLT-LMM
-# $8 = Genetic map table for BOLT-LMM
+# $5 = output folder
+# $6 = LD Table for BOLT-LMM
+# $7 = Genetic map table for BOLT-LMM
 
 # Absolute path to this script
 SCRIPT=$(readlink -f "$0")
@@ -34,9 +33,9 @@ source ./set_dirs.sh
 
 # Temporary folder for temporary files
 TMP_DIR=$DATA"/tmp"
-mkdir -p $6/lmm
+mkdir -p $5/lmm
 mkdir -p $TMP_DIR
 
-$SCRIPTPATH/knockoffgwas_pipeline/misc/lmm.sh $1 $2 $3 $4 $5 $6 $7 $8
+$SCRIPTPATH/knockoffgwas_pipeline/misc/lmm.sh $1 $2 $3 $4 $5 $5 $6 $7
 
 

@@ -90,7 +90,7 @@ The following is the structure and contents of the *new_knockoffgwas_pipeline* d
         └── run_remove_temporary_files.sh
 
 
-Below is a flow diagram of the KnockOffGWAS pipeline. **This will be updated with a better diagram**
+Below is a flow diagram of the KnockOffGWAS pipeline.
 
 .. _flow-fig:
 

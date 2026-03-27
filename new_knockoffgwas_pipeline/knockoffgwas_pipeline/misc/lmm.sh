@@ -12,10 +12,9 @@
 #      also path & file prefix (not including "_map_chrXX") for genetic map data, .txt
 #      also path & file prefix (not including "_ibd_chrXX") for IBD data, .txt
 # $4 = phenotype name
-# $5 = FDR rate - not used here but included for consistency with other scripts
-# $6 = output folder
-# $7 = LD Table for BOLT-LMM
-# $8 = Genetic map table for BOLT-LMM
+# $5 = output folder
+# $6 = LD Table for BOLT-LMM
+# $7 = Genetic map table for BOLT-LMM
 
 # Set dirs
 source ./set_dirs.sh
@@ -36,7 +35,7 @@ FAM_FILE="$3_chr"$CHR_MIN".fam"
 PHENO_FILE=$3_phenotypes.txt
 PHENO_NAME=$4
 
-OUT_DIR="$6/lmm"
+OUT_DIR="$5/lmm"
 mkdir -p $OUT_DIR
 STATS_FILE=$OUT_DIR"/stats_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm.txt"
 CLUMP_BASENAME=$OUT_DIR"/clump_chr"$CHR_MIN"_chr"$CHR_MAX
@@ -48,8 +47,8 @@ CLUMP_THRESHOLD=0.00000005 # 5e-8
 ####################
 
 # Stuff for bolt
-LD_TABLE=$7 
-MAP_TABLE=$8 
+LD_TABLE=$6 
+MAP_TABLE=$7 
 
 bolt \
     --bed=$GENO_FILE"{$CHR_MIN:$CHR_MAX}.bed" \
@@ -69,4 +68,4 @@ bolt \
 echo "Output file:"
 echo $STATS_FILE
 
-$SCRIPTPATH/summarise_lmm.sh $1 $2 $3 $4 $5 $6 $7 $8
+$SCRIPTPATH/summarise_lmm.sh $1 $2 $3 $4 $5 $6 $7

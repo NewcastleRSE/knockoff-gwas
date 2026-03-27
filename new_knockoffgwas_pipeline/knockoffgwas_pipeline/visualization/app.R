@@ -14,7 +14,7 @@ print(getwd())
 
 #data_dir <- "../../../pbc_analysis/data" #"../data"
 #res_dir <- "../../../pbc_analysis/results" #../results"
-lmm_dir <- "../../../pbc_analysis/results/lmm"
+#lmm_dir <- "../../../pbc_analysis/results/lmm"
 gwas_dir <- "../../../pbc_analysis/results_gwas"
 use_plink_gwas <- FALSE
 
@@ -34,17 +34,36 @@ ui <- fluidPage(theme = "theme.css",
            wellPanel(
              shinyDirButton(
                id = "results_dir",
-               label = "Choose directory",
+               label = "Choose results directory",
                title = "Select results folder",
                multiple = FALSE
              ),
-            
-           
-           verbatimTextOutput("results_dir_path"),
-           tags$small(
-             tags$strong("Selected directory:"),
-             textOutput("res_dir_text")
-           )),
+             
+             div(
+               tags$small(
+                 tags$strong("Selected directory: "),
+                 textOutput("res_dir_text", inline = TRUE)
+               )
+             ),
+             
+             # spacing
+             tags$br(),
+             
+             shinyDirButton(
+               id = "results_lmm_dir",
+               label = "Choose BOLT-LMM directory",
+               title = "Select BOLT-LMM folder",
+               multiple = FALSE
+             ),
+             
+             div(
+               tags$small(
+                 tags$strong("Selected BOLT-LMM directory: "),
+                 textOutput("res_lmm_dir_text", inline = TRUE)
+               )
+             )
+           ),
+          
       h4("Step 2: Select a chromosome."),
       wellPanel(
         #selectInput(inputId = 'phenotype', label = 'Phenotype', choices = c(phenotypes)),
@@ -123,6 +142,7 @@ server <- function(input, output, session) {
 
   ## reactive holder for user choice
   res_dir_rv <- reactiveVal("/path/to/results")
+  res_lmm_dir_rv <- reactiveVal("/path/to/results/lmm")
   
   app_dir  <- normalizePath(getwd())
   root_dir <- normalizePath(file.path(app_dir, "..", "..", ".."))
@@ -131,11 +151,24 @@ server <- function(input, output, session) {
   shinyDirChoose(input, "results_dir", roots = volumes, session = session)
   
   observeEvent(input$results_dir, {
-    res_dir_rv(parseDirPath(volumes, input$results_dir))
+    new_path <- parseDirPath(volumes, input$results_dir)
+    
+    res_dir_rv(new_path)
+    res_lmm_dir_rv(file.path(new_path, "lmm")) 
+  })
+  
+  shinyDirChoose(input, "results_lmm_dir", roots = volumes, session = session)
+  
+  observeEvent(input$results_lmm_dir, {
+    res_lmm_dir_rv(parseDirPath(volumes, input$results_lmm_dir))
   })
   
   output$res_dir_text <- renderText({
     res_dir_rv()
+  })
+  
+  output$res_lmm_dir_text <- renderText({
+    res_lmm_dir_rv()
   })
   
   output$placeholder.manhattan <- renderText({"[Select a results directory and chromosome to get started.]"})
@@ -213,13 +246,13 @@ server <- function(input, output, session) {
         output$plot.annotations <- NULL # important: clear Chicago plot
         output$placeholder.locus <- renderText({"[Select a gene to produce locus view.]"})
         file_prefix<-paste0("results_chr",chr,"_chr",chr)
-        state$association_results <- load_association_results(res_dir_rv(), lmm_dir, file_prefix)
+        state$association_results <- load_association_results(res_dir_rv(), res_lmm_dir_rv(), file_prefix)
       
     } else{
         state$chr <- chr
         file_prefix<-paste0("results_chr",chr,"_chr",chr)
         withProgress(message = 'Loading results...', value = 0, {
-          state$association_results <- load_association_results(res_dir_rv(), lmm_dir, file_prefix)
+          state$association_results <- load_association_results(res_dir_rv(), res_lmm_dir_rv(), file_prefix)
         })
     }
     

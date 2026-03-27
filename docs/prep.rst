@@ -64,7 +64,7 @@ Before the main part of data preprocessing can run it is necessary to have some 
 
 There is a shell script called `run_pre_create_map_files.sh` to do this. This script runs an R script which fills in or interpolates any missing rates and renames the headers to be compatible with the rest of the pipeline. This shell script has the following parameters:
 
-**Script run_pre_create_map_files.sh Command Parameters**
+**Command-Line Parameters for run_pre_create_map_files.sh**
 
     1. Minimum chromosome number. 
 
@@ -114,7 +114,7 @@ or whatever is appropriate for the HPC machine you are using. This may take an h
 
 To perform the bulk of the preprocessing there are two scripts called `run_pre_phasing.sh` and `run_pre_ibd.sh` which must be run. The main purpose of this preprocessing is to produce phased haplotype files (`mydata_chrXX.sample` and `mydata_phased_chrXX.bgen`) and IBD segment files (`mydata_ibd_chrXX.txt`) which are needed for KnockOffGWAS. The parameters for the scripts are as follows:
 
-**Command Parameters for run_pre_phasing.sh and run_pre_ibd.sh**
+**Command-Line Parameters for run_pre_phasing.sh and run_pre_ibd.sh**
 
     1. Chromosome number.
 
