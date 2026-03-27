@@ -19,8 +19,8 @@
 #      also path & file prefix (not including "_qc_samples") for all QC SNP data, .txt
 # $3 = phenotype name
 # $4 = output folder
-# $6 = -d
-# $7 = -w
+# $5 = -d
+# $6 = -w
 
 # Set dirs
 source set_dirs.sh
@@ -31,7 +31,7 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 # Log file
-LOG_FILE=$4"/pre_knockoffgwas_"$1"_"$1".log"
+LOG_FILE=$4"/pre_knockoffgwas_"$1".log"
 rm -f $LOG_FILE
 touch $LOG_FILE
 echo "Log file: "$LOG_FILE
@@ -91,7 +91,7 @@ for CHR in $CHR_LIST; do
     
     # Usage: ./RaPID_v.1.7 -i <input_file_vcf_compressed> -g <genetic_mapping_file> -d <min_length_in_cM> -o <output_folder> -w  <window_size> -r <#runs> -s <#success>
     
-    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$2_phased_chr${CHR}.vcf.gz" -g "$2_map_rapid_chr${CHR}.txt" -d $6 -w $7 -r 10 -s 5 -o $TMP_DIR/"ibd_chr"$CHR &>> $LOG_FILE
+    $SCRIPTPATH/knockoffgwas_pipeline/new_bits/RaPID_v.1.7 -i "$2_phased_chr${CHR}.vcf.gz" -g "$2_map_rapid_chr${CHR}.txt" -d $5 -w $6 -r 10 -s 5 -o $TMP_DIR/"ibd_chr"$CHR &>> $LOG_FILE
 
     gunzip -f $TMP_DIR/"ibd_chr"$CHR/results.max.gz
     mv $TMP_DIR/"ibd_chr"$CHR/results.max "$2_temp_ibd_chr${CHR}.txt"
