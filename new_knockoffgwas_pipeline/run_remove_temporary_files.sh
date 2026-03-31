@@ -78,5 +78,8 @@ done
 rm -f $1_qc_variants.txt
 rm -f $1_qc_samples.txt
 
+# Remove phenotype file
+rm -f $1_phenotypes.txt
+
 # Remove temporary files used for IBD calculations
 rm -rf $DATA/tmp
