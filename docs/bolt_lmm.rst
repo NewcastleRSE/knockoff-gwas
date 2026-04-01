@@ -11,10 +11,10 @@ Once BOLT-LMM is installed on your HPC machine (or elsewhere), the analysis can 
 
     1. Start chromosome number.
 
-    1. End chromosome number.
+    2. End chromosome number.
 
     3. Path and filename prefix of the data.
-
+    
     4. The phenotype name to give to the phenotype data. 
 
     5. The directory name used to store the results. This directory will be created automatically by the pipeline.

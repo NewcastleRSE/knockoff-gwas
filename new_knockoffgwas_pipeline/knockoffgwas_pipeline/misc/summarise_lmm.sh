@@ -6,12 +6,13 @@
 
 # Parameters
 #
-# $1 = Chromosome number
-# $2 = path & file prefix (not including "_chrXX") for genetic data, .bim, .bed, .fam
+# $1 = start chr number
+# $2 = end chr number
+# $3 = path & file prefix (not including "_chrXX") for genetic data, .bim, .bed, .fam
 #      also path & file prefix (not including "_map_chrXX") for genetic map data, .txt
 #      also path & file prefix (not including "_ibd_chrXX") for IBD data, .txt
-# $3 = phenotype name
-# $4 = output folder
+# $4 = phenotype name
+# $5 = output folder
 
 # Set dirs
 source ./set_dirs.sh
@@ -26,13 +27,13 @@ CHR_MIN=$1
 CHR_MAX=$2
 CHR_LIST=$(seq $CHR_MIN $CHR_MAX)
 
-GENO_FILE="$2_chr"
-FAM_FILE="$2_chr"$CHR_MIN".fam"
+GENO_FILE="$3_chr"
+FAM_FILE="$3_chr"$CHR_MIN".fam"
 
-PHENO_FILE=$2_phenotypes.txt
-PHENO_NAME=$3
+PHENO_FILE=$3_phenotypes.txt
+PHENO_NAME=$4
 
-OUT_DIR="$4/lmm"
+OUT_DIR="$5/lmm"
 mkdir -p $OUT_DIR
 STATS_FILE=$OUT_DIR"/stats_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm.txt"
 CLUMP_BASENAME=$OUT_DIR"/clump_chr"$CHR_MIN"_chr"$CHR_MAX
@@ -84,4 +85,4 @@ echo "Results written on "$CLUMP_FILE".tab"
 
 # Parse clumped p-values and summarise discoveries
 OUT_FILE=$CLUMP_BASENAME"_lmm_regions.txt"
-Rscript --vanilla $SCRIPTPATH/summarise_lmm.R $CLUMP_FILE".tab" ${OUT_FILE} $2 $STATS_FILE
+Rscript --vanilla $SCRIPTPATH/summarise_lmm.R $CLUMP_FILE".tab" ${OUT_FILE} $3 $STATS_FILE
