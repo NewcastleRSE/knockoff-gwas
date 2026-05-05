@@ -4,6 +4,7 @@ pbc_analysis/ibd*
 *slurm*out
 pbc_analysis/results/pre*.log
 pbc_test/
+*.sif
 *.ld
 *.frq
 *.nosex

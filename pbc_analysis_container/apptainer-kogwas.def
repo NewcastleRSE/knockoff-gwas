@@ -1,0 +1,291 @@
+# Build with: 
+# apptainer build kogwas.sif apptainer-kogwas.def 
+#
+
+Bootstrap: docker
+From: ubuntu:24.04
+
+%labels
+    Author Richard Howey
+
+%environment
+    export LC_ALL=C
+    export PATH=/:/opt/bolt:/opt/plink:/opt/plink2:/usr/local/bin:$PATH
+
+    # Default (can be overridden by user at runtime)
+    export DATA=${DATA:-/data}
+
+    export OMP_NUM_THREADS=1
+    # For BOLT-LMM
+    export LD_LIBRARY_PATH=/opt/nlopt/lib:$LD_LIBRARY_PATH
+
+%files
+    ../new_knockoffgwas_pipeline/* /
+
+%post
+    set -e
+
+    export DEBIAN_FRONTEND=noninteractive
+    export TZ=Europe/London
+
+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
+
+    # Clean old lists (IMPORTANT)
+    rm -rf /var/lib/apt/lists/*
+
+    # Update package lists fresh
+    apt-get update
+
+    # =========================================
+    # System toolchain (match GCC module env)
+    # =========================================
+    apt-get update && apt-get install -y --fix-missing \
+        tzdata \
+        build-essential \
+        gcc-13 \
+        g++-13 \
+        gfortran \
+        make \
+        wget \
+        curl \
+        unzip \
+        ca-certificates \
+        cmake \
+        zlib1g-dev \
+        libcurl4-openssl-dev \
+        libboost-program-options-dev \
+        libboost-iostreams-dev \
+        liblapack-dev \
+        libblas-dev \
+        libzstd-dev \
+        libssl-dev \
+        libxml2-dev \
+        zlib1g-dev \
+        libbz2-dev \
+        liblzma-dev \
+        libpcre2-dev \
+        r-base \
+        libfontconfig1-dev \
+        libharfbuzz-dev \
+        libfribidi-dev \
+        libfreetype6-dev \
+        libpng-dev \
+        libtiff5-dev \
+        libjpeg-dev \
+        libicu-dev \
+        libuv1-dev \
+        libwebp-dev \
+        libwebpmux3 
+
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+
+    # If anything failed, fix dependencies
+    apt-get install -f -y
+
+    ########################################
+    # Ensure pipeline scripts are executable
+    ########################################
+    find / -type f -name "*.sh" -exec chmod +x {} \; || true
+
+    ########################################
+    # Install BCFtools (approx version 1.22)
+    ########################################
+    cd /opt
+    wget https://github.com/samtools/bcftools/releases/download/1.22/bcftools-1.22.tar.bz2
+    tar -xjf bcftools-1.22.tar.bz2
+    cd bcftools-1.22
+    make
+    make install
+   
+    cd /
+    rm -rf /opt/bcftools-1.22*
+
+    ########################################
+    # Install PLINK 1.9
+    ########################################
+    mkdir -p /opt/plink
+    cd /opt/plink
+    wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20210606.zip
+    unzip plink_linux_x86_64_20210606.zip
+    chmod +x plink
+
+    rm plink_linux_x86_64_20210606*
+
+    ########################################
+    # Install PLINK 2.0 (pinned working URL)
+    ########################################
+    mkdir -p /opt/plink2
+    cd /opt/plink2
+    wget https://s3.amazonaws.com/plink2-assets/alpha7/plink2_linux_x86_64_20260425.zip
+    unzip plink2_linux_x86_64_20260425.zip
+    chmod +x plink2
+
+    rm plink2_linux_x86_64_20260425*
+
+    ########################################
+    # Install R packages (robust + complete)
+    ########################################
+    Rscript -e "
+    options(repos='https://cloud.r-project.org');
+
+    # Core tidyverse packages
+    core <- c(
+      'ggplot2','dplyr','tidyr','readr',
+      'purrr','tibble','stringr','forcats'
+    )
+
+    # Known problematic dependency chain (from build logs)
+    deps <- c(
+      'pkgload','bslib','fs','ragg',
+      'gargle','googledrive','googlesheets4',
+      'rmarkdown','reprex'
+    )
+
+    # Other required packages
+    extra <- c(
+      'BiocManager','fastcluster','latex2exp',
+      'gridExtra','bigstatsr','bigsnpr'
+    )
+
+    # 1. Install dependency chain FIRST (prevents tidyverse failure)
+    install.packages(deps, dependencies=TRUE, Ncpus=parallel::detectCores())
+
+    # 2. Install core + extra packages
+    install.packages(c(core, extra), dependencies=TRUE, Ncpus=parallel::detectCores())
+
+    # 3. Install tidyverse LAST (meta-package)
+    install.packages('tidyverse', dependencies=TRUE, Ncpus=parallel::detectCores())
+
+    # 4. Fail fast validation
+    pkgs <- c(core, extra, deps, 'tidyverse')
+
+    for (p in pkgs) {
+      if (!require(p, character.only=TRUE)) {
+        stop(paste('FAILED:', p))
+      }
+    }
+    "
+
+    # =========================================
+    # Build NLopt WITH C++ support
+    # =========================================
+    cd /opt
+
+    wget -q https://github.com/stevengj/nlopt/archive/v2.7.1.tar.gz
+    tar --no-same-owner -xzf v2.7.1.tar.gz
+    cd nlopt-2.7.1
+
+    mkdir build && cd build
+
+    cmake .. \
+        -DNLOPT_CXX=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/nlopt
+
+    make -j$(nproc)
+    make install
+
+    # Ensure headers visible
+    export CPATH=/opt/nlopt/include:$CPATH
+    export LIBRARY_PATH=/opt/nlopt/lib:$LIBRARY_PATH
+
+    cd /opt
+    rm -f v2.7.1.tar*
+    rm -rf nlopt-2.7.1*
+
+    # =========================================
+    # Download BOLT-LMM
+    # =========================================
+    cd /opt
+
+    wget -q https://storage.googleapis.com/broad-alkesgroup-public/BOLT-LMM/downloads/BOLT-LMM_v2.5.tar.gz
+
+    tar --no-same-owner -zxf BOLT-LMM_v2.5.tar.gz
+    cd BOLT-LMM_v2.5/src
+
+    # =========================================
+    # Makefile patch for BOLT-LMM (John Snowdon)
+    # =========================================
+    cat Makefile | \
+        sed 's/CC *= *icpc/#CC = icpc/g' | \
+        sed 's/# CC = g++/CC = g++/g' | \
+        sed 's/BOOST_INSTALL_DIR =/#BOOST_INSTALL_DIR =/g' | \
+        sed 's/NLOPT_INSTALL_DIR =/#NLOPT_INSTALL_DIR =/g' | \
+        sed 's/ZLIB_STATIC_DIR =/#ZLIB_STATIC_DIR =/g' | \
+        sed 's/LIBSTDCXX_STATIC_DIR =/#LIBSTDCXX_STATIC_DIR =/g' | \
+        sed 's/GLIBC_STATIC_DIR =/#GLIBC_STATIC_DIR =/g' | \
+        sed 's/ZSTD_DIR =/#ZSTD_DIR =/g' | \
+        sed 's/^CPATHS +=/#CPATHS +=/g' | \
+        sed 's/^LPATHS +=/#LPATHS +=/g' | \
+        sed 's/LLAPACK = -llapack -lgfortran/#LLAPACK = -llapack -lgfortran/g' | \
+        sed 's|\$L|\$L -lgfortran -llapack -lblas|g' \
+        > Makefile.linux
+
+    # =========================================
+    # Build BOLT (HPC-style GCC build)
+    # =========================================
+    make -f Makefile.linux clean
+
+    export CFLAGS="-O2 -pipe -march=x86-64 -msse4 -mavx2"
+
+    make -f Makefile.linux -j$(nproc)
+
+    # =========================================
+    # Install
+    # =========================================
+   
+    # install final binary
+    mkdir -p /opt/bolt
+    cp bolt /opt/bolt/
+
+    # strip binaries (debug symbols)
+    strip /opt/bolt/bolt
+    strip /opt/nlopt/lib/*.so || true
+
+    # =======================================
+    # remove build artifacts
+    # =======================================
+    cd /
+    rm -rf /opt/BOLT-LMM_v2.5 /opt/nlopt-2.7.1
+    
+    # remove build toolchain
+    apt-get purge -y \
+        build-essential \
+        gcc-13 \
+        g++-13 \
+        gfortran \
+        make \
+        cmake
+
+    apt-get autoremove -y
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+    rm -rf /opt/nlopt/include
+    rm -f /opt/nlopt/lib/*.a
+    rm -f /opt/nlopt/lib/*.la
+
+    apt-get purge -y \
+    libboost-program-options-dev \
+    libboost-iostreams-dev \
+    liblapack-dev \
+    libblas-dev \
+    zlib1g-dev \
+    libzstd-dev
+
+    apt-get install -y \
+    libboost-program-options1.83.0 \
+    libboost-iostreams1.83.0 \
+    liblapack3 \
+    libblas3 \
+    zlib1g \
+    libzstd1
+
+    ########################################
+    # Clean up
+    ########################################
+    rm -rf /tmp/downloaded_packages
+
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
