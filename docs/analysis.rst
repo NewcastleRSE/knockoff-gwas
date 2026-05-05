@@ -36,7 +36,7 @@ As the analysis will take a long time is is best to run the analysis as an array
     #SBATCH --account=your_account
     #SBATCH --cpus-per-task=1
     #SBATCH --mem=100GB
-    #SBATCH --array=1-22                       # Run tasks for given chromosomes
+    #SBATCH --array=1-22                      # Run tasks for given chromosomes
     #SBATCH --output=slurm_anal_%a.out
 
     # Load modules

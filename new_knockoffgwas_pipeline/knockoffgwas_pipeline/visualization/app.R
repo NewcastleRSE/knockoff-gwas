@@ -154,7 +154,8 @@ server <- function(input, output, session) {
     new_path <- parseDirPath(volumes, input$results_dir)
     
     res_dir_rv(new_path)
-    res_lmm_dir_rv(file.path(new_path, "lmm")) 
+    # Set LMM also?
+    #res_lmm_dir_rv(file.path(new_path, "lmm")) 
   })
   
   shinyDirChoose(input, "results_lmm_dir", roots = volumes, session = session)
