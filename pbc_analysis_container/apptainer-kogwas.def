@@ -21,6 +21,7 @@ From: ubuntu:24.04
 
 %files
     ../new_knockoffgwas_pipeline/* /
+    container_set_dirs.sh /set_dirs.sh
 
 %post
     set -e

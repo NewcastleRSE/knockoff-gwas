@@ -32,8 +32,8 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 source ./set_dirs.sh
 
 # Output folder
-mkdir -p $5/lmm
+mkdir -p $5
 
-$SCRIPTPATH/knockoffgwas_pipeline/misc/lmm.sh $1 $2 $3 $4 $5 $5 $6 $7
+$SCRIPTPATH/knockoffgwas_pipeline/misc/lmm.sh $1 $2 $3 $4 $5 $6 $7
 
 

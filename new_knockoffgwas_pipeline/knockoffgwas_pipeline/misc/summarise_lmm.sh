@@ -33,7 +33,7 @@ FAM_FILE="$3_chr"$CHR_MIN".fam"
 PHENO_FILE=$3_phenotypes.txt
 PHENO_NAME=$4
 
-OUT_DIR="$5/lmm"
+OUT_DIR=$5
 mkdir -p $OUT_DIR
 STATS_FILE=$OUT_DIR"/stats_chr"$CHR_MIN"_chr"$CHR_MAX"_lmm.txt"
 CLUMP_BASENAME=$OUT_DIR"/clump_chr"$CHR_MIN"_chr"$CHR_MAX
