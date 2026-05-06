@@ -38,6 +38,7 @@ Contents
    bolt_lmm
    visualisation
    conclusions
+   container
    references
 
 .. _contact:

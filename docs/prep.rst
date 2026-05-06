@@ -46,17 +46,24 @@ Setup directories for analysis
 3. Enter this directory.
 4. Create an ``hpc`` directory to store HPC scripts in.
 
-.. _running_prep:
+.. _data_directory:
 
-Running data preprocessing
---------------------------
+Create script "set_dirs.sh" to point to dataset directory
+---------------------------------------------------------
 
-**Important:** Create a script called ``set_dirs.sh`` and save it in your analysis directory. This script should define Bash variables ``DATA`` and ``IBD_DATA`` to point to the directory where your data is stored and where IBD data should be stored. These files may be too big to store in your personal quota on an HPC machine, so may need to be stored elsewhere which is still accessible when preprocessing and analysis is performed. For example, the file may be as follows:
+It is **important** to create a script called ``set_dirs.sh`` and save it in your analysis directory. It should define the Bash variable ``DATA`` which points to the directory where your data is stored. The data files may be too big to store in your personal quota on an HPC machine, so may need to be stored elsewhere but such that it is still accessible for preprocessing and analysis. For example, the file may be as follows:
 
 .. code-block:: none
 
     # Run this file using "source set_dirs.sh" to set the following variable
     DATA=/nobackup/proj/your_account/data
+
+The data preprocessing and analysis scripts will try to run this script to know where to find the dataset to analysis.
+
+.. _running_prep:
+
+Running data preprocessing
+--------------------------
 
 **Genetic Map Files**
 

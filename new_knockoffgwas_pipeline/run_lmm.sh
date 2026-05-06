@@ -31,10 +31,8 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 # Load dirs
 source ./set_dirs.sh
 
-# Temporary folder for temporary files
-TMP_DIR=$DATA"/tmp"
+# Output folder
 mkdir -p $5/lmm
-mkdir -p $TMP_DIR
 
 $SCRIPTPATH/knockoffgwas_pipeline/misc/lmm.sh $1 $2 $3 $4 $5 $5 $6 $7
 
