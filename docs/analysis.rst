@@ -3,7 +3,7 @@
 Step 2. Performing KnockOffGWAS
 ===============================
 
-To perform KnockOffGWAS it is necessary that the data has been prepared as described in section :ref:`_prep`. 
+To perform KnockOffGWAS it is necessary that the data has been prepared as described in section :ref:`prep`. 
 
 You should have already have created a script called ``set_dirs.sh`` saved it in your analysis directory. This script should look something like:
 

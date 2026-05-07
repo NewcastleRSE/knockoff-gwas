@@ -5,25 +5,8 @@ Pipeline Container
 
 🚧🚧 Under Construction 🚧🚧
 
-In order to make the pipeline as portable as possible across computing environments an `Apptainer <https://apptainer.org/>`_ container is supplied. This section gives a brief description on how to use the container to analyse your data and you should refer to the other sections for more details.
+In order to make the pipeline as portable as possible across computing environments an `Apptainer <https://apptainer.org/>`_ container is supplied. This section gives a brief description on how to use the container to analyse your data, and you should refer to the corresponding non-container sections for more details.
 
-**Running scripts**
-
-Running a pipeline script that is stored inside the container is not too much different from before. Instead of running scripts like this:
-
-.. code-block:: none
-
-    ../new_knockoffgwas_pipeline/run_lmm.sh 1 22 $DATA/mydata ...
-
-they should be run like this:
-
-.. code-block:: none
-
-    apptainer exec --bind $DATA:/data kogwas.sif run_lmm.sh 1 22 /data/mydata ...
-
-The ``$DATA`` variable should point to the location of your data on the host system. This path must be bind-mounted to the ``\data`` directory inside the container, since the scripts running in the container expect to find the data there.
-
-The sub-sections below will take you through each step of using the pipeline with the container. As before, all scripts will need to be modified for your details and the requirements of the HPC machine that you are using. 
 
 Setup
 -----
@@ -43,7 +26,25 @@ Create an ``hpc`` directory to save scripts to run the data preparation and anal
 
     mkdir hpc
 
-See section :ref:`initial_prep` on how your data should be formatted.
+See :ref:`initial_prep` on how your data should be formatted.
+
+**Running scripts**
+
+Running a pipeline script that is stored inside the container is not too much different from before. Instead of running scripts like this:
+
+.. code-block:: none
+
+    ../new_knockoffgwas_pipeline/run_lmm.sh 1 22 $DATA/mydata ...
+
+they should be run like this:
+
+.. code-block:: none
+
+    apptainer exec --bind $DATA:/data kogwas.sif run_lmm.sh 1 22 /data/mydata ...
+
+The ``$DATA`` variable should point to the location of your data on the host system. This path must be bind-mounted to the ``\data`` directory inside the container, since the scripts running in the container expect to find the data there.
+
+The sub-sections below will take you through each step of using the pipeline with the container. As before, all scripts will need to be modified for your details and the requirements of the HPC machine that you are using. 
 
 Data preprocessing
 ------------------
@@ -113,12 +114,12 @@ Run it with:
 
     sbatch hpc/pre.sh
 
-There may be some problems setting the segment length and window size, see section :ref:`running_prep` for more details.
+There may be some problems setting the segment length and window size, see :ref:`running_prep` for more details.
 
 Analysis
 --------
 
-See section :ref:`analysis` for more details on running the KnockOffGWAS analysis. To do so using the container create a script `hpc/analysis.sh` something similar to the following:
+See :ref:`analysis` for more details on running the KnockOffGWAS analysis. To do so using the container create a script `hpc/analysis.sh` something similar to the following:
 
 .. code-block:: none
         
@@ -196,9 +197,23 @@ Run the analysis on the HPC with the following command:
 
 or whatever is appropriate for the HPC machine you are using.
 
+Removing temporary files
+------------------------
+
+A number of files are produced during the data preprocessing and during analysis calculations. These files can be removed by running a script, which also restores the `.fam` file which needed to have its format altered. If you remove the temporary files and wish to rerun the analysis for any reason you will need to rerun the data preprocessing scripts also.
+
+The script, `run_remove_temporary_files.sh`, can be ran from the container as follows:
+
+.. code-block:: none
+
+    source set_dirs.sh
+    apptainer exec --bind $DATA:/data kogwas.sif run_remove_temporary_files.sh /data/mydata
+
+Where the parameter is the path and filename of the data used in the analysis.
+
 Visualisation
 -------------
 
-The visualisation of the results should still be done without the container using the shiny R app, `app.R`, which can be found `here <https://github.com/NewcastleRSE/knockoff-gwas/tree/main/new_knockoffgwas_pipeline/knockoffgwas_pipeline/visualization>`.
+The visualisation of the results should still be done without the container using the shiny R app, `app.R`, which can be found `here <https://github.com/NewcastleRSE/knockoff-gwas/tree/main/new_knockoffgwas_pipeline/knockoffgwas_pipeline/visualization>`_.
 
-See section :ref:`visualisation` for details.
+See :ref:`visualisation` for details.
