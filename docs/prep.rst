@@ -41,7 +41,7 @@ The pipeline will not perform any kind of quality control on the data, so this n
 Setup directories for analysis
 ------------------------------
 
-1. Download the pipeline, see :ref:`downloads`.
+1. Download the pipeline, see :ref:`download`.
 2. Create a directory for your analysis on the same level as the ``new_knockoffgwas_pipeline`` directory, i.e. below the ``knockoff_gwas`` directory. (You could create it elsewhere and change the HPC script appropriately to run the pipeline scripts.) 
 3. Enter this directory.
 4. Create an ``hpc`` directory to store HPC scripts in.

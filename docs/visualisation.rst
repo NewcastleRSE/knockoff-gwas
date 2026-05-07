@@ -18,7 +18,7 @@ Follow steps 1. and 2. to the right to choose the directories where the results 
 
 Plots may be exported using the buttons in step 5. The filenames for these plots will be timestamped and stored in the selected results directory.
 
-.. _flow-fig:
+.. _shiny-app-fig:
 
 .. figure:: images/shiny-app2.png
    :class: custom-figure
