@@ -10,7 +10,7 @@ You should have already have created a script called ``set_dirs.sh`` saved it in
 .. code-block:: none
 
     # Run this file using "source set_dirs.sh" to set the following variable
-    DATA=/nobackup/proj/your_account/data
+    DATA=/nobackup/proj/my_account/data
 
 To run the analysis there is a script called ``run_knockoff_gwas.sh`` with the following parameters. 
 
@@ -33,7 +33,7 @@ As the analysis will take a long time is is best to run the analysis as an array
 
     #!/bin/bash
     #SBATCH --partition=default_free
-    #SBATCH --account=your_account
+    #SBATCH --account=my_account
     #SBATCH --cpus-per-task=1
     #SBATCH --mem=100GB
     #SBATCH --array=1-22                      # Run tasks for given chromosomes

@@ -23,16 +23,16 @@ Once BOLT-LMM is installed on your HPC machine (or elsewhere), the analysis can 
 
     7. Genetic map table for BOLT-LMM. Again, these should be appropriate for the data you are using. See `BOLT-LMM <https://storage.googleapis.com/broad-alkesgroup-public/BOLT-LMM/BOLT-LMM_manual.html>`_ documentation for details.
 
-Create an HPC script to do the preprocessing in the ``hpc`` directory called ``bolt-lmm.sh`` which should look something like the following:
+Create an HPC script to do the preprocessing in the ``hpc`` directory called ``bolt_lmm.sh`` which should look something like the following:
 
 .. code-block:: none
 
     #!/bin/bash
     #SBATCH --partition=default_free
-    #SBATCH --account=your_account
+    #SBATCH --account=my_account
     #SBATCH --cpus-per-task=1
     #SBATCH --mem=10GB
-    #SBATCH --output=slurm_bolt_lmm_%a.out
+    #SBATCH --output=slurm_bolt_lmm.out
 
     # Load modules
     module load BOLT-LMM
@@ -45,7 +45,7 @@ Create an HPC script to do the preprocessing in the ``hpc`` directory called ``b
     date
     echo "Running on $HOSTNAME PBC BOLT-LMM analysis"
 
-    ../new_knockoffgwas_pipeline/run_lmm.sh 1 22 $DATA/mydata pbc results $DATA"/tables/LDSCORE.1000G_EUR.GRCh38.tab.gz" $DATA"/tables/genetic_map_hg19_withX.txt.gz"
+    ../new_knockoffgwas_pipeline/run_lmm.sh 1 22 $DATA/mydata pbc lmm_results $DATA"/tables/LDSCORE.1000G_EUR.GRCh38.tab.gz" $DATA"/tables/genetic_map_hg19_withX.txt.gz"
 
     date
 
@@ -67,7 +67,7 @@ Run the analysis as an array job on the HPC with the following command:
 
 .. code-block:: none
 
-    sbatch hpc/bolt-lmm.sh
+    sbatch hpc/bolt_lmm.sh
 
 or whatever is appropriate for the HPC machine you are using.
 
@@ -77,7 +77,7 @@ Run the analysis on the HPC with the following command:
 
 .. code-block:: none
 
-    sbatch hpc/bolt-lmm.sh
+    sbatch hpc/bolt_lmm.sh
 
 or whatever is appropriate for the HPC machine you are using.
 

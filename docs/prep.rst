@@ -56,7 +56,7 @@ It is **important** to create a script called ``set_dirs.sh`` and save it in you
 .. code-block:: none
 
     # Run this file using "source set_dirs.sh" to set the following variable
-    DATA=/nobackup/proj/your_account/data
+    DATA=/nobackup/proj/my_account/data
 
 The data preprocessing and analysis scripts will try to run this script to know where to find the dataset to analysis.
 
@@ -83,13 +83,13 @@ There is a shell script called `run_pre_create_map_files.sh` to do this. This sc
 
     5. Path and filename prefix of the genetic map data. 
 
-To run this an HPC shell script called `pre_create_map_files.sh` can be created in the ``hpc`` directory and should look something like the following:
+To run this an HPC shell script called `pre-create-map-files.sh` can be created in the ``hpc`` directory and should look something like the following:
 
 .. code-block:: none
 
     #!/bin/bash
     #SBATCH --partition=default_free
-    #SBATCH --account=your_account
+    #SBATCH --account=my_account
     #SBATCH --cpus-per-task=1
     #SBATCH --mem=20GB
     #SBATCH --output=slurm_pre_create_map_files.out
@@ -139,7 +139,7 @@ To run this shell script create an HPC shell script to do the preprocessing in t
 
     #!/bin/bash
     #SBATCH --partition=default_free
-    #SBATCH --account=your_account
+    #SBATCH --account=my_account
     #SBATCH --cpus-per-task=1
     #SBATCH --mem=20GB
     #SBATCH --array=1-22                       # Tasks to run, corresponds to chromosome number
@@ -161,7 +161,7 @@ To run this shell script create an HPC shell script to do the preprocessing in t
     # Phase chromosome data
     ../new_knockoffgwas_pipeline/run_pre_phasing.sh $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results
 
-    # It may be necessary to change the segment length and window size until a suitable IBD data is returned
+    # It may be necessary to change the segment length and window size until suitable IBD data is returned
     ../new_knockoffgwas_pipeline/run_pre_ibd.sh $SLURM_ARRAY_TASK_ID $DATA/mydata pbc results 25 3
 
     date
