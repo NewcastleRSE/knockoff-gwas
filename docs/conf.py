@@ -19,10 +19,6 @@ extensions = [
     'sphinxcontrib.bibtex',
 ]
 
-# Disable parallel reading/writing
-parallel_read_safe = False
-parallel_write_safe = False
-
 # Fix for incompatible versions where things have changed location.
 # https://stackoverflow.com/questions/59636631/importerror-cannot-import-name-mutablemapping-from-collections
 
