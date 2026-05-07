@@ -118,6 +118,37 @@ There may be some problems setting the segment length and window size, see secti
 Analysis
 --------
 
+See section :ref:`analysis` for more details on running the KnockOffGWAS analysis. To do so using the container create a script `hpc/analysis.sh` something similar to the following:
+
+.. code-block:: none
+        
+    #!/bin/bash
+    #SBATCH --partition=default_free
+    #SBATCH --account=my_account
+    #SBATCH --cpus-per-task=1
+    #SBATCH --mem=100GB
+    #SBATCH --array=1-22                       # Run tasks for given chromosomes
+    #SBATCH --output=slurm_anal_%a.out
+
+    # Load modules
+    module load apptainer
+
+    # Set dirs
+    source ./set_dirs.sh
+
+    date
+    echo "Running on $HOSTNAME PBC analysis using container"
+
+    apptainer exec --bind $DATA:/data kogwas.sif run_knockof_gwas.sh $SLURM_ARRAY_TASK_ID /data/mydata pbc 0.1 results
+
+    date
+
+and run it with:
+
+.. code-block:: none
+
+    sbatch hpc/analysis.sh
+
 BOLT-LMM Analysis
 -----------------
 
@@ -164,3 +195,10 @@ Run the analysis on the HPC with the following command:
     sbatch hpc/bolt_lmm.sh
 
 or whatever is appropriate for the HPC machine you are using.
+
+Visualisation
+-------------
+
+The visualisation of the results should still be done without the container using the shiny R app, `app.R`, which can be found `here <https://github.com/NewcastleRSE/knockoff-gwas/tree/main/new_knockoffgwas_pipeline/knockoffgwas_pipeline/visualization>`.
+
+See section :ref:`visualisation` for details.
