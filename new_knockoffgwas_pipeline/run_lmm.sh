@@ -28,8 +28,8 @@ SCRIPT=$(readlink -f "$0")
 # Absolute path this script is in
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-# Load dirs
-source ./set_dirs.sh
+# Set data dir
+DATA=$(dirname "$3")
 
 # Output folder
 mkdir -p $5

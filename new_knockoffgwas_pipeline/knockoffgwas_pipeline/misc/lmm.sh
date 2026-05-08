@@ -16,8 +16,8 @@
 # $6 = LD Table for BOLT-LMM
 # $7 = Genetic map table for BOLT-LMM
 
-# Set dirs
-source ./set_dirs.sh
+# Set data dir
+DATA=$(dirname "$3")
 
 # Absolute path to this script
 SCRIPT=$(readlink -f "$0")

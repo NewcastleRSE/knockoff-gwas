@@ -21,8 +21,8 @@
 # $4 = output folder   
 # $5 = genetic map data for each chr, path and file, but not including end which must be "_chrXX.txt" for each chr separately
 
-# Set dirs
-source set_dirs.sh
+# Set data dir
+DATA=$(dirname "$3")
 
 # Absolute path to this script
 SCRIPT=$(readlink -f "$0")

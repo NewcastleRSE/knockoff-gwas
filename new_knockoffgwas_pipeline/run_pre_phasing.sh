@@ -20,8 +20,8 @@
 # $3 = phenotype name
 # $4 = output folder
 
-# Set dirs
-source set_dirs.sh
+# Set data dir
+DATA=$(dirname "$2")
 
 # Absolute path to this script
 SCRIPT=$(readlink -f "$0")
@@ -38,7 +38,6 @@ echo "Log file: "$LOG_FILE
 TMP_DIR=$DATA"/tmp"
 mkdir -p $4
 mkdir -p $TMP_DIR
-mkdir -p data
 
 # Make Phenotype file if it does not exist
 if [ ! -e "$2_phenotypes.txt" ]; then

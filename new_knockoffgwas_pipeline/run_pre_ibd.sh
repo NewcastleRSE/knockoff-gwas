@@ -22,8 +22,8 @@
 # $5 = -d
 # $6 = -w
 
-# Set dirs
-source set_dirs.sh
+# Set data dir
+DATA=$(dirname "$2")
 
 # Absolute path to this script
 SCRIPT=$(readlink -f "$0")

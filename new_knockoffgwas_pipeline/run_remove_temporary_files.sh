@@ -11,8 +11,8 @@
 
 # $1 = path & file prefix (not including "_chrXX") for genetic data, .bim, .bed, .fam etc.
 
-# Set dirs
-source set_dirs.sh
+# Set data dir
+DATA=$(dirname "$1")
 
 # List of chromosomes
 CHR_LIST=$(seq 1 22)

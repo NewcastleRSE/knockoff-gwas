@@ -30,8 +30,8 @@ SCRIPT=$(readlink -f "$0")
 # Absolute path this script is in
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-# Set dirs
-source ./set_dirs.sh
+# Set data dir
+DATA=$(dirname "$3")
 
 # Temporary folder for temporary files
 TMP_DIR=$DATA"/tmp"

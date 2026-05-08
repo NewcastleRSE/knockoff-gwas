@@ -14,8 +14,8 @@
 # $4 = phenotype name
 # $5 = output folder
 
-# Set dirs
-source ./set_dirs.sh
+# Set data dir
+DATA=$(dirname "$3")
 
 # Absolute path to this script
 SCRIPT=$(readlink -f "$0")
