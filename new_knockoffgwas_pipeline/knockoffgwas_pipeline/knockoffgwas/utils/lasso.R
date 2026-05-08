@@ -71,7 +71,7 @@ Variants <- readr::read_delim(
                           CHR=readr::col_character(),
                           SNP=readr::col_character())
 ) %>%
-    tidyr::separate(SNP, c("SNP", "Knockoff"), fill="right") %>%
+    tidyr::separate(SNP, into=c("SNP", "Knockoff"), fill="right") %>%
     dplyr::mutate(Knockoff = ifelse(is.na(Knockoff), FALSE, TRUE)) %>%
     dplyr::select(CHR, SNP, BP, Knockoff)
 

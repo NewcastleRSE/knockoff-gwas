@@ -33,7 +33,7 @@ Variants <- lapply(chr.list, function(chr) {
         col_names=c("CHR", "SNP", "X0", "BP", "X1", "X2"),
         col_types=readr::cols()
     ) %>%
-        tidyr::separate(SNP, c("SNP", "Knockoff"), fill="right") %>%
+        tidyr::separate(SNP, into=c("SNP", "Knockoff"), fill="right") %>%
         dplyr::mutate(Knockoff = ifelse(is.na(Knockoff), FALSE, TRUE)) %>%
         dplyr::select(CHR, SNP, BP, Knockoff)
 

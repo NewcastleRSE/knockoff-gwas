@@ -32,7 +32,7 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
 
     ## Compute diagnostics
     Frq <- Frq %>%
-        tidyr::separate(SNP, ".k", into=c("SNP", "Knockoff")) %>%
+        tidyr::separate(SNP, into = c("SNP", "Knockoff"), sep = "\\.k") %>%
         dplyr::mutate(Knockoff = ifelse(is.na(Knockoff), FALSE, TRUE))
 
     Diagnostics <- Frq %>%
@@ -69,9 +69,9 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
 
     ## Add knockoff key information
     LD <- LD %>%
-        tidyr::separate(SNP_A, ".k", into=c("SNP_A", "Knockoff_A")) %>%
+        tidyr::separate(SNP_A, into = c("SNP_A", "Knockoff_A"), sep = "\\.k") %>%
         dplyr::mutate(Knockoff_A = ifelse(is.na(Knockoff_A), FALSE, TRUE)) %>%
-        tidyr::separate(SNP_B, ".k", into=c("SNP_B", "Knockoff_B")) %>%
+        tidyr::separate(SNP_B, into = c("SNP_B", "Knockoff_B"), sep = "\\.k") %>%
         dplyr::mutate(Knockoff_B = ifelse(is.na(Knockoff_B), FALSE, TRUE))
 
     ## Plot originality
