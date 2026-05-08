@@ -4,10 +4,6 @@
 # devtools::install_github("privefl/bigstatsr")
 # devtools::install_github("privefl/bigsnpr")
 
-# Documentation here:
-# https://privefl.github.io/bigsnpr/reference/index.html
-# https://privefl.github.io/bigstatsr/reference/big_spLinReg.html
-
 # Load packages
 suppressMessages(library(tidyverse))
 suppressMessages(library(bigsnpr))
@@ -40,19 +36,20 @@ fbm.file <- sprintf("%s.rds", basename)
 
 # Attach the "bigSNP" object in R session
 cat("Attaching bigSNP object... ")
-obj.bigSNP <- snp_attach(fbm.file)
+obj.bigSNP <- bigsnpr::snp_attach(fbm.file)
 cat("done.\n")
 
 # Extract list of variants
-map <- obj.bigSNP$map %>% as_tibble()
+map <- obj.bigSNP$map %>% tibble::as_tibble()
 colnames(map) <- c("CHR", "SNP", "gd", "BP", "a1", "a2")
-map <- map %>% select(CHR, SNP, BP)
+map <- map %>% dplyr::select(CHR, SNP, BP)
 
 # Extract list of subjects
-Subjects <- obj.bigSNP$fam %>% as_tibble()
+Subjects <- obj.bigSNP$fam %>% tibble::as_tibble()
 colnames(Subjects) <- c("FID", "IID", "X1", "X2", "sex", "X3")
-Subjects <- Subjects %>% select(FID, IID) %>%
-    mutate(FID=as.character(FID), IID=as.character(IID))
+Subjects <- Subjects %>%
+    dplyr::select(FID, IID) %>%
+    dplyr::mutate(FID=as.character(FID), IID=as.character(IID))
 
 # Get aliases for useful slots
 G   <- obj.bigSNP$genotypes
@@ -66,19 +63,32 @@ SNP <- obj.bigSNP$map$marker.ID
 
 ## Load list of variants and partitions
 bim.file <- sprintf("%s.bim", basename)
-Variants <- read_delim(bim.file, delim="\t", col_names=c("CHR", "SNP", "X0", "BP", "X1", "X2"),
-                       col_types=cols(.default=col_integer(), CHR=col_character(), SNP=col_character())) %>%
-    separate(SNP, c("SNP", "Knockoff"), fill="right") %>%
-    mutate(Knockoff = ifelse(is.na(Knockoff), FALSE, TRUE)) %>%
-    select(CHR, SNP, BP, Knockoff)
+Variants <- readr::read_delim(
+    bim.file,
+    delim="\t",
+    col_names=c("CHR", "SNP", "X0", "BP", "X1", "X2"),
+    col_types=readr::cols(.default=readr::col_integer(),
+                          CHR=readr::col_character(),
+                          SNP=readr::col_character())
+) %>%
+    tidyr::separate(SNP, c("SNP", "Knockoff"), fill="right") %>%
+    dplyr::mutate(Knockoff = ifelse(is.na(Knockoff), FALSE, TRUE)) %>%
+    dplyr::select(CHR, SNP, BP, Knockoff)
+
 grp.file <- sprintf("%s_grp.txt", basename)
-df <- read_delim(grp.file, delim=" ", col_names=c("SNP", "Group"),
-                 col_types=cols(.default=col_integer(), SNP=col_character()))
-Variants <- Variants %>% left_join(df, by = "SNP")
+df <- readr::read_delim(
+    grp.file,
+    delim=" ",
+    col_names=c("SNP", "Group"),
+    col_types=readr::cols(.default=readr::col_integer(),
+                          SNP=readr::col_character())
+)
+
+Variants <- Variants %>% dplyr::left_join(df, by = "SNP")
 
 # Compute scaling factor for the genotypes
 cat("Computing scaling factors for all variants... ")
-scaler <- big_scale()
+scaler <- bigsnpr::big_scale()
 G.scale <- scaler(G)
 scaling.factors <- G.scale$scale
 cat("done.\n")
@@ -88,29 +98,32 @@ cat("done.\n")
 #####################
 
 cat("Reading phenotype file... ")
-# Load phenotype table
-Phenotypes <- read_delim(pheno.file, delim="\t", col_types=cols()) %>%
-    mutate(FID=as.character(FID), IID=as.character(IID))
-# Make sure that the rows of the genotypes match the rows of the phenotypes
-Phenotypes <- Phenotypes %>% right_join(Subjects, by=c("FID", "IID"))
+Phenotypes <- readr::read_delim(
+    pheno.file,
+    delim="\t",
+    col_types=readr::cols()
+) %>%
+    dplyr::mutate(FID=as.character(FID), IID=as.character(IID))
+
+Phenotypes <- Phenotypes %>%
+    dplyr::right_join(Subjects, by=c("FID", "IID"))
 cat("done.\n")
 
 ###################
 ## Fit the lasso ##
 ###################
 
-# Extract response variable
 ind.train <- which(!is.na(Phenotypes[[pheno.name]]))
 cat(sprintf("%d individuals out of %d have missing phenotype.\n",
             nrow(Subjects)-length(ind.train), nrow(Subjects)))
+
 y <- Phenotypes[[pheno.name]][ind.train]
 
-# Extract covariates (sex)
-Covariates <- Phenotypes %>% select(sex)
-covar.train <- as.matrix(Covariates)[ind.train,,drop=F]
+Covariates <- Phenotypes %>% dplyr::select(sex)
+covar.train <- as.matrix(Covariates)[ind.train,,drop=FALSE]
 
-# Find the class of response (numeric or binary factor)
 y.unique <- unique(y[!is.na(y)])
+
 if(length(y.unique)==2) {
     phenotype.class <- "binary"
     y <- factor(y, levels=c(1,2), labels=c(0,1))
@@ -119,77 +132,105 @@ if(length(y.unique)==2) {
     phenotype.class <- "continuous"
 }
 
-# Fit the lasso
 if(phenotype.class=="binary") {
     cat(sprintf("Fitting sparse logistic regression with %d observations, %d variants and %d covariates... ",
                 length(y), ncol(G), ncol(covar.train)))
-    lasso.fit <- big_spLogReg(G, y01.train=y, ind.train=ind.train, covar.train=covar.train,
-                              dfmax=dfmax, ncores=ncores)
+
+    lasso.fit <- bigsnpr::big_spLogReg(
+        G,
+        y01.train=y,
+        ind.train=ind.train,
+        covar.train=covar.train,
+        dfmax=dfmax,
+        ncores=ncores
+    )
 } else {
     cat(sprintf("Fitting sparse linear regression with %d observations, %d variants and %d covariates... ",
                 length(y), ncol(G), ncol(covar.train)))
-    lasso.fit <- big_spLinReg(G, y.train=y, ind.train=ind.train, covar.train=covar.train,
-                              dfmax=dfmax, ncores=ncores)
+
+    lasso.fit <- bigsnpr::big_spLinReg(
+        G,
+        y.train=y,
+        ind.train=ind.train,
+        covar.train=covar.train,
+        dfmax=dfmax,
+        ncores=ncores
+    )
 }
 cat("done.\n")
 
-# Extract beta from each fold and combine them
+##############################
+## Extract coefficients ##
+##############################
+
 cat("Extracting regression coefficients... ")
 beta <- sapply(1:10, function(k) lasso.fit[[1]][k][[1]]$beta)
 
-# Separate the coefficients of the genetic variants from the coefficients of the covariates
 beta.variants <- beta[1:ncol(G),]
 beta.covariates <- beta[(ncol(G)+1):nrow(beta),]
 
-# Undo scaling of lasso coefficients
 beta.variants <- beta.variants * scaling.factors
-Beta <- cbind(tibble(CHR=Variants$CHR,
-                     SNP=Variants$SNP, BP=Variants$BP, Knockoff=Variants$Knockoff),
-                     as_tibble(beta.variants)) %>% as_tibble()
-colnames(Beta) <- c("CHR", "SNP", "BP", "Knockoff", paste("K", seq(ncol(beta.variants)),sep=""))
-Beta <- Beta %>%
-    mutate(Z=(K1+K2+K3+K4+K5+K6+K7+K8+K9+K10)/10,
-           Nonzero=(K1!=0)+(K2!=0)+(K3!=0)+(K4!=0)+(K5!=0)+(K6!=0)+(K7!=0)+(K8!=0)+(K9!=0)+(K10!=0)) %>%
-    select(CHR, SNP, BP, Knockoff, Z)
 
-# Extract the estimated coefficients
+Beta <- cbind(
+    tibble::tibble(CHR=Variants$CHR,
+                   SNP=Variants$SNP,
+                   BP=Variants$BP,
+                   Knockoff=Variants$Knockoff),
+    tibble::as_tibble(beta.variants)
+) %>% tibble::as_tibble()
+
+colnames(Beta) <- c("CHR", "SNP", "BP", "Knockoff",
+                     paste("K", seq(ncol(beta.variants)), sep=""))
+
+Beta <- Beta %>%
+    dplyr::mutate(
+        Z=(K1+K2+K3+K4+K5+K6+K7+K8+K9+K10)/10,
+        Nonzero=(K1!=0)+(K2!=0)+(K3!=0)+(K4!=0)+(K5!=0)+(K6!=0)+(K7!=0)+(K8!=0)+(K9!=0)+(K10!=0)
+    ) %>%
+    dplyr::select(CHR, SNP, BP, Knockoff, Z)
+
 Lasso.res <- Beta %>%
-    inner_join(Variants, by = c("CHR", "SNP", "BP", "Knockoff")) %>%
-    filter(Z!=0) %>%
-    arrange(desc(Z)) %>%
-    select(CHR, SNP, BP, Z, Group, Knockoff)
+    dplyr::inner_join(Variants, by = c("CHR", "SNP", "BP", "Knockoff")) %>%
+    dplyr::filter(Z!=0) %>%
+    dplyr::arrange(desc(Z)) %>%
+    dplyr::select(CHR, SNP, BP, Z, Group, Knockoff)
+
 cat("done.\n")
 
 ##################################
-## Compute the test stastistics ##
+## Compute test statistics ##
 ##################################
+
 cat("Computing test statistics... ")
 
-# Compute the knockoff statistics
 W.stats <- function(Z, knockoff) {
     importance <- abs(Z)
-    z  <- sum(importance[which(knockoff==FALSE)], na.rm=T)
-    zk <- sum(importance[which(knockoff==TRUE)], na.rm=T)
+    z  <- sum(importance[which(knockoff==FALSE)], na.rm=TRUE)
+    zk <- sum(importance[which(knockoff==TRUE)], na.rm=TRUE)
     w <- z-zk
 }
 
 Stats <- Lasso.res %>%
-    select("CHR", "Group", "SNP", "BP", "Knockoff", "Z") %>%
-    filter(Z!=0) %>%
-    group_by(CHR, Group) %>%
-    summarize(W = W.stats(abs(Z),Knockoff),
-              Lead=which.max(abs(Z)), SNP.lead=SNP[Lead], BP.lead=BP[Lead],
-              Size=n()) %>%
-    ungroup() %>%
-    arrange(desc(abs(W))) %>%
-    select(CHR, Group, SNP.lead, BP.lead, Size, W) %>%
-    filter(W!=0)
+    dplyr::select(CHR, Group, SNP, BP, Knockoff, Z) %>%
+    dplyr::filter(Z!=0) %>%
+    dplyr::group_by(CHR, Group) %>%
+    dplyr::summarize(
+        W = W.stats(abs(Z), Knockoff),
+        Lead=which.max(abs(Z)),
+        SNP.lead=SNP[Lead],
+        BP.lead=BP[Lead],
+        Size=n()
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(desc(abs(W))) %>%
+    dplyr::select(CHR, Group, SNP.lead, BP.lead, Size, W) %>%
+    dplyr::filter(W!=0)
+
 cat("done.\n")
 
-# Give preview
 Stats %>% print(n=20)
 
-# Save results
 stats.file <- sprintf("%s_stats.txt", out.basename)
-Stats %>% write_delim(stats.file, delim=" ")
+Stats %>% readr::write_delim(stats.file, delim=" ")
+
 cat(sprintf("Test statistics written on:\n%s\n", stats.file))
