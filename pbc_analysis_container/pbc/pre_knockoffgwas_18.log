@@ -1,0 +1,87 @@
+Creating phenotype file /data/Nicola_phenotypes.txt using .fam file from chromesome 18 with phenotype name NA for use in KnockOffGWAS pipeline...
+PLINK v2.0.0-a.7.0LM 64-bit Intel (25 Apr 2026)     cog-genomics.org/plink/2.0/
+(C) 2005-2026 Shaun Purcell, Christopher Chang    GNU General Public License v3
+Logging to 18_chr18.log.
+Options in effect:
+  --bfile 18_chr18
+  --export vcf
+  --out 18_chr18
+
+Start time: Thu May  7 11:25:14 2026
+1547126 MiB RAM detected, ~1418494 available; reserving 773563 MiB for main
+workspace.
+Using 1 compute thread.
+Error: Failed to open 18_chr18.fam : No such file or directory.
+End time: Thu May  7 11:25:14 2026
+[E::hts_open_format] Failed to open file "18_chr18.vcf.gz" : No such file or directory
+Failed to read from 18_chr18.vcf.gz: No such file or directory
+[E::hts_open_format] Failed to open file "18_chr18.bcf" : No such file or directory
+Failed to read from 18_chr18.bcf: No such file or directory
+index: failed to open 18_chr18.bcf
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '18_chr18.fam': No such file or directory
+Execution halted
+
+[SHAPEIT5] phase_common (jointly phase multiple common markers)
+  * Author        : Olivier DELANEAU, University of Lausanne
+  * Contact       : olivier.delaneau@gmail.com
+  * Version       : 5.1.1 / commit = 990ed0d / release = 2023-05-08
+  * Run date      : 07/05/2026 - 11:25:14
+
+Files:
+  * Input         : [18_chr18.bcf]
+  * Pedigree      : [18_chr18_shapeit.fam]
+  * Genetic Map   : [18_map_chr18_shapeit.txt]
+  * Output        : [18_phased_chr18.bcf]
+  * Output format : [bcf]
+
+Parameters:
+  * Seed    : 15052011
+  * Threads : 8 threads
+  * MCMC    : 15 iterations [5b + 1p + 1b + 1p + 1b + 1p + 5m]
+  * PBWT    : [window = 4cM / depth = auto / modulo = auto / mac = 5 / missing = 0.1]
+  * HMM     : [window = 4cM / Ne = 15000 / Recombination rates given by genetic map]
+
+Reading genotype data:
+[E::hts_open_format] Failed to open file "18_chr18.bcf" : No such file or directory
+
+[31mERROR: [0mOpening [18_chr18.bcf]: unknown error
+[E::hts_open_format] Failed to open file "18_phased_chr18.bcf" : No such file or directory
+Failed to read from 18_phased_chr18.bcf: No such file or directory
+PLINK v2.0.0-a.7.0LM 64-bit Intel (25 Apr 2026)     cog-genomics.org/plink/2.0/
+(C) 2005-2026 Shaun Purcell, Christopher Chang    GNU General Public License v3
+Logging to 18_temp_chr18.log.
+Options in effect:
+  --make-pgen
+  --out 18_temp_chr18
+  --vcf 18_phased_chr18.vcf
+
+Start time: Thu May  7 11:25:14 2026
+1547126 MiB RAM detected, ~1418121 available; reserving 773563 MiB for main
+workspace.
+Using 1 compute thread.
+Error: Failed to open 18_phased_chr18.vcf : No such file or directory.
+End time: Thu May  7 11:25:14 2026
+PLINK v2.0.0-a.7.0LM 64-bit Intel (25 Apr 2026)     cog-genomics.org/plink/2.0/
+(C) 2005-2026 Shaun Purcell, Christopher Chang    GNU General Public License v3
+Logging to 18_phased_chr18.log.
+Options in effect:
+  --export bgen-1.2 ref-first id-paste=iid
+  --out 18_phased_chr18
+  --pfile 18_temp_chr18
+
+Start time: Thu May  7 11:25:14 2026
+1547126 MiB RAM detected, ~1418120 available; reserving 773563 MiB for main
+workspace.
+Using 1 compute thread.
+Error: Failed to open 18_temp_chr18.psam : No such file or directory.
+End time: Thu May  7 11:25:14 2026
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '18_temp_phased_chr18.sample': No such file or directory
+Execution halted

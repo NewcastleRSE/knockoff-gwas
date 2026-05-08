@@ -19,6 +19,6 @@ source ./set_dirs.sh
 date
 echo "Running on $HOSTNAME PBC analysis"
 
-../new_knockoffgwas_pipeline/run_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.2 results_d25_w3_FDR20
+../new_knockoffgwas_pipeline/run_knockoff_gwas.sh $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc 0.2 results_d25_w3_FDR20
 
 date

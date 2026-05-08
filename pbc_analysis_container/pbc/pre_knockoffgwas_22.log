@@ -1,0 +1,87 @@
+Creating phenotype file /data/Nicola_phenotypes.txt using .fam file from chromesome 22 with phenotype name NA for use in KnockOffGWAS pipeline...
+PLINK v2.0.0-a.7.0LM 64-bit Intel (25 Apr 2026)     cog-genomics.org/plink/2.0/
+(C) 2005-2026 Shaun Purcell, Christopher Chang    GNU General Public License v3
+Logging to 22_chr22.log.
+Options in effect:
+  --bfile 22_chr22
+  --export vcf
+  --out 22_chr22
+
+Start time: Thu May  7 11:25:14 2026
+1547126 MiB RAM detected, ~1418498 available; reserving 773563 MiB for main
+workspace.
+Using 1 compute thread.
+Error: Failed to open 22_chr22.fam : No such file or directory.
+End time: Thu May  7 11:25:14 2026
+[E::hts_open_format] Failed to open file "22_chr22.vcf.gz" : No such file or directory
+Failed to read from 22_chr22.vcf.gz: No such file or directory
+[E::hts_open_format] Failed to open file "22_chr22.bcf" : No such file or directory
+Failed to read from 22_chr22.bcf: No such file or directory
+index: failed to open 22_chr22.bcf
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '22_chr22.fam': No such file or directory
+Execution halted
+
+[SHAPEIT5] phase_common (jointly phase multiple common markers)
+  * Author        : Olivier DELANEAU, University of Lausanne
+  * Contact       : olivier.delaneau@gmail.com
+  * Version       : 5.1.1 / commit = 990ed0d / release = 2023-05-08
+  * Run date      : 07/05/2026 - 11:25:14
+
+Files:
+  * Input         : [22_chr22.bcf]
+  * Pedigree      : [22_chr22_shapeit.fam]
+  * Genetic Map   : [22_map_chr22_shapeit.txt]
+  * Output        : [22_phased_chr22.bcf]
+  * Output format : [bcf]
+
+Parameters:
+  * Seed    : 15052011
+  * Threads : 8 threads
+  * MCMC    : 15 iterations [5b + 1p + 1b + 1p + 1b + 1p + 5m]
+  * PBWT    : [window = 4cM / depth = auto / modulo = auto / mac = 5 / missing = 0.1]
+  * HMM     : [window = 4cM / Ne = 15000 / Recombination rates given by genetic map]
+
+Reading genotype data:
+[E::hts_open_format] Failed to open file "22_chr22.bcf" : No such file or directory
+
+[31mERROR: [0mOpening [22_chr22.bcf]: unknown error
+[E::hts_open_format] Failed to open file "22_phased_chr22.bcf" : No such file or directory
+Failed to read from 22_phased_chr22.bcf: No such file or directory
+PLINK v2.0.0-a.7.0LM 64-bit Intel (25 Apr 2026)     cog-genomics.org/plink/2.0/
+(C) 2005-2026 Shaun Purcell, Christopher Chang    GNU General Public License v3
+Logging to 22_temp_chr22.log.
+Options in effect:
+  --make-pgen
+  --out 22_temp_chr22
+  --vcf 22_phased_chr22.vcf
+
+Start time: Thu May  7 11:25:14 2026
+1547126 MiB RAM detected, ~1418120 available; reserving 773563 MiB for main
+workspace.
+Using 1 compute thread.
+Error: Failed to open 22_phased_chr22.vcf : No such file or directory.
+End time: Thu May  7 11:25:14 2026
+PLINK v2.0.0-a.7.0LM 64-bit Intel (25 Apr 2026)     cog-genomics.org/plink/2.0/
+(C) 2005-2026 Shaun Purcell, Christopher Chang    GNU General Public License v3
+Logging to 22_phased_chr22.log.
+Options in effect:
+  --export bgen-1.2 ref-first id-paste=iid
+  --out 22_phased_chr22
+  --pfile 22_temp_chr22
+
+Start time: Thu May  7 11:25:14 2026
+1547126 MiB RAM detected, ~1418118 available; reserving 773563 MiB for main
+workspace.
+Using 1 compute thread.
+Error: Failed to open 22_temp_chr22.psam : No such file or directory.
+End time: Thu May  7 11:25:14 2026
+Error in file(file, "rt") : cannot open the connection
+Calls: read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '22_temp_phased_chr22.sample': No such file or directory
+Execution halted

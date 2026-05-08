@@ -20,10 +20,10 @@ date
 echo "Running on $HOSTNAME PBC pre-analysis data preparing"
 
 # Phase chromosome data
-../new_knockoffgwas_pipeline/run_pre_phasing.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc results
+../new_knockoffgwas_pipeline/run_pre_phasing.sh $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc results
 
-# It may be necessary to change the segment length and window size until a suitable IBD data is returned
-../new_knockoffgwas_pipeline/run_pre_ibd.sh $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc results 25 3
+# It may be necessary to change the segment length and window size until suitable IBD data is returned
+../new_knockoffgwas_pipeline/run_pre_ibd.sh $SLURM_ARRAY_TASK_ID $DATA/Nicola pbc results 25 3
 
 echo "Node memory state: `free`"
 date
