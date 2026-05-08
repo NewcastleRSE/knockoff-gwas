@@ -53,7 +53,7 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
 
     ## Load LD table
     ld.file <- sprintf("%s.ld", stats.basename)
-    LD <- suppressWarnings(readr::read_table2(ld.file, col_types = readr::cols())) %>%
+    LD <- suppressWarnings(readr::read_table(ld.file, col_types = readr::cols())) %>%
         dplyr::mutate(CHR=CHR_A) %>% dplyr::select(-CHR_A, -CHR_B)
 
     ## Add grouping information
