@@ -32,7 +32,7 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
 
     ## Compute diagnostics
     Frq <- Frq %>%
-        tidyr::separate(SNP, into = c("SNP", "Knockoff"), sep = "\\.k") %>%
+        tidyr::separate(SNP, into = c("SNP", "Knockoff"), sep = ".k") %>%
         dplyr::mutate(Knockoff = ifelse(is.na(Knockoff), FALSE, TRUE))
 
     Diagnostics <- Frq %>%
@@ -69,10 +69,34 @@ plot.knockoff.diagnostics <- function(chr.name, res.name, stats.basename, groups
 
     ## Add knockoff key information
     LD <- LD %>%
-        tidyr::separate(SNP_A, into = c("SNP_A", "Knockoff_A"), sep = "\\.k") %>%
+        tidyr::separate(SNP_A, into = c("SNP_A", "Knockoff_A"), sep = ".k") %>%
         dplyr::mutate(Knockoff_A = ifelse(is.na(Knockoff_A), FALSE, TRUE)) %>%
-        tidyr::separate(SNP_B, into = c("SNP_B", "Knockoff_B"), sep = "\\.k") %>%
+        tidyr::separate(SNP_B, into = c("SNP_B", "Knockoff_B"), sep = ".k") %>%
         dplyr::mutate(Knockoff_B = ifelse(is.na(Knockoff_B), FALSE, TRUE))
+
+    # Create correlation tables between different groups
+    group.range <- seq(0,10)
+    LD.XX <- LD %>%
+        dplyr::filter(abs(Group_B-Group_A) %in% group.range, Knockoff_A==FALSE, Knockoff_B==FALSE) %>%
+        dplyr::mutate(R.XX=R2) %>%
+        dplyr::mutate(SNP_A=stringr::str_replace(SNP_A,".A",""), SNP_A=stringr::str_replace(SNP_A,".B","")) %>%
+        dplyr::mutate(SNP_B=stringr::str_replace(SNP_B,".A",""), SNP_B=stringr::str_replace(SNP_B,".B","")) %>%
+        dplyr::select(Group_A, Group_B, SNP_A, SNP_B, R.XX) %>%
+        dplyr::distinct(Group_A, Group_B, SNP_A, SNP_B, R.XX)
+    LD.XkXk <- LD %>%
+        dplyr::filter(abs(Group_B-Group_A) %in% group.range, Knockoff_A==TRUE, Knockoff_B==TRUE) %>%
+        dplyr::mutate(R.XkXk=R2) %>%
+        dplyr::mutate(SNP_A=stringr::str_replace(SNP_A,".A",""), SNP_A=stringr::str_replace(SNP_A,".B","")) %>%
+        dplyr::mutate(SNP_B=stringr::str_replace(SNP_B,".A",""), SNP_B=stringr::str_replace(SNP_B,".B","")) %>%
+        dplyr::select(Group_A, Group_B, SNP_A, SNP_B, R.XkXk) %>%
+        dplyr::distinct(Group_A, Group_B, SNP_A, SNP_B, R.XkXk)
+    LD.XXk <- LD %>%
+        dplyr::filter((Group_B-Group_A) %in% seq(1,10), Knockoff_A*Knockoff_B==FALSE) %>%
+        dplyr::mutate(R.XXk=R2) %>%
+        dplyr::mutate(SNP_A=stringr::str_replace(SNP_A,".A",""), SNP_A=stringr::str_replace(SNP_A,".B","")) %>%
+        dplyr::mutate(SNP_B=stringr::str_replace(SNP_B,".A",""), SNP_B=stringr::str_replace(SNP_B,".B","")) %>%
+        dplyr::select(Group_A, Group_B, SNP_A, SNP_B, R.XXk) %>%
+        dplyr::distinct(Group_A, Group_B, SNP_A, SNP_B, R.XXk)
 
     ## Plot originality
     LD.cross <- dplyr::inner_join(LD.XX, LD.XkXk, by = c("Group_A", "Group_B", "SNP_A", "SNP_B"))
