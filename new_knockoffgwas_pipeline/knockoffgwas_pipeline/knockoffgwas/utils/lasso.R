@@ -88,9 +88,11 @@ Variants <- Variants %>% dplyr::left_join(df, by = "SNP")
 
 # Compute scaling factor for the genotypes
 cat("Computing scaling factors for all variants... ")
-scaler <- bigsnpr::big_scale()
-G.scale <- scaler(G)
-scaling.factors <- G.scale$scale
+G.mat <- G[]
+scaling.factors <- apply(G.mat, 2, sd, na.rm = TRUE)
+scaling.factors[is.na(scaling.factors)] <- 1
+scaling.factors[scaling.factors == 0] <- 1
+rm(G.mat)
 cat("done.\n")
 
 #####################
