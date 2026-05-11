@@ -41,7 +41,7 @@ mkdir -p $TMP_DIR
 
 # Make Phenotype file if it does not exist
 if [ ! -e "$2_phenotypes.txt" ]; then
-    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/make_phenotype_file_from_fam.R $CHR $2 $3 &>> $LOG_FILE
+    Rscript --vanilla $SCRIPTPATH/knockoffgwas_pipeline/new_bits/make_phenotype_file_from_fam.R $1 $2 $3 &>> $LOG_FILE
 fi
 
 # Setup spinner for long jobs
