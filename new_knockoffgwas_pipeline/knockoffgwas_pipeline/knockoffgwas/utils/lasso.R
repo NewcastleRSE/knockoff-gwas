@@ -7,6 +7,7 @@
 # Load packages
 suppressMessages(library(tidyverse))
 suppressMessages(library(bigsnpr))
+suppressMessages(library(bigstatsr))
 
 # Default arguments (for debugging)
 basename       <- "../../tmp/knockoffs_full/example_res0"
@@ -138,7 +139,7 @@ if(phenotype.class=="binary") {
     cat(sprintf("Fitting sparse logistic regression with %d observations, %d variants and %d covariates... ",
                 length(y), ncol(G), ncol(covar.train)))
 
-    lasso.fit <- bigsnpr::big_spLogReg(
+    lasso.fit <- bigstatsr::big_spLogReg(
         G,
         y01.train=y,
         ind.train=ind.train,
