@@ -7,6 +7,7 @@ Pipeline Container
 
 In order to make the pipeline as portable as possible across computing environments an `Apptainer <https://apptainer.org/>`_ container is supplied. This section gives a brief description on how to use the container to analyse your data, and you should refer to the corresponding non-container sections for more details.
 
+All of the scripts below will need to be amended for use with the HPC machine you are using and your individual details.
 
 Setup
 -----
@@ -78,6 +79,8 @@ Run it with:
 .. code-block:: none
 
     sbatch hpc/pre_create_map_files.sh
+
+Note that just the apptainer module needs to be loaded instead of various packages which are now handled by the container.
 
 Next the data needs to be phased and the IBD segments calculated with script `hpc/pre.sh`:
 
