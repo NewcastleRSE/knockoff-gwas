@@ -12,9 +12,6 @@ From: ubuntu:24.04
     export LC_ALL=C
     export PATH=/:/opt/bolt:/opt/plink:/opt/plink2:/usr/local/bin:$PATH
 
-    # Default (can be overridden by user at runtime)
-    export DATA=${DATA:-/data}
-
     export OMP_NUM_THREADS=1
     # For BOLT-LMM
     export LD_LIBRARY_PATH=/opt/nlopt/lib:$LD_LIBRARY_PATH

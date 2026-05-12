@@ -34,4 +34,1537 @@ Loading required package: bigstatsr
 Loading required package: bigsnpr
 bigstatsr   bigsnpr 
      TRUE      TRUE 
-mkdir: cannot create directory '/nobackup': Read-only file system
+
+----------------------------------------------------------------------------------------------------
+Partitioning variants
+----------------------------------------------------------------------------------------------------
+
+Processing chromosome 15 ...
+
+Mean group sizes: 
+    res_7     res_6     res_5     res_4     res_3     res_2     res_1 
+ 1.000000  3.243449  6.648438  9.548387 14.609442 27.901639 47.608392 
+Partitions written to: /data/tmp/partitions/chr15.txt
+
+----------------------------------------------------------------------------------------------------
+Generating knockoffs
+----------------------------------------------------------------------------------------------------
+	+----------------------+
+	|                      |
+	|  SNPKNOCK2, v0.3     |
+	|  July 21, 2020       |
+	|  Matteo Sesia        |
+	|                      |
+	+----------------------+
+
+Copyright (C) 2020 Stanford University.
+Distributed under the GNU GPLv3 open source license.
+
+Use --help for more information.
+
+Command line arguments:
+  --bgen /data/Nicola_phased_chr{15:15}
+  --keep /data/Nicola_qc_samples.txt
+  --extract /data/Nicola_qc_chr{15:15}.txt
+  --map /data/Nicola_map_chr{15:15}.txt
+  --part /data/tmp/partitions/chr{15:15}.txt
+  --ibd /data/Nicola_ibd_chr{15:15}.txt
+  --K 10
+  --cluster_size_min 1000
+  --cluster_size_max 10000
+  --hmm-rho 1
+  --hmm-lambda 1e-3
+  --windows 0
+  --n_threads 4
+  --seed 2020
+  --compute-references
+  --generate-knockoffs
+  --out /data/tmp/knockoffs/knockoffs_chr{15:15}
+
+Requested operations:
+  --compute-references
+  --generate_knockoffs
+
+
+--------------------------------------------------------------------------------
+Loading metadata
+--------------------------------------------------------------------------------
+Loading sample information from:
+  /data/Nicola_phased_chr15.sample
+Loading legend from:
+  /data/Nicola_phased_chr15.bim
+Loading partitions from:
+  /data/tmp/partitions/chr15.txt
+Loading IBD segments from:
+  /data/Nicola_ibd_chr15.txt
+Loaded 879 IBD segments.
+
+Printing summary of 1 windows:
+     0: 0--6808
+Summary of metadata for chromosome 1:
+  number of samples (after | before filtering) : 24510 | 24510
+  number of SNPs (after | before filtering)    : 6808 | 6808
+  number of variant partitions                 : 7
+  size of genomic windows                      : whole-chromosome
+  number of IBD segments                       : 879
+
+
+--------------------------------------------------------------------------------
+Kinship (using only haplotype data)
+--------------------------------------------------------------------------------
+Reached 1
+Chromosome 1 will be loaded from:
+  haplotype file            : /data/Nicola_phased_chr15.bgen
+  sample file               : /data/Nicola_phased_chr15.sample
+  legend file               : /data/Nicola_phased_chr15.bim
+  thinning factor           : 10
+  sample filter file        : /data/Nicola_qc_samples.txt
+  variant filter file       : /data/Nicola_qc_chr15.txt
+  number of SNPs            : 681
+  number of haplotypes      : 49020
+
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+Solving 1 bifurcating K-means problems using 1 threads.
+
+Bifurcating K-means
+Smallest allowed cluster size: 1000
+ step	 cluster	    size	    left	   right	accepted
+    1	       0	   49020	   24224	   24796	     yes	
+    2	       0	   24224	   10416	   13808	     yes	
+    3	       0	   10416	    5272	    5144	     yes	
+    5	       1	   24796	   12664	   12132	     yes	
+    6	       1	   12664	    6594	    6070	     yes	
+    8	       2	   13808	    6746	    7062	     yes	
+   11	       4	   12132	    5840	    6292	     yes	
+Bifurcating K-means completed after 14 steps.
+Number of clusters: 8.
+
+
+Kinship clusters written to:
+  /data/tmp/knockoffs/knockoffs_chr15_clust.txt
+  /data/tmp/knockoffs/knockoffs_chr15.sample
+
+Assigning references for the whole chromosome using 4 threads: 
+|....................................................................................................|
+|====================================================================================================|
+
+Reached 2
+Individual global references written to:
+  /data/tmp/knockoffs/knockoffs_chr15_lref.txt
+
+Individual local references written to:
+  /data/tmp/knockoffs/knockoffs_chr15_ref.txt
+
+
+--------------------------------------------------------------------------------
+Knockoffs for chromosome 1
+--------------------------------------------------------------------------------
+Chromosome 1 will be loaded from:
+  haplotype file            : /data/Nicola_phased_chr15
+  haplotype file format     : bgen
+  sample file               : /data/Nicola_phased_chr15.sample
+  legend file               : /data/Nicola_phased_chr15.bim
+  map file                  : /data/Nicola_map_chr15.txt
+  sample filter file        : /data/Nicola_qc_samples.txt
+  variant filter file       : /data/Nicola_qc_chr15.txt
+  number of SNPs            : 6808
+  number of windows         : 1
+  number of haplotypes      : 49020
+
+Loading data for chromosome 1
+Reading BGEN file using 4 threads:
+|....................................................................................................|
+|====================================================================================================|
+
+Initializing HMM with user-supplied hyperparameters: rho = 1, lambda = 0.001.
+
+HMM parameters written to:
+  /data/tmp/knockoffs/knockoffs_chr15_hmm.txt
+
+SNP groups written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res0_grp.txt
+SNP windows written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res0_windows.txt
+
+Generating related knockoffs for chromosome 1 (1434 haplotypes in 669 families, 6808 variants in 6808 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+Generating unrelated knockoffs for chromosome 1 (47586 haplotypes; 6808 variants in 6808 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res0.bed
+  /data/tmp/knockoffs/knockoffs_chr15_res0.bim
+  /data/tmp/knockoffs/knockoffs_chr15_res0.fam
+Reconstructed ancestries written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res0_anc.txt
+SNP groups written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res1_grp.txt
+SNP windows written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res1_windows.txt
+
+Generating related knockoffs for chromosome 1 (1434 haplotypes in 669 families, 6808 variants in 2099 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+Generating unrelated knockoffs for chromosome 1 (47586 haplotypes; 6808 variants in 2099 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res1.bed
+  /data/tmp/knockoffs/knockoffs_chr15_res1.bim
+  /data/tmp/knockoffs/knockoffs_chr15_res1.fam
+Reconstructed ancestries written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res1_anc.txt
+SNP groups written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res2_grp.txt
+SNP windows written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res2_windows.txt
+
+Generating related knockoffs for chromosome 1 (1434 haplotypes in 669 families, 6808 variants in 1024 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+Generating unrelated knockoffs for chromosome 1 (47586 haplotypes; 6808 variants in 1024 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res2.bed
+  /data/tmp/knockoffs/knockoffs_chr15_res2.bim
+  /data/tmp/knockoffs/knockoffs_chr15_res2.fam
+Reconstructed ancestries written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res2_anc.txt
+SNP groups written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res3_grp.txt
+SNP windows written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res3_windows.txt
+
+Generating related knockoffs for chromosome 1 (1434 haplotypes in 669 families, 6808 variants in 713 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+Generating unrelated knockoffs for chromosome 1 (47586 haplotypes; 6808 variants in 713 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res3.bed
+  /data/tmp/knockoffs/knockoffs_chr15_res3.bim
+  /data/tmp/knockoffs/knockoffs_chr15_res3.fam
+Reconstructed ancestries written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res3_anc.txt
+SNP groups written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res4_grp.txt
+SNP windows written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res4_windows.txt
+
+Generating related knockoffs for chromosome 1 (1434 haplotypes in 669 families, 6808 variants in 466 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+Generating unrelated knockoffs for chromosome 1 (47586 haplotypes; 6808 variants in 466 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res4.bed
+  /data/tmp/knockoffs/knockoffs_chr15_res4.bim
+  /data/tmp/knockoffs/knockoffs_chr15_res4.fam
+Reconstructed ancestries written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res4_anc.txt
+SNP groups written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res5_grp.txt
+SNP windows written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res5_windows.txt
+
+Generating related knockoffs for chromosome 1 (1434 haplotypes in 669 families, 6808 variants in 244 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+Generating unrelated knockoffs for chromosome 1 (47586 haplotypes; 6808 variants in 244 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res5.bed
+  /data/tmp/knockoffs/knockoffs_chr15_res5.bim
+  /data/tmp/knockoffs/knockoffs_chr15_res5.fam
+Reconstructed ancestries written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res5_anc.txt
+SNP groups written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res6_grp.txt
+SNP windows written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res6_windows.txt
+
+Generating related knockoffs for chromosome 1 (1434 haplotypes in 669 families, 6808 variants in 143 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+Generating unrelated knockoffs for chromosome 1 (47586 haplotypes; 6808 variants in 143 groups):
+|....................................................................................................|
+|====================================================================================================|
+
+
+Output (binary) written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res6.bed
+  /data/tmp/knockoffs/knockoffs_chr15_res6.bim
+  /data/tmp/knockoffs/knockoffs_chr15_res6.fam
+Reconstructed ancestries written to:
+  /data/tmp/knockoffs/knockoffs_chr15_res6_anc.txt
+
+Finished.
+
+
+----------------------------------------------------------------------------------------------------
+Checking knockoffs goodness-of-fit
+----------------------------------------------------------------------------------------------------
+
+Computing goodness-of-fit diagnostics for chromosome 15 at resolution 6 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res6_self.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res6
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res6_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr15_res6_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr15_res6_self.frq .
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr15_res6_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res6.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res6
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res6
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr15_res6.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr15_res6.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 6808 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 167084 rows [2, 5, 6, 9,
+10, 15, 16, 17, 18, 19, 20, 21, 22, 27, 28, 33, 34, 35, 40, 41, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 167154 rows [1, 2, 5, 6,
+9, 10, 15, 16, 17, 18, 19, 20, 21, 22, 27, 28, 33, 34, 35, 37, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr15_res6.png
+
+Computing goodness-of-fit diagnostics for chromosome 15 at resolution 5 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res5_self.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res5
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res5_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr15_res5_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr15_res5_self.frq .
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr15_res5_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res5.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res5
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res5
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr15_res5.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr15_res5.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 6808 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 185119 rows [2, 5, 6, 7,
+8, 9, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 33, 34, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 184940 rows [1, 2, 5, 6,
+7, 8, 10, 11, 13, 17, 19, 22, 23, 25, 26, 27, 28, 35, 36, 38, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr15_res5.png
+
+Computing goodness-of-fit diagnostics for chromosome 15 at resolution 4 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res4_self.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res4
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res4_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr15_res4_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr15_res4_self.frq .
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr15_res4_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res4.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res4
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res4
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr15_res4.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr15_res4.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 6808 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 205034 rows [2, 6, 7, 13,
+14, 15, 16, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 204712 rows [1, 2, 3, 5,
+6, 7, 8, 10, 11, 14, 15, 17, 18, 20, 23, 24, 26, 28, 31, 32, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr15_res4.png
+
+Computing goodness-of-fit diagnostics for chromosome 15 at resolution 3 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res3_self.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res3
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res3_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr15_res3_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr15_res3_self.frq .
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr15_res3_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res3.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res3
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res3
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr15_res3.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr15_res3.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 6808 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 213030 rows [2, 3, 7, 8,
+9, 15, 16, 17, 18, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 213282 rows [1, 3, 4, 6,
+8, 9, 10, 12, 13, 16, 17, 19, 20, 22, 25, 26, 28, 30, 33, 34, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr15_res3.png
+
+Computing goodness-of-fit diagnostics for chromosome 15 at resolution 2 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res2_self.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res2
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res2_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr15_res2_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr15_res2_self.frq .
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr15_res2_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res2.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res2
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res2
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr15_res2.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr15_res2.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 6808 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 217682 rows [2, 3, 7, 8,
+9, 15, 16, 17, 18, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 218086 rows [1, 3, 4, 6,
+8, 9, 10, 12, 13, 16, 17, 19, 20, 22, 25, 26, 28, 30, 33, 34, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr15_res2.png
+
+Computing goodness-of-fit diagnostics for chromosome 15 at resolution 1 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res1_self.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res1
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res1_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr15_res1_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr15_res1_self.frq .
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr15_res1_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res1.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res1
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res1
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr15_res1.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr15_res1.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 6808 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 224305 rows [2, 3, 7, 8,
+9, 15, 16, 17, 18, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 225300 rows [1, 3, 4, 6,
+8, 9, 10, 12, 13, 16, 17, 19, 20, 22, 25, 26, 28, 30, 33, 34, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr15_res1.png
+
+Computing goodness-of-fit diagnostics for chromosome 15 at resolution 0 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res0_self.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res0
+  --freq
+  --keep-allele-order
+  --ld-window 2
+  --ld-window-kb 0
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res0_self
+  --r in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+results/knockoffs_gof/knockoffs_chr15_res0_self.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+--freq: Allele frequencies (founders only) written to
+results/knockoffs_gof/knockoffs_chr15_res0_self.frq .
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r in-phase to results/knockoffs_gof/knockoffs_chr15_res0_self.ld ...
+0% [processing]writing]             done.
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to results/knockoffs_gof/knockoffs_chr15_res0.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res0
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr15_res0
+  --r2 in-phase
+
+1547128 MB RAM detected; reserving 9000 MB for main workspace.
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr15_res0.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr15_res0.ld ...
+0% [processing]writing]             done.
+Warning messages:
+1: Expected 2 pieces. Missing pieces filled with `NA` in 6808 rows [2, 3, 6, 8,
+10, 11, 13, 16, 17, 19, 22, 24, 25, 27, 30, 31, 34, 35, 37, 40, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 228511 rows [2, 3, 7, 8,
+9, 10, 16, 17, 18, 19, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, ...]. 
+3: Expected 2 pieces. Missing pieces filled with `NA` in 229145 rows [1, 3, 4, 6,
+8, 10, 11, 13, 14, 17, 18, 20, 21, 23, 26, 27, 29, 31, 34, 35, ...]. 
+Saving 7 x 7 in image
+GOF plots saved on results/knockoffs_gof_plots/knockoffs_chr15_res0.png
+
+----------------------------------------------------------------------------------------------------
+Converting augmented genotypes into FBM
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /data/tmp/knockoffs_full/ko_chr15_chr15_res6.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res6
+  --make-bed
+  --memory 5000
+  --merge-list /data/tmp/knockoffs_full/ko_chr15_chr15_res6_mergelist.txt
+  --out /data/tmp/knockoffs_full/ko_chr15_chr15_res6
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs4932079.k' and 'rs4932079' have the same position.
+Warning: Variants 'rs8029154.k' and 'rs8029154' have the same position.
+Warning: Variants 'rs11632180.k' and 'rs11632180' have the same position.
+6805 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 13616 variants).
+                                              Merged fileset written to
+/data/tmp/knockoffs_full/ko_chr15_chr15_res6-merge.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res6-merge.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res6-merge.fam .
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to /data/tmp/knockoffs_full/ko_chr15_chr15_res6.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /data/tmp/knockoffs_full/ko_chr15_chr15_res6.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res6.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res6.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Reading genotype file and creating FBM object... done.
+Written /data/tmp/knockoffs_full/ko_chr15_chr15_res6.rds
+
+Processing at resolution 5 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /data/tmp/knockoffs_full/ko_chr15_chr15_res5.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res5
+  --make-bed
+  --memory 5000
+  --merge-list /data/tmp/knockoffs_full/ko_chr15_chr15_res5_mergelist.txt
+  --out /data/tmp/knockoffs_full/ko_chr15_chr15_res5
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs4932079.k' and 'rs4932079' have the same position.
+Warning: Variants 'rs8029154.k' and 'rs8029154' have the same position.
+Warning: Variants 'rs11632180.k' and 'rs11632180' have the same position.
+6805 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 13616 variants).
+                                              Merged fileset written to
+/data/tmp/knockoffs_full/ko_chr15_chr15_res5-merge.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res5-merge.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res5-merge.fam .
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to /data/tmp/knockoffs_full/ko_chr15_chr15_res5.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /data/tmp/knockoffs_full/ko_chr15_chr15_res5.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res5.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res5.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Reading genotype file and creating FBM object... done.
+Written /data/tmp/knockoffs_full/ko_chr15_chr15_res5.rds
+
+Processing at resolution 4 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /data/tmp/knockoffs_full/ko_chr15_chr15_res4.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res4
+  --make-bed
+  --memory 5000
+  --merge-list /data/tmp/knockoffs_full/ko_chr15_chr15_res4_mergelist.txt
+  --out /data/tmp/knockoffs_full/ko_chr15_chr15_res4
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs4932079.k' and 'rs4932079' have the same position.
+Warning: Variants 'rs8029154.k' and 'rs8029154' have the same position.
+Warning: Variants 'rs11632180.k' and 'rs11632180' have the same position.
+6805 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 13616 variants).
+                                              Merged fileset written to
+/data/tmp/knockoffs_full/ko_chr15_chr15_res4-merge.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res4-merge.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res4-merge.fam .
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to /data/tmp/knockoffs_full/ko_chr15_chr15_res4.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /data/tmp/knockoffs_full/ko_chr15_chr15_res4.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res4.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res4.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Reading genotype file and creating FBM object... done.
+Written /data/tmp/knockoffs_full/ko_chr15_chr15_res4.rds
+
+Processing at resolution 3 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /data/tmp/knockoffs_full/ko_chr15_chr15_res3.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res3
+  --make-bed
+  --memory 5000
+  --merge-list /data/tmp/knockoffs_full/ko_chr15_chr15_res3_mergelist.txt
+  --out /data/tmp/knockoffs_full/ko_chr15_chr15_res3
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs4932079.k' and 'rs4932079' have the same position.
+Warning: Variants 'rs8029154.k' and 'rs8029154' have the same position.
+Warning: Variants 'rs11632180.k' and 'rs11632180' have the same position.
+6805 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 13616 variants).
+                                              Merged fileset written to
+/data/tmp/knockoffs_full/ko_chr15_chr15_res3-merge.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res3-merge.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res3-merge.fam .
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to /data/tmp/knockoffs_full/ko_chr15_chr15_res3.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /data/tmp/knockoffs_full/ko_chr15_chr15_res3.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res3.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res3.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Reading genotype file and creating FBM object... done.
+Written /data/tmp/knockoffs_full/ko_chr15_chr15_res3.rds
+
+Processing at resolution 2 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /data/tmp/knockoffs_full/ko_chr15_chr15_res2.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res2
+  --make-bed
+  --memory 5000
+  --merge-list /data/tmp/knockoffs_full/ko_chr15_chr15_res2_mergelist.txt
+  --out /data/tmp/knockoffs_full/ko_chr15_chr15_res2
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs4932079.k' and 'rs4932079' have the same position.
+Warning: Variants 'rs8029154.k' and 'rs8029154' have the same position.
+Warning: Variants 'rs11632180.k' and 'rs11632180' have the same position.
+6805 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 13616 variants).
+                                              Merged fileset written to
+/data/tmp/knockoffs_full/ko_chr15_chr15_res2-merge.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res2-merge.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res2-merge.fam .
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to /data/tmp/knockoffs_full/ko_chr15_chr15_res2.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /data/tmp/knockoffs_full/ko_chr15_chr15_res2.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res2.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res2.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Reading genotype file and creating FBM object... done.
+Written /data/tmp/knockoffs_full/ko_chr15_chr15_res2.rds
+
+Processing at resolution 1 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /data/tmp/knockoffs_full/ko_chr15_chr15_res1.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res1
+  --make-bed
+  --memory 5000
+  --merge-list /data/tmp/knockoffs_full/ko_chr15_chr15_res1_mergelist.txt
+  --out /data/tmp/knockoffs_full/ko_chr15_chr15_res1
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs4932079.k' and 'rs4932079' have the same position.
+Warning: Variants 'rs8029154.k' and 'rs8029154' have the same position.
+Warning: Variants 'rs11632180.k' and 'rs11632180' have the same position.
+6805 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 13616 variants).
+                                              Merged fileset written to
+/data/tmp/knockoffs_full/ko_chr15_chr15_res1-merge.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res1-merge.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res1-merge.fam .
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to /data/tmp/knockoffs_full/ko_chr15_chr15_res1.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /data/tmp/knockoffs_full/ko_chr15_chr15_res1.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res1.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res1.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Reading genotype file and creating FBM object... done.
+Written /data/tmp/knockoffs_full/ko_chr15_chr15_res1.rds
+
+Processing at resolution 0 ...
+
+PLINK v1.90b6.24 64-bit (6 Jun 2021)           www.cog-genomics.org/plink/1.9/
+(C) 2005-2021 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /data/tmp/knockoffs_full/ko_chr15_chr15_res0.log.
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr15_res0
+  --make-bed
+  --memory 5000
+  --merge-list /data/tmp/knockoffs_full/ko_chr15_chr15_res0_mergelist.txt
+  --out /data/tmp/knockoffs_full/ko_chr15_chr15_res0
+
+1547128 MB RAM detected; reserving 5000 MB for main workspace.
+Warning: --merge-list file is empty.
+Warning: Variants 'rs4932079.k' and 'rs4932079' have the same position.
+Warning: Variants 'rs8029154.k' and 'rs8029154' have the same position.
+Warning: Variants 'rs11632180.k' and 'rs11632180' have the same position.
+6805 more same-position warnings: see log file.
+Performing single-pass merge (24510 people, 13616 variants).
+                                              Merged fileset written to
+/data/tmp/knockoffs_full/ko_chr15_chr15_res0-merge.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res0-merge.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res0-merge.fam .
+13616 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to /data/tmp/knockoffs_full/ko_chr15_chr15_res0.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99% done.
+Total genotyping rate is in [0.9999995, 1).
+13616 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /data/tmp/knockoffs_full/ko_chr15_chr15_res0.bed +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res0.bim +
+/data/tmp/knockoffs_full/ko_chr15_chr15_res0.fam ... 0%1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%27%28%29%30%31%32%33%34%35%36%37%38%39%40%41%42%43%44%45%46%47%48%49%50%51%52%53%54%55%56%57%58%59%60%61%62%63%64%65%66%67%68%69%70%71%72%73%74%75%76%77%78%79%80%81%82%83%84%85%86%87%88%89%90%91%92%93%94%95%96%97%98%99%done.
+Converting augmented genotypes into FBM...
+Reading genotype file and creating FBM object... done.
+Written /data/tmp/knockoffs_full/ko_chr15_chr15_res0.rds
+
+----------------------------------------------------------------------------------------------------
+Computing test statistics
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 13616 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+i Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR and Group.
+i Output is grouped by CHR.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.
+done.
+# A tibble: 138 x 6
+   CHR   Group SNP.lead     BP.lead  Size       W
+   <chr> <int> <chr>          <int> <int>   <dbl>
+ 1 15       51 rs4776151   53745403    12  0.0597
+ 2 15      142 rs1143136  102264476     9  0.0526
+ 3 15       36 rs17574546  38902476     6  0.0517
+ 4 15       40 rs16970851  40885107    20  0.0494
+ 5 15       78 rs12441341  69991614    10  0.0461
+ 6 15       86 rs3825932   79235446     6  0.0395
+ 7 15       84 rs11857860  77839761    15  0.0375
+ 8 15       93 rs6495607   81960409    10  0.0354
+ 9 15       16 rs1597196   28294922    11  0.0330
+10 15       82 rs11072464  74305182    12  0.0318
+11 15      136 rs8027443  100285705    11  0.0255
+12 15       79 rs12440755  70757896     4  0.0244
+13 15       60 rs7164726   59715666     4  0.0212
+14 15      132 rs2120026   98867675     8  0.0211
+15 15       98 rs17702916  87414469     8  0.0197
+16 15       99 rs3913351   87755594     8  0.0188
+17 15       90 rs8025914   81034473     8  0.0180
+18 15       38 rs16968751  39607401    27 -0.0177
+19 15       80 rs10735127  70791915    13  0.0176
+20 15       72 rs11071896  66821250    10  0.0175
+# i 118 more rows
+Test statistics written on:
+/data/tmp/stats/stats_chr15_chr15_res6_stats.txt
+
+Processing at resolution 5 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 13616 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+i Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR and Group.
+i Output is grouped by CHR.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.
+done.
+# A tibble: 215 x 6
+   CHR   Group SNP.lead     BP.lead  Size       W
+   <chr> <int> <chr>          <int> <int>   <dbl>
+ 1 15       60 rs17574546  38902476     5  0.0437
+ 2 15       87 rs4776151   53745403    10  0.0417
+ 3 15      150 rs3825932   79235446     5  0.0380
+ 4 15       67 rs16970851  40885107    18  0.0377
+ 5 15      162 rs6495607   81960409     8  0.0318
+ 6 15      134 rs10152591  70048157     8  0.0305
+ 7 15       82 rs8038609   50416551    10  0.0301
+ 8 15      242 rs6598481  102008648     7  0.0297
+ 9 15       25 rs1597196   28294922    10  0.0283
+10 15      231 rs8027443  100285705     6  0.0206
+11 15      143 rs11072464  74305182     9  0.0204
+12 15       65 rs17666578  40330047     9 -0.0196
+13 15      103 rs7164726   59715666     4  0.0180
+14 15      146 rs924285    76408090     5  0.0162
+15 15      243 rs1143136  102264476     3  0.0160
+16 15      165 rs1426163   84415949    11  0.0151
+17 15      164 rs7172665   83717146     4  0.0146
+18 15      167 rs11074256  86003866     8 -0.0139
+19 15      225 rs2120026   98867675     7  0.0137
+20 15      171 rs17702916  87414469     6  0.0134
+# i 195 more rows
+Test statistics written on:
+/data/tmp/stats/stats_chr15_chr15_res5_stats.txt
+
+Processing at resolution 4 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 13616 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+i Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR and Group.
+i Output is grouped by CHR.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.
+done.
+# A tibble: 277 x 6
+   CHR   Group SNP.lead     BP.lead  Size       W
+   <chr> <int> <chr>          <int> <int>   <dbl>
+ 1 15      109 rs17574546  38902476     2  0.0477
+ 2 15      164 rs4776151   53745403     5  0.0423
+ 3 15      290 rs3825932   79235446     4  0.0376
+ 4 15      125 rs16970851  40885107    12  0.0363
+ 5 15       44 rs1597196   28294922     8  0.0328
+ 6 15      256 rs10152591  70048157     5  0.0319
+ 7 15      311 rs6495607   81960409     6  0.0222
+ 8 15      310 rs8037919   81774047     2 -0.0221
+ 9 15      442 rs8027443  100285705     2  0.0190
+10 15      327 rs17702916  87414469     3  0.0186
+11 15      283 rs4886847   77377654     3 -0.0183
+12 15      277 rs11072464  74305182     3  0.0163
+13 15      349 rs4436756   90660359     3 -0.0161
+14 15      432 rs2120026   98867675     1  0.0159
+15 15      264 rs12440755  70757896     1  0.0139
+16 15      153 rs8038609   50416551    10  0.0135
+17 15      464 rs2047222  102035267     5  0.0135
+18 15      304 rs2055713   81109594     2  0.0134
+19 15      194 rs7164726   59715666     5  0.0123
+20 15      154 rs8024514   50587336     2  0.0121
+# i 257 more rows
+Test statistics written on:
+/data/tmp/stats/stats_chr15_chr15_res4_stats.txt
+
+Processing at resolution 3 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 13616 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+i Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR and Group.
+i Output is grouped by CHR.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.
+done.
+# A tibble: 401 x 6
+   CHR   Group SNP.lead     BP.lead  Size       W
+   <chr> <int> <chr>          <int> <int>   <dbl>
+ 1 15      165 rs17574546  38902476     2  0.0475
+ 2 15      188 rs16970851  40885107     6  0.0378
+ 3 15      448 rs3825932   79235446     4  0.0365
+ 4 15      392 rs10152591  70048157     5  0.0316
+ 5 15      252 rs4776151   53745403     7  0.0294
+ 6 15      425 rs11072464  74305182     3  0.0203
+ 7 15       68 rs1597196   28294922     4  0.0192
+ 8 15       14 rs11161353  24104152     3 -0.0188
+ 9 15      253 rs12437464  53975404     4 -0.0188
+10 15      679 rs8027443  100285705     2  0.0182
+11 15       89 rs4779521   31672128     2 -0.0174
+12 15      480 rs8037919   81774047     2 -0.0167
+13 15      658 rs2120026   98867675     1  0.0153
+14 15      439 rs6495249   78093563     3 -0.0153
+15 15      491 rs1426163   84415949     4 -0.0150
+16 15      482 rs6495607   81960409     2  0.0146
+17 15      301 rs7164726   59715666     6  0.0143
+18 15      712 rs1143136  102264476     1  0.0142
+19 15       69 rs2240203   28494202     4  0.0141
+20 15      404 rs12440755  70757896     1  0.0138
+# i 381 more rows
+Test statistics written on:
+/data/tmp/stats/stats_chr15_chr15_res3_stats.txt
+
+Processing at resolution 2 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 13616 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+i Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR and Group.
+i Output is grouped by CHR.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.
+done.
+# A tibble: 464 x 6
+   CHR   Group SNP.lead     BP.lead  Size       W
+   <chr> <int> <chr>          <int> <int>   <dbl>
+ 1 15      226 rs17574546  38902476     2  0.0484
+ 2 15      259 rs16970851  40885107     9  0.0412
+ 3 15      648 rs3825932   79235446     5  0.0382
+ 4 15      562 rs12441341  69991614     6  0.0330
+ 5 15      361 rs4776151   53745403     3  0.0318
+ 6 15      611 rs11072464  74305182     2  0.0280
+ 7 15      737 rs17702916  87414469     4  0.0187
+ 8 15      705 rs1426163   84415949     5 -0.0179
+ 9 15       89 rs1597196   28294922     5  0.0178
+10 15      974 rs8027443  100285705     3  0.0177
+11 15      693 rs6495607   81960409     2  0.0168
+12 15      120 rs4779521   31672128     1 -0.0167
+13 15      946 rs2120026   98867675     1  0.0162
+14 15      690 rs8037919   81774047     2 -0.0156
+15 15      934 rs7166685   98241913     3 -0.0149
+16 15     1022 rs1143136  102264476     1  0.0147
+17 15      740 rs3913351   87755594     2  0.0146
+18 15      681 rs2055713   81109594     1  0.0142
+19 15      701 rs7172665   83717146     4  0.0140
+20 15      911 rs12594623  96934745     1  0.0138
+# i 444 more rows
+Test statistics written on:
+/data/tmp/stats/stats_chr15_chr15_res2_stats.txt
+
+Processing at resolution 1 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 13616 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+i Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR and Group.
+i Output is grouped by CHR.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.
+done.
+# A tibble: 724 x 6
+   CHR   Group SNP.lead     BP.lead  Size       W
+   <chr> <int> <chr>          <int> <int>   <dbl>
+ 1 15      419 rs17574546  38902476     2  0.0513
+ 2 15      488 rs16970851  40885107     8  0.0432
+ 3 15     1342 rs3825932   79235446     4  0.0399
+ 4 15      709 rs4776151   53745403     2  0.0349
+ 5 15     1781 rs4502169   93744231     2 -0.0260
+ 6 15     1155 rs12441341  69991614     4 -0.0233
+ 7 15     1559 rs17702916  87414469     3  0.0212
+ 8 15     2007 rs8027443  100285705     2  0.0202
+ 9 15      148 rs1597196   28294922     2  0.0195
+10 15      692 rs189800    53359796     5 -0.0191
+11 15     1258 rs2289413   74276228     2 -0.0189
+12 15     1949 rs2120026   98867675     1  0.0179
+13 15     1119 rs3784346   68638492     3 -0.0178
+14 15       18 rs11161353  24104152     1 -0.0169
+15 15     2095 rs1143136  102264476     2  0.0161
+16 15     1898 rs12594623  96934745     1  0.0160
+17 15     1421 rs2055713   81109594     1  0.0156
+18 15     1567 rs3913351   87755594     2  0.0156
+19 15     1442 rs6495607   81960409     1  0.0155
+20 15     1189 rs12440755  70757896     2  0.0148
+# i 704 more rows
+Test statistics written on:
+/data/tmp/stats/stats_chr15_chr15_res1_stats.txt
+
+Processing at resolution 0 ...
+
+Attaching bigSNP object... done.
+Warning message:
+One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat <- vroom(...)
+  problems(dat) 
+Computing scaling factors for all variants... done.
+Reading phenotype file... done.
+0 individuals out of 24510 have missing phenotype.
+Fitting sparse logistic regression with 24510 observations, 13616 variants and 1 covariates... done.
+Extracting regression coefficients... Warning message:
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+i Using compatibility `.name_repair`. 
+done.
+Computing test statistics... `summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR and Group.
+i Output is grouped by CHR.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.
+done.
+# A tibble: 826 x 6
+   CHR   Group SNP.lead     BP.lead  Size       W
+   <chr> <int> <chr>          <int> <int>   <dbl>
+ 1 15     1120 rs17574546  38902476     1  0.0429
+ 2 15     2278 rs4776151   53745403     1  0.0368
+ 3 15     4538 rs3825932   79235446     1  0.0342
+ 4 15     4982 rs1426163   84415949     1 -0.0244
+ 5 15     4176 rs4886844   74308940     1 -0.0224
+ 6 15     1367 rs11630273  40878978     1 -0.0223
+ 7 15     4172 rs2289413   74276228     1 -0.0203
+ 8 15     6581 rs8027443  100285705     2  0.0187
+ 9 15     5364 rs17702916  87414469     1  0.0185
+10 15     6425 rs2120026   98867675     1  0.0184
+11 15     1365 rs1037445   40871212     1 -0.0182
+12 15     4857 rs6495607   81960409     1  0.0181
+13 15     4934 rs12907032  83718609     1 -0.0178
+14 15     6802 rs1143136  102264476     1  0.0170
+15 15     4799 rs2055713   81109594     1  0.0169
+16 15     3883 rs12440755  70757896     1  0.0161
+17 15     4380 rs12900004  77844904     1 -0.0157
+18 15     6292 rs12594623  96934745     1  0.0154
+19 15     3622 rs55966838  67984818     1  0.0148
+20 15     3953 rs10518959  71690941     1 -0.0146
+# i 806 more rows
+Test statistics written on:
+/data/tmp/stats/stats_chr15_chr15_res0_stats.txt
+
+----------------------------------------------------------------------------------------------------
+Filtering the test statistics
+----------------------------------------------------------------------------------------------------
+
+Processing at resolution 6 ...
+
+`summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR, Group, SNP.lead, BP.lead, Size, and
+  W.
+i Output is grouped by CHR, Group, SNP.lead, BP.lead, and Size.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group, SNP.lead, BP.lead, Size, W))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.
+Selections:
+# A tibble: 21 x 9
+     CHR Group SNP.lead     BP.lead  Size      W    BP.min    BP.max BP.width
+   <dbl> <dbl> <chr>          <dbl> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+ 1    15    51 rs4776151   53745403    12 0.0597  53089442  53766542   677100
+ 2    15   142 rs1143136  102264476     9 0.0526 101981375 102397317   415942
+ 3    15    36 rs17574546  38902476     6 0.0517  38838264  39110325   272061
+ 4    15    40 rs16970851  40885107    20 0.0494  40642877  42178122  1535245
+ 5    15    78 rs12441341  69991614    10 0.0461  69991417  70297249   305832
+ 6    15    86 rs3825932   79235446     6 0.0395  78742376  79333228   590852
+ 7    15    84 rs11857860  77839761    15 0.0375  76134601  77984480  1849879
+ 8    15    93 rs6495607   81960409    10 0.0354  81708850  82187225   478375
+ 9    15    16 rs1597196   28294922    11 0.0330  28182715  28530182   347467
+10    15    82 rs11072464  74305182    12 0.0318  72064719  74434196  2369477
+# i 11 more rows
+Discoveries written on: results/results_chr15_chr15_res6_discoveries.txt
+Test statistics written on: results/results_chr15_chr15_res6_stats.txt
+
+Processing at resolution 5 ...
+
+`summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR, Group, SNP.lead, BP.lead, Size, and
+  W.
+i Output is grouped by CHR, Group, SNP.lead, BP.lead, and Size.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group, SNP.lead, BP.lead, Size, W))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.
+Selections:
+# A tibble: 11 x 9
+     CHR Group SNP.lead     BP.lead  Size      W    BP.min    BP.max BP.width
+   <dbl> <dbl> <chr>          <dbl> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+ 1    15    60 rs17574546  38902476     5 0.0437  38838264  39005798   167534
+ 2    15    87 rs4776151   53745403    10 0.0417  53391724  53766542   374818
+ 3    15   150 rs3825932   79235446     5 0.0380  78742376  79235446   493070
+ 4    15    67 rs16970851  40885107    18 0.0377  40642877  41247629   604752
+ 5    15   162 rs6495607   81960409     8 0.0318  81708850  82187225   478375
+ 6    15   134 rs10152591  70048157     8 0.0305  69991417  70121894   130477
+ 7    15    82 rs8038609   50416551    10 0.0301  50221358  50587336   365978
+ 8    15   242 rs6598481  102008648     7 0.0297 101981375 102068658    87283
+ 9    15    25 rs1597196   28294922    10 0.0283  28182715  28530182   347467
+10    15   231 rs8027443  100285705     6 0.0206 100086709 100426831   340122
+11    15   143 rs11072464  74305182     9 0.0204  74097901  74434196   336295
+Discoveries written on: results/results_chr15_chr15_res5_discoveries.txt
+Test statistics written on: results/results_chr15_chr15_res5_stats.txt
+
+Processing at resolution 4 ...
+
+`summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR, Group, SNP.lead, BP.lead, Size, and
+  W.
+i Output is grouped by CHR, Group, SNP.lead, BP.lead, and Size.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group, SNP.lead, BP.lead, Size, W))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.
+Selections:
+# A tibble: 0 x 9
+# i 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr15_chr15_res4_discoveries.txt
+Test statistics written on: results/results_chr15_chr15_res4_stats.txt
+
+Processing at resolution 3 ...
+
+`summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR, Group, SNP.lead, BP.lead, Size, and
+  W.
+i Output is grouped by CHR, Group, SNP.lead, BP.lead, and Size.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group, SNP.lead, BP.lead, Size, W))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.
+Selections:
+# A tibble: 0 x 9
+# i 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr15_chr15_res3_discoveries.txt
+Test statistics written on: results/results_chr15_chr15_res3_stats.txt
+
+Processing at resolution 2 ...
+
+`summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR, Group, SNP.lead, BP.lead, Size, and
+  W.
+i Output is grouped by CHR, Group, SNP.lead, BP.lead, and Size.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group, SNP.lead, BP.lead, Size, W))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.
+Selections:
+# A tibble: 0 x 9
+# i 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr15_chr15_res2_discoveries.txt
+Test statistics written on: results/results_chr15_chr15_res2_stats.txt
+
+Processing at resolution 1 ...
+
+`summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR, Group, SNP.lead, BP.lead, Size, and
+  W.
+i Output is grouped by CHR, Group, SNP.lead, BP.lead, and Size.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group, SNP.lead, BP.lead, Size, W))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.
+Selections:
+# A tibble: 0 x 9
+# i 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr15_chr15_res1_discoveries.txt
+Test statistics written on: results/results_chr15_chr15_res1_stats.txt
+
+Processing at resolution 0 ...
+
+`summarise()` has regrouped the output.
+i Summaries were computed grouped by CHR, Group, SNP.lead, BP.lead, Size, and
+  W.
+i Output is grouped by CHR, Group, SNP.lead, BP.lead, and Size.
+i Use `summarise(.groups = "drop_last")` to silence this message.
+i Use `summarise(.by = c(CHR, Group, SNP.lead, BP.lead, Size, W))` for
+  per-operation grouping (`?dplyr::dplyr_by`) instead.
+Selections:
+# A tibble: 0 x 9
+# i 9 variables: CHR <dbl>, Group <dbl>, SNP.lead <chr>, BP.lead <dbl>,
+#   Size <dbl>, W <dbl>, BP.min <dbl>, BP.max <dbl>, BP.width <dbl>
+Discoveries written on: results/results_chr15_chr15_res0_discoveries.txt
+Test statistics written on: results/results_chr15_chr15_res0_stats.txt

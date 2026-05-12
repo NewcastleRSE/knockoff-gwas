@@ -1,0 +1,30 @@
+PLINK v1.90b6.24 64-bit (6 Jun 2021)
+Options in effect:
+  --bfile /data/tmp/knockoffs/knockoffs_chr1_res6
+  --keep-allele-order
+  --ld-window 5000
+  --ld-window-kb 10000
+  --ld-window-r2 0.01
+  --memory 9000
+  --out results/knockoffs_gof/knockoffs_chr1_res6
+  --r2 in-phase
+
+Hostname: hmem009.comet.hpc.ncl.ac.uk
+Working directory: /mnt/nfs/home/nrajh/StatGen/work-other/KnockOff/knockoff-gwas/pbc_analysis_container
+Start time: Tue May 12 10:38:45 2026
+
+Random number seed: 1778578725
+1547124 MB RAM detected; reserving 9000 MB for main workspace.
+40232 variants loaded from .bim file.
+24510 people (0 males, 0 females, 24510 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/knockoffs_gof/knockoffs_chr1_res6.nosex .
+Using up to 255 threads (change this with --threads).
+Before main variant filters, 24510 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is in [0.9999995, 1).
+40232 variants and 24510 people pass filters and QC.
+Note: No phenotypes present.
+--r2 in-phase to results/knockoffs_gof/knockoffs_chr1_res6.ld ...
+done.
+
+End time: Tue May 12 10:50:34 2026
