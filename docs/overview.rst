@@ -23,6 +23,8 @@ The KnockOffGWAS pipeline was constructed by adapting the `example <https://mses
 
     9. By following the steps on this website it should be possible to perform KnockOffGWAS on your dataset. As an example of using this pipeline, the directory *pbc_analysis* contains additional scripts to run analysis for this data on an HPC machine. Hopefully, with this pipeline, guide and worked example it should be as straightforward as it can be to perform KnockOffGWAS considering the many programs and different data formats involved.
 
+    10. A containerised version is also provided to facilitate deployment across different systems. See :ref:`container`.
+
 The following is the structure and contents of the *new_knockoffgwas_pipeline* directory:
 
 .. code-block:: none

@@ -3,8 +3,6 @@
 Pipeline Container
 ==================
 
-🚧🚧 Under Construction 🚧🚧
-
 In order to make the pipeline as portable as possible across computing environments an `Apptainer <https://apptainer.org/>`_ container is supplied. This section gives a brief description on how to use the container to analyse your data, and you should refer to the corresponding non-container sections for more details.
 
 All of the scripts below will need to be amended for use with the HPC machine you are using and your individual details.
@@ -19,7 +17,7 @@ Create a directory for your analysis and save in it a script called ``set_dirs.s
     # Run this file using "source set_dirs.sh" to set the following variable
     DATA=/nobackup/proj/my_account/data
 
-Download the apptainer container file `kogwas.sif <TBA>`_ and save it in your analysis directory or somewhere accessible.
+Download the apptainer container file `kogwas.sif <https://zenodo.org/records/20160045>`_ and save it in your analysis directory or somewhere accessible.
 
 Create an ``hpc`` directory to save scripts to run the data preparation and analysis.
 
