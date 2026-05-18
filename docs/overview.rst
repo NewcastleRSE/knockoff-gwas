@@ -96,9 +96,9 @@ Below is a flow diagram of the KnockOffGWAS pipeline.
 
 .. _flow-fig:
 
-.. figure:: images/flow0.png
+.. figure:: images/flow1.png
    :class: custom-figure
 
-   Flow diagram of the KnockOfGWAS pipeline.
+   Flow diagram of the KnockOfGWAS pipeline. The pink ovals show input data and parameters, the orange squares show data processing steps, blue rounded squares show intermediate data and the green rounded squares show final output.
 
 
