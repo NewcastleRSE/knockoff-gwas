@@ -249,7 +249,8 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
     resolution.heights <- seq(length(resolution.list))
     names(resolution.heights) <- resolution.list
     #resolution.labels <- paste(parse_number(resolution.list), "\\%", sep="")
-    resolution.labels <- c("single-SNP", "6", "22", "38", "75", "149", "358") %>% rev
+    #resolution.labels <- c("single-SNP", "6", "22", "38", "75", "149", "358") %>% rev
+    resolution.labels <- c("single-SNP", "0.01", "0.05", "0.1", "0.2", "0.5", "1") %>% rev
 
     if(nrow(Knockoffs.window)>0) {
         p.knockoffs <- Knockoffs.window %>%
@@ -288,7 +289,8 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
     }
 
     p.knockoffs <- p.knockoffs +
-        ylab("Resolution (Mb)") + xlab("") +
+        #ylab("Resolution (Mb)") + xlab("") +
+        ylab("Resolution (cM)") + xlab("") +
         coord_cartesian(xlim = c(window.left,window.right)) +
         scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
         scale_y_continuous(limits=c(0.5,max(resolution.heights)+0.5),

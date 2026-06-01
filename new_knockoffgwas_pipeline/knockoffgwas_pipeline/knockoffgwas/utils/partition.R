@@ -118,9 +118,42 @@ for(resolution.idx in 1:length(resolution.list)) {
   Partitions[[col.name]] <- hc.clusters
 }
 
+## Compute partition statistics
+group.stats <- lapply(seq_along(resolution.list), function(resolution.idx) {
+  
+  col.name <- sprintf("res_%d", length(resolution.list) - resolution.idx + 1)
+  groups <- Partitions[[col.name]]
+  
+  ## SNP counts per group
+  snp.sizes <- as.numeric(table(groups))
+  
+  ## Physical widths (kb) per group
+  kb.sizes <- tapply(Map$BP, groups, function(bp) {
+    (max(bp) - min(bp)) / 1000
+  })
+  
+  data.frame(
+    resolution_cM      = resolution.list[resolution.idx],
+    median_width_kB    = median(kb.sizes),
+    mean_width_kB      = mean(kb.sizes),
+    n_groups           = length(snp.sizes),
+    median_size_SNPs   = median(snp.sizes),
+    mean_size_SNPs     = mean(snp.sizes)
+  )
+})
+
+group.stats <- bind_rows(group.stats)
+
+print(group.stats)
+
 ## Compute average group sizes
 group.sizes <- apply(Partitions[,-c(1,2)], 2, function(x) mean(table(x)))
 cat(sprintf("Mean group sizes: \n"))
+print(group.sizes)
+
+## Compute median group sizes
+group.sizes <- apply(Partitions[,-c(1,2)], 2, function(x) median(table(x)))
+cat(sprintf("Median group sizes: \n"))
 print(group.sizes)
 
 if(FALSE) {
