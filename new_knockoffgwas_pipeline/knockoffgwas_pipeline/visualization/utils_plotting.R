@@ -295,7 +295,7 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
         scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
         scale_y_continuous(limits=c(0.5,max(resolution.heights)+0.5),
                            labels=resolution.labels, breaks=resolution.heights) +
-        ggtitle("Chicago plot (KnockoffZoom)") +
+        ggtitle("Chicago plot") +
         theme_bw() +
         theme(panel.grid.minor.y = element_blank(),
               axis.line=element_blank(),
