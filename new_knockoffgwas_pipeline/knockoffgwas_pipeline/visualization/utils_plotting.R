@@ -222,7 +222,11 @@ plot_pvalues <- function(window.chr, window.left, window.right, LMM, LMM.clumped
       scale_y_continuous(breaks = NULL) +
       scale_x_continuous(labels = bp.labeler, expand = c(0.01, 0.01)) +
       coord_cartesian(xlim = c(window.left, window.right)) +
-      theme_void()
+      theme_void() + 
+      theme(
+        legend.text = element_text(size = legend.font.size * 1),
+        legend.title = element_text(size = legend.font.size * 1)
+      )
     
   } else {
     p.clumped <- ggplot(tibble()) + geom_blank()
@@ -290,7 +294,7 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
 
     p.knockoffs <- p.knockoffs +
         #ylab("Resolution (Mb)") + xlab("") +
-        ylab("Resolution (cM)") + xlab("") +
+        ylab("Resolution (cM)") + xlab(sprintf("Chromosome %d (Mb)", window.chr)) +
         coord_cartesian(xlim = c(window.left,window.right)) +
         scale_x_continuous(expand=c(0.01,0.01), labels=bp.labeler) +
         scale_y_continuous(limits=c(0.5,max(resolution.heights)+0.5),
@@ -299,7 +303,7 @@ plot_chicago <- function(window.chr, window.left, window.right, Discoveries) {
         theme_bw() +
         theme(panel.grid.minor.y = element_blank(),
               axis.line=element_blank(),
-              axis.title.x=element_blank(),
+              axis.title.x = element_text(size = axis.font.size),
               panel.border=element_blank(),
               panel.grid.major.x = element_line(linewidth = 0.2, colour = "darkgray"),
               panel.grid.minor.x = element_line(linewidth = 0.1, colour = "darkgray"),
@@ -488,7 +492,7 @@ plot_genes <- function(window.chr, window.left, window.right, Exons.canonical,
 
 plot_combined <- function(window.chr, window.left, window.right, Discoveries, LMM, LMM.clumped,
                           Annotations.func=NULL, Exons.canonical=NULL,
-                          highlight.gene=NULL, max.gene.rows=10) {
+                          highlight.gene=NULL, max.gene.rows=10, include_genes = TRUE) {
 
     # Make sure that the window is not empty
     if(window.right<=window.left) {
@@ -507,21 +511,24 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
         p.lmm$clumped <- ggplot(tibble()) + geom_blank()
     }
 
-    # Plot functional annotations
-    if(!is.null(Annotations.func)) {
-        p.functional <- plot_annotations(window.chr, window.left, window.right, Annotations.func)
-    } else {
-        p.functional <- ggplot(tibble()) + geom_blank()
+    if(include_genes) {
+      # Plot functional annotations
+      if(!is.null(Annotations.func)) {
+          p.functional <- plot_annotations(window.chr, window.left, window.right, Annotations.func)
+      } else {
+          p.functional <- ggplot(tibble()) + geom_blank()
+      }
+  
+      # Plot genes
+      if(!is.null(Exons.canonical)) {
+          p.genes <- plot_genes(window.chr, window.left, window.right, Exons.canonical,
+                                highlight.gene=highlight.gene, max.gene.rows=max.gene.rows)
+      } else {
+          p.genes <- ggplot(tibble()) + geom_blank()
+      }
+      
     }
-
-    # Plot genes
-    if(!is.null(Exons.canonical)) {
-        p.genes <- plot_genes(window.chr, window.left, window.right, Exons.canonical,
-                              highlight.gene=highlight.gene, max.gene.rows=max.gene.rows)
-    } else {
-        p.genes <- ggplot(tibble()) + geom_blank()
-    }
-
+    
     # Determine relative heights of each subplot
     height.manhattan <- 0.75
     height.clumps <- 0.6
@@ -538,38 +545,53 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
     # Keep originals for legend extraction
     p.lmm_clumped_noleg   <- p.lmm$clumped   + theme(legend.position = "none")
     p.knockoffs_noleg     <- p.knockoffs     + theme(legend.position = "none")
-    p.functional_noleg    <- p.functional    + theme(legend.position = "none")
+    
+    if(include_genes) {p.functional_noleg    <- p.functional    + theme(legend.position = "none")}
     
     
     # Then convert to grobs
     g2 <- ggplotGrob(p.lmm_clumped_noleg)
     g3 <- ggplotGrob(p.knockoffs_noleg)
-    g4 <- ggplotGrob(p.functional_noleg)
+    if(include_genes) {g4 <- ggplotGrob(p.functional_noleg)}
     
     
-    g5 <-  ggplotGrob(p.genes)
+    if(include_genes) {g5 <-  ggplotGrob(p.genes)}
     fg1 <- gtable_frame(g1, width = unit(1, "null"), height = unit(heights[1], "null"), debug = debug.lines)
     fg2 <- gtable_frame(g2, width = unit(1, "null"), height = unit(heights[2], "null"), debug = debug.lines)
     fg3 <- gtable_frame(g3, width = unit(1, "null"), height = unit(heights[3], "null"), debug = debug.lines)
-    fg4 <- gtable_frame(g4, width = unit(1, "null"), height = unit(heights[4], "null"), debug = debug.lines)
-    fg5 <- gtable_frame(g5, width = unit(1, "null"), height = unit(heights[5], "null"), debug = debug.lines)
-
+    
+    if(include_genes) {
+      fg4 <- gtable_frame(g4, width = unit(1, "null"), height = unit(heights[4], "null"), debug = debug.lines)
+      fg5 <- gtable_frame(g5, width = unit(1, "null"), height = unit(heights[5], "null"), debug = debug.lines)
+    }
+    
     # Combine the main plots
-    fg.l <- gtable_frame(gtable_rbind(fg1, fg2, fg3, fg4, fg5),
+    if(include_genes) {
+      fg.l <- gtable_frame(gtable_rbind(fg1, fg2, fg3, fg4, fg5),
                          width = unit(4, "null"), height = unit(1, "null"))
-
+    } else {
+      fg.l <- gtable_frame(gtable_rbind(fg1, fg2, fg3),
+                           width = unit(4, "null"), height = unit(1, "null"))
+      
+    }
+    
     extract_legend_safe <- function(p) {
+      
       guides <- get_plot_component(p, "guide-box", return_all = TRUE)
       
-      if (length(guides) == 0) return(ggplot())
+      blank_plot <- ggplot() +
+        theme_void()
       
-      # If it's already a grob, use it directly
+      if (length(guides) == 0) {
+        return(blank_plot)
+      }
+      
       if (inherits(guides, "grob")) {
         legend <- guides
       } else if (is.list(guides) && length(guides) > 0) {
         legend <- guides[[1]]
       } else {
-        return(ggplot())
+        return(blank_plot)
       }
       
       ggplotify::as.ggplot(legend)
@@ -577,32 +599,42 @@ plot_combined <- function(window.chr, window.left, window.right, Discoveries, LM
     
     g6 <- ggplotGrob(extract_legend_safe(p.lmm$clumped))
     g7 <- ggplotGrob(extract_legend_safe(p.knockoffs))
-    g8 <- ggplotGrob(extract_legend_safe(p.functional))
+    
+    if(include_genes) {g8 <- ggplotGrob(extract_legend_safe(p.functional))}
     
     # Combine the legends
-    fg6 <- gtable_frame(g6, width = unit(1, "null"), height = unit(0.75, "null"), debug = debug.lines)
-    fg7 <- gtable_frame(g7, width = unit(1, "null"), height = unit(1, "null"), debug = debug.lines)
-    fg8 <- gtable_frame(g8, width = unit(1, "null"), height = unit(1, "null"), debug = debug.lines)
+    if(include_genes) {
+      
+      fg6 <- gtable_frame(g6, width=unit(1,"null"),
+                          height=unit(height.manhattan + height.clumps,"null"))
+      
+      fg7 <- gtable_frame(g7, width=unit(1,"null"),
+                          height=unit(height.knockoffs,"null"))
+      
+      fg8 <- gtable_frame(g8, width=unit(1,"null"),
+                          height=unit(height.functional + height.genes,"null"))
+      
+      fg.r <- gtable_frame(
+        gtable_rbind(fg6, fg7, fg8),
+        width=unit(1,"null"),
+        height=unit(1,"null")
+      )
+      
+    } else {
+      
+      fg6 <- gtable_frame(g6, width=unit(1,"null"),
+                          height=unit(height.manhattan + height.clumps,"null"))
+      
+      fg7 <- gtable_frame(g7, width=unit(1,"null"),
+                          height=unit(height.knockoffs,"null"))
+      
+      fg.r <- gtable_frame(
+        gtable_rbind(fg6, fg7),
+        width=unit(1,"null"),
+        height=unit(1,"null")
+      )
+    }
     
-    g0 <- ggplotGrob(
-      ggplot() + theme_void()
-    )
-    
-    fg00 <- gtable_frame(
-      g0,
-      width = unit(1, "null"),
-      height = unit(1, "null"),
-      debug = debug.lines
-    )
-    
-    
-    # Rebuild legend column
-    fg.r <- gtable_frame(
-      gtable_rbind(fg6, fg7, fg8, fg00),
-      width = unit(1, "null"),
-      height = unit(1, "null"),
-      debug = debug.lines
-    )
     
     # Combine main plots and legends
     grid.newpage()

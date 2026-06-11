@@ -217,14 +217,15 @@ load_association_results <- function(data_dir, lmm_dir, phenotype){
     return(association_results)
 }
 
-plot_combined_state <- function(state, annotations){
+plot_combined_state <- function(state, annotations, include_genes = TRUE){
     plot_combined(state$chr, state$window.left, state$window.right,
                   state$association_results$Discoveries,
                   state$association_results$LMM,
                   state$association_results$LMM.clumped,
                   Annotations.func=annotations$Annotations.func,
                   Exons.canonical=annotations$Exons.canonical,
-                  highlight.gene=state$highlight.gene)
+                  highlight.gene=state$highlight.gene,
+                  include_genes=include_genes)
 }
 
 # From https://github.com/daqana/dqshiny

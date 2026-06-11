@@ -98,10 +98,11 @@ ui <- fluidPage(theme = "theme.css",
         fluidRow(
           column(6, actionButton("export_manhattan", "Export Manhattan Plot")),
           column(6, actionButton("export_chicago", "Export Chicago Plot"))
-          ),
+        ),
         br(), 
         fluidRow(
-          column(6,actionButton("export_all", "Export All Plots"))
+          column(6,actionButton("export_all", "Export All Plots")),
+          column(6,checkboxInput("chicago_include_genes", "Include gene information with all plots", value = TRUE))
         )
       ),
       actionButton("info", "?"),
@@ -639,7 +640,7 @@ server <- function(input, output, session) {
     png(file.path(res_dir_rv(), paste0("all-",today,".png") ), 2800, 1400, res=150)
     
     # REBUILD the plot fresh
-    p<-plot_combined_state(state, annotations)
+    p<-plot_combined_state(state, annotations, include_genes = input$chicago_include_genes)
     
     print(p)
     dev.off()
