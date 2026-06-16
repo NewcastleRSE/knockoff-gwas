@@ -144,7 +144,7 @@ plot_pvalues <- function(window.chr, window.left, window.right, LMM, LMM.clumped
   
   if(nrow(LMM.window)>0) {
     LMM.window <- LMM.window %>% mutate(P=pmax(P, 1e-300))
-    manhattan.y.max <- max(-log10(LMM.window$P), na.rm=TRUE)
+    manhattan.y.max <- max(c(10, -log10(LMM.window$P)), na.rm=TRUE)
     manhattan.y.breaks <- c(0,7.3, manhattan.y.max)
     
     # Base Manhattan plot
