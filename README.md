@@ -15,7 +15,7 @@ KnockoffGWAS is a framework for genome-wide association studies that identifies 
 
 ## Documentation
 
-For instructions on how to apply the pipeline, please read the user guide: [https://knockoff-gwas.readthedocs.io/](https://knockoffgwas.readthedocs.io/)
+For instructions on how to apply the pipeline, please read the user guide: [https://knockoff-gwas.readthedocs.io/](https://knockoff-gwas.readthedocs.io/)
 
 ---
 
